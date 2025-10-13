@@ -7,26 +7,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.4022151375598355,
-              43.571228696738274
-            ],
-            [
-              1.4022151375598355,
-              43.571020871250425
-            ],
-            [
-              1.402834121095026,
-              43.571020871250425
-            ],
-            [
-              1.402834121095026,
-              43.571228696738274
-            ],
-            [
-              1.4022151375598355,
-              43.571228696738274
-            ]
+            [1.4022151375598355, 43.571228696738274],
+            [1.4022151375598355, 43.571020871250425],
+            [1.402834121095026, 43.571020871250425],
+            [1.402834121095026, 43.571228696738274],
+            [1.4022151375598355, 43.571228696738274]
           ]
         ]
       },
@@ -34,9 +19,7 @@
         "id": "M001",
         "name": "Marché sauvage Reynerie",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/ZnGD44Ss/M001.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/ZnGD44Ss/M001.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -73,26 +56,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.4021581667335568,
-              43.571256308118535
-            ],
-            [
-              1.4021581667335568,
-              43.57091722421356
-            ],
-            [
-              1.4028737720880429,
-              43.57091722421356
-            ],
-            [
-              1.4028737720880429,
-              43.571256308118535
-            ],
-            [
-              1.4021581667335568,
-              43.571256308118535
-            ]
+            [1.4021581667335568, 43.571256308118535],
+            [1.4021581667335568, 43.57091722421356],
+            [1.4028737720880429, 43.57091722421356],
+            [1.4028737720880429, 43.571256308118535],
+            [1.4021581667335568, 43.571256308118535]
           ]
         ]
       },
@@ -100,9 +68,7 @@
         "id": "M002",
         "name": "Marché sauvage reynerie: abandonné",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/PJpFgNB8/M002.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/PJpFgNB8/M002.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -139,54 +105,18 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.4028217176305304,
-              43.570711318947076
-            ],
-            [
-              1.4030459483379332,
-              43.57071722802263
-            ],
-            [
-              1.403043229735232,
-              43.570827530727115
-            ],
-            [
-              1.4034591758352235,
-              43.570827530727115
-            ],
-            [
-              1.4034618944366173,
-              43.57092010605555
-            ],
-            [
-              1.402779525345295,
-              43.570902378876355
-            ],
-            [
-              1.4025783488008017,
-              43.57074677340992
-            ],
-            [
-              1.4024097954797128,
-              43.57064631903461
-            ],
-            [
-              1.4023336746246287,
-              43.57063844025271
-            ],
-            [
-              1.4023282374205621,
-              43.57042768246197
-            ],
-            [
-              1.402817585772823,
-              43.57043162186636
-            ],
-            [
-              1.4028217176305304,
-              43.570711318947076
-            ]
+            [1.4028217176305304, 43.570711318947076],
+            [1.4030459483379332, 43.57071722802263],
+            [1.403043229735232, 43.570827530727115],
+            [1.4034591758352235, 43.570827530727115],
+            [1.4034618944366173, 43.57092010605555],
+            [1.402779525345295, 43.570902378876355],
+            [1.4025783488008017, 43.57074677340992],
+            [1.4024097954797128, 43.57064631903461],
+            [1.4023336746246287, 43.57063844025271],
+            [1.4023282374205621, 43.57042768246197],
+            [1.402817585772823, 43.57043162186636],
+            [1.4028217176305304, 43.570711318947076]
           ]
         ]
       },
@@ -194,9 +124,7 @@
         "id": "M003",
         "name": "Marché ramadan Reynerie",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/43sqYfhr/M003.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/43sqYfhr/M003.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -231,18 +159,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4028801136182096,
-          43.570744803717815
-        ]
+        "coordinates": [1.4028801136182096, 43.570744803717815]
       },
       "properties": {
         "id": "M004",
         "name": "Arbre comme porte affaires pour commerçant",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/9MNngyNh/M004.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/9MNngyNh/M004.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -279,26 +202,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.3989675243882402,
-              43.56579932741906
-            ],
-            [
-              1.3989675243882402,
-              43.56572392426963
-            ],
-            [
-              1.399705883812885,
-              43.56572392426963
-            ],
-            [
-              1.399705883812885,
-              43.56579932741906
-            ],
-            [
-              1.3989675243882402,
-              43.56579932741906
-            ]
+            [1.3989675243882402, 43.56579932741906],
+            [1.3989675243882402, 43.56572392426963],
+            [1.399705883812885, 43.56572392426963],
+            [1.399705883812885, 43.56579932741906],
+            [1.3989675243882402, 43.56579932741906]
           ]
         ]
       },
@@ -306,9 +214,7 @@
         "id": "M005",
         "name": "Marché ramadan Bellefontaine",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/MTGLY955/M005.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/MTGLY955/M005.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -343,18 +249,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4069892970805142,
-          43.57123226582058
-        ]
+        "coordinates": [1.4069892970805142, 43.57123226582058]
       },
       "properties": {
         "id": "M006",
         "name": "Squat Messager 1",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/yNj59MmW/M006.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/yNj59MmW/M006.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": true,
@@ -389,18 +290,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4066526086371596,
-          43.57144253856384
-        ]
+        "coordinates": [1.4066526086371596, 43.57144253856384]
       },
       "properties": {
         "id": "M007",
         "name": "Détournement électriicé à Messager",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/8zmDKndg/M007.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/8zmDKndg/M007.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -435,16 +331,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.406497613730238,
-          43.57157419604789
-        ]
+        "coordinates": [1.4058336581169897, 43.57154549459332]
       },
       "properties": {
         "id": "M008",
-        "name": "Squat Messager (a documenter)",
+        "name": "Squat Messager 2",
         "description": "-",
-        "photos": [],
+        "photos": ["https://i.postimg.cc/xTpwft97/M008.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -479,18 +372,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.3966564832778658,
-          43.564719484397415
-        ]
+        "coordinates": [1.3966564832778658, 43.564719484397415]
       },
       "properties": {
         "id": "M009",
         "name": "Squat Pigeonnier 1",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/cLS0cNnc/M009.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/cLS0cNnc/M009.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -525,18 +413,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.3961811989165938,
-          43.56337760386177
-        ]
+        "coordinates": [1.3961811989165938, 43.56337760386177]
       },
       "properties": {
         "id": "M010",
         "name": "Squat Pigeonnier 2",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/dtdJd0L1/M010.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/dtdJd0L1/M010.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -573,26 +456,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.4012942682371943,
-              43.560263857238255
-            ],
-            [
-              1.4009689386927278,
-              43.5598114703281
-            ],
-            [
-              1.4014261585924714,
-              43.55965536419714
-            ],
-            [
-              1.4017602808276024,
-              43.56008226571774
-            ],
-            [
-              1.4012942682371943,
-              43.560263857238255
-            ]
+            [1.4012942682371943, 43.560263857238255],
+            [1.4009689386927278, 43.5598114703281],
+            [1.4014261585924714, 43.55965536419714],
+            [1.4017602808276024, 43.56008226571774],
+            [1.4012942682371943, 43.560263857238255]
           ]
         ]
       },
@@ -637,42 +505,15 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.407298628492157,
-              43.57046803037639
-            ],
-            [
-              1.4067328950571323,
-              43.5700011938103
-            ],
-            [
-              1.4071067099625623,
-              43.569443387385235
-            ],
-            [
-              1.4067462455888915,
-              43.569291843706594
-            ],
-            [
-              1.4066972936372792,
-              43.569220908237185
-            ],
-            [
-              1.4067907473639707,
-              43.56908871009293
-            ],
-            [
-              1.407667432320153,
-              43.569014550031
-            ],
-            [
-              1.408240211507291,
-              43.570457575168064
-            ],
-            [
-              1.407298628492157,
-              43.57046803037639
-            ]
+            [1.407298628492157, 43.57046803037639],
+            [1.4067328950571323, 43.5700011938103],
+            [1.4071067099625623, 43.569443387385235],
+            [1.4067462455888915, 43.569291843706594],
+            [1.4066972936372792, 43.569220908237185],
+            [1.4067907473639707, 43.56908871009293],
+            [1.407667432320153, 43.569014550031],
+            [1.408240211507291, 43.570457575168064],
+            [1.407298628492157, 43.57046803037639]
           ]
         ]
       },
@@ -680,9 +521,7 @@
         "id": "M012",
         "name": "Jardin sur friche collège",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/gc1YnhcQ/M012.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/gc1YnhcQ/M012.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": true,
@@ -719,26 +558,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.4019082048677092,
-              43.5682623346508
-            ],
-            [
-              1.4019082048677092,
-              43.56773060388045
-            ],
-            [
-              1.4028633153824899,
-              43.56773060388045
-            ],
-            [
-              1.4028633153824899,
-              43.5682623346508
-            ],
-            [
-              1.4019082048677092,
-              43.5682623346508
-            ]
+            [1.4019082048677092, 43.5682623346508],
+            [1.4019082048677092, 43.56773060388045],
+            [1.4028633153824899, 43.56773060388045],
+            [1.4028633153824899, 43.5682623346508],
+            [1.4019082048677092, 43.5682623346508]
           ]
         ]
       },
@@ -783,26 +607,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.404575347771953,
-              43.56773196957732
-            ],
-            [
-              1.404575347771953,
-              43.56765134195038
-            ],
-            [
-              1.40624990159165,
-              43.56765134195038
-            ],
-            [
-              1.40624990159165,
-              43.56773196957732
-            ],
-            [
-              1.404575347771953,
-              43.56773196957732
-            ]
+            [1.404575347771953, 43.56773196957732],
+            [1.404575347771953, 43.56765134195038],
+            [1.40624990159165, 43.56765134195038],
+            [1.40624990159165, 43.56773196957732],
+            [1.404575347771953, 43.56773196957732]
           ]
         ]
       },
@@ -810,9 +619,7 @@
         "id": "M014",
         "name": "Jardins partagés: Satié",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/VsJffgwX/M014.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/VsJffgwX/M014.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -849,26 +656,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.4055606502602416,
-              43.56856621864182
-            ],
-            [
-              1.4055606502602416,
-              43.568477872825014
-            ],
-            [
-              1.4060414102292214,
-              43.568477872825014
-            ],
-            [
-              1.4060414102292214,
-              43.56856621864182
-            ],
-            [
-              1.4055606502602416,
-              43.56856621864182
-            ]
+            [1.4055606502602416, 43.56856621864182],
+            [1.4055606502602416, 43.568477872825014],
+            [1.4060414102292214, 43.568477872825014],
+            [1.4060414102292214, 43.56856621864182],
+            [1.4055606502602416, 43.56856621864182]
           ]
         ]
       },
@@ -876,9 +668,7 @@
         "id": "M015",
         "name": "Jardins partagés: La pyramide",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/rwW8KzWV/M015.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/rwW8KzWV/M015.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -915,26 +705,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.4028439423965722,
-              43.57397587590776
-            ],
-            [
-              1.4028439423965722,
-              43.57337574492573
-            ],
-            [
-              1.4034435108430614,
-              43.57337574492573
-            ],
-            [
-              1.4034435108430614,
-              43.57397587590776
-            ],
-            [
-              1.4028439423965722,
-              43.57397587590776
-            ]
+            [1.4028439423965722, 43.57397587590776],
+            [1.4028439423965722, 43.57337574492573],
+            [1.4034435108430614, 43.57337574492573],
+            [1.4034435108430614, 43.57397587590776],
+            [1.4028439423965722, 43.57397587590776]
           ]
         ]
       },
@@ -942,9 +717,7 @@
         "id": "M016",
         "name": "Friche maraichère: Daurat",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/jjbRNKQz/M016.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/jjbRNKQz/M016.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -979,18 +752,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.3978204274093287,
-          43.56420389988264
-        ]
+        "coordinates": [1.3978204274093287, 43.56420389988264]
       },
       "properties": {
         "id": "M017",
         "name": "Rochers",
         "description": "Jeux enfants",
-        "photos": [
-          "https://i.postimg.cc/VvVYbCD6/M017.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/VvVYbCD6/M017.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": true,
@@ -1027,30 +795,12 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.3978367497960562,
-              43.561777538457505
-            ],
-            [
-              1.3981374882943953,
-              43.56165803126487
-            ],
-            [
-              1.3984188243099709,
-              43.56185310906008
-            ],
-            [
-              1.3982175235400405,
-              43.561935709377394
-            ],
-            [
-              1.3978246232443325,
-              43.56192692211491
-            ],
-            [
-              1.3978367497960562,
-              43.561777538457505
-            ]
+            [1.3978367497960562, 43.561777538457505],
+            [1.3981374882943953, 43.56165803126487],
+            [1.3984188243099709, 43.56185310906008],
+            [1.3982175235400405, 43.561935709377394],
+            [1.3978246232443325, 43.56192692211491],
+            [1.3978367497960562, 43.561777538457505]
           ]
         ]
       },
@@ -1058,9 +808,7 @@
         "id": "M018",
         "name": "Dalle Tintoret: Rodéo moto",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/WpWpyBTv/M018.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/WpWpyBTv/M018.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -1095,16 +843,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.404219770121074,
-          43.5697369382965
-        ]
+        "coordinates": [1.404219770121074, 43.5697369382965]
       },
       "properties": {
         "id": "M019",
         "name": "Portes peintes: Gluck",
         "description": "\"Ici, on peut loger une famille\" sur les portes condamnées du tripode Gluck, étudiants en art et collectif d'habitants",
-        "photos": [],
+        "photos": ["https://i.postimg.cc/4N3CRrRD/M019.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -1139,18 +884,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4069796582005836,
-          43.57116289274501
-        ]
+        "coordinates": [1.4069796582005836, 43.57116289274501]
       },
       "properties": {
         "id": "M021",
         "name": "Point de deal: Messager",
         "description": "Zone de rencontre ",
-        "photos": [
-          "https://i.postimg.cc/ncNFFqXS/M021.png"
-        ],
+        "photos": ["https://i.postimg.cc/ncNFFqXS/M021.png"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -1185,18 +925,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4043152402089163,
-          43.57065894360068
-        ]
+        "coordinates": [1.4043152402089163, 43.57065894360068]
       },
       "properties": {
         "id": "M022",
         "name": "Point de deal: Auriacombe",
         "description": "Zone de rencontre ",
-        "photos": [
-          "https://i.postimg.cc/qMNBH1vC/M022.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/qMNBH1vC/M022.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -1231,18 +966,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.3958693502353015,
-          43.56450506726708
-        ]
+        "coordinates": [1.3958693502353015, 43.56450506726708]
       },
       "properties": {
         "id": "M023",
         "name": "Point de deal: Pergaud",
         "description": "Zone de rencontre ",
-        "photos": [
-          "https://i.postimg.cc/fytbCC3X/M023.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/fytbCC3X/M023.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -1277,15 +1007,12 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4046198015010987,
-          43.57345203625269
-        ]
+        "coordinates": [1.4046198015010987, 43.57345203625269]
       },
       "properties": {
         "id": "M024",
-        "name": "Épicerie solidaire: Varèse",
-        "description": "-",
+        "name": "Épicerie solidaire La Manne",
+        "description": "RDC du Petit Varèse",
         "photos": [],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
@@ -1321,18 +1048,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4027066399986268,
-          43.56859630140147
-        ]
+        "coordinates": [1.4027066399986268, 43.56859630140147]
       },
       "properties": {
         "id": "M025",
         "name": "TO7",
         "description": "Lieu de rencontre",
-        "photos": [
-          "https://i.postimg.cc/d3bVxCdf/M025.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/d3bVxCdf/M025.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -1367,18 +1089,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.398147279731603,
-          43.56507820411653
-        ]
+        "coordinates": [1.398147279731603, 43.56507820411653]
       },
       "properties": {
         "id": "M026",
         "name": "Local CGT",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/ZY2nRGgL/M026.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/ZY2nRGgL/M026.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": true,
@@ -1413,16 +1130,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.3980635400139363,
-          43.570525379630766
-        ]
+        "coordinates": [1.3980635400139363, 43.570525379630766]
       },
       "properties": {
         "id": "M027",
         "name": "Lieu de street workout: Lac ",
         "description": "-",
-        "photos": [],
+        "photos": ["https://i.postimg.cc/ncL8f6f5/M027.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": true,
@@ -1457,18 +1171,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4014459871346503,
-          43.57408104951162
-        ]
+        "coordinates": [1.4014459871346503, 43.57408104951162]
       },
       "properties": {
         "id": "M029",
         "name": "Barbecue: Mirail université",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/SKdjxJFX/M029.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/SKdjxJFX/M029.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -1505,26 +1214,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.3977631354445919,
-              43.56404118400977
-            ],
-            [
-              1.3977631354445919,
-              43.56396839630975
-            ],
-            [
-              1.3980528995649024,
-              43.56396839630975
-            ],
-            [
-              1.3980528995649024,
-              43.56404118400977
-            ],
-            [
-              1.3977631354445919,
-              43.56404118400977
-            ]
+            [1.3977631354445919, 43.56404118400977],
+            [1.3977631354445919, 43.56396839630975],
+            [1.3980528995649024, 43.56396839630975],
+            [1.3980528995649024, 43.56404118400977],
+            [1.3977631354445919, 43.56404118400977]
           ]
         ]
       },
@@ -1532,9 +1226,7 @@
         "id": "M030",
         "name": "Terrain de pétanque: Bellefontaine",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/rmps0MMf/M030.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/rmps0MMf/M030.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": true,
@@ -1571,22 +1263,10 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.4039727111860714,
-              43.56871952966475
-            ],
-            [
-              1.40410084869049,
-              43.56872468754233
-            ],
-            [
-              1.4040047455616786,
-              43.56880463459245
-            ],
-            [
-              1.4039727111860714,
-              43.56871952966475
-            ]
+            [1.4039727111860714, 43.56871952966475],
+            [1.40410084869049, 43.56872468754233],
+            [1.4040047455616786, 43.56880463459245],
+            [1.4039727111860714, 43.56871952966475]
           ]
         ]
       },
@@ -1594,9 +1274,7 @@
         "id": "M031",
         "name": "Décharge : Gluck",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/FRnR08KN/M031.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/FRnR08KN/M031.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -1631,18 +1309,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.3984085550653447,
-          43.56233751761286
-        ]
+        "coordinates": [1.3984085550653447, 43.56233751761286]
       },
       "properties": {
         "id": "M032",
         "name": "Foodtruck: Bellefontaine",
         "description": "Lieu de rencontre",
-        "photos": [
-          "https://i.postimg.cc/Nj15Zddk/M032.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/Nj15Zddk/M032.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": true,
@@ -1679,26 +1352,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.4020211077017848,
-              43.572161516595855
-            ],
-            [
-              1.4020211077017848,
-              43.572004793129054
-            ],
-            [
-              1.4026075675585048,
-              43.572004793129054
-            ],
-            [
-              1.4026075675585048,
-              43.572161516595855
-            ],
-            [
-              1.4020211077017848,
-              43.572161516595855
-            ]
+            [1.4020211077017848, 43.572161516595855],
+            [1.4020211077017848, 43.572004793129054],
+            [1.4026075675585048, 43.572004793129054],
+            [1.4026075675585048, 43.572161516595855],
+            [1.4020211077017848, 43.572161516595855]
           ]
         ]
       },
@@ -1706,9 +1364,7 @@
         "id": "M033",
         "name": "Crèche abandonnée",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/5NQHS4vG/M033.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/5NQHS4vG/M033.jpg"],
         "frequence_usage_aucun": true,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -1743,18 +1399,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4053929223890407,
-          43.56837475123197
-        ]
+        "coordinates": [1.4053929223890407, 43.56837475123197]
       },
       "properties": {
         "id": "M034",
         "name": "Assises: rembarde tripode",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/RCD6t63K/M034.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/RCD6t63K/M034.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": true,
@@ -1790,35 +1441,18 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [
-            1.3975899177840745,
-            43.56384902372628
-          ],
-          [
-            1.3982601977170646,
-            43.56386158465821
-          ],
-          [
-            1.3982717542680234,
-            43.563107924102724
-          ],
-          [
-            1.3975956960595681,
-            43.563103737073135
-          ],
-          [
-            1.3975899177840745,
-            43.563840649769844
-          ]
+          [1.3975899177840745, 43.56384902372628],
+          [1.3982601977170646, 43.56386158465821],
+          [1.3982717542680234, 43.563107924102724],
+          [1.3975956960595681, 43.563103737073135],
+          [1.3975899177840745, 43.563840649769844]
         ]
       },
       "properties": {
         "id": "M036",
         "name": "Résidentialisation: André Maurois",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/HkGrSq9L/M036.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/HkGrSq9L/M036.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -1853,18 +1487,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.402748751763312,
-          43.57029527587105
-        ]
+        "coordinates": [1.402748751763312, 43.57029527587105]
       },
       "properties": {
         "id": "M039",
         "name": "Affichage: Violences policières",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/L5nJ7RWJ/M039.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/L5nJ7RWJ/M039.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -1899,18 +1528,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4029682303707887,
-          43.57109418700651
-        ]
+        "coordinates": [1.4029682303707887, 43.57109418700651]
       },
       "properties": {
         "id": "M040",
         "name": "Tag: Violences policières",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/BbkjfkWM/M040.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/BbkjfkWM/M040.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -1945,18 +1569,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.398843348756543,
-          43.56589630290293
-        ]
+        "coordinates": [1.398843348756543, 43.56589630290293]
       },
       "properties": {
         "id": "M041",
         "name": "Table CPES: Marché Bellefontaine",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/B6h8MtmW/M041.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/B6h8MtmW/M041.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": true,
@@ -1993,26 +1612,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.4023590643228943,
-              43.57101803670503
-            ],
-            [
-              1.4026429485601,
-              43.570907483615144
-            ],
-            [
-              1.4026500456666895,
-              43.57104760319453
-            ],
-            [
-              1.40236261287572,
-              43.571164583510864
-            ],
-            [
-              1.4023590643228943,
-              43.57101803670503
-            ]
+            [1.4023590643228943, 43.57101803670503],
+            [1.4026429485601, 43.570907483615144],
+            [1.4026500456666895, 43.57104760319453],
+            [1.40236261287572, 43.571164583510864],
+            [1.4023590643228943, 43.57101803670503]
           ]
         ]
       },
@@ -2020,9 +1624,7 @@
         "id": "M042",
         "name": "Assises: Place Abbal",
         "description": "Lieu d'intensité/affluence",
-        "photos": [
-          "https://i.postimg.cc/B6ZLT2cc/M042.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/B6ZLT2cc/M042.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -2059,26 +1661,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.4026965644656286,
-              43.570364322219376
-            ],
-            [
-              1.4026965644656286,
-              43.57008150851584
-            ],
-            [
-              1.4028118924372848,
-              43.57008150851584
-            ],
-            [
-              1.4028118924372848,
-              43.570364322219376
-            ],
-            [
-              1.4026965644656286,
-              43.570364322219376
-            ]
+            [1.4026965644656286, 43.570364322219376],
+            [1.4026965644656286, 43.57008150851584],
+            [1.4028118924372848, 43.57008150851584],
+            [1.4028118924372848, 43.570364322219376],
+            [1.4026965644656286, 43.570364322219376]
           ]
         ]
       },
@@ -2086,9 +1673,7 @@
         "id": "M043",
         "name": "Commerces passage: Place abbal",
         "description": "Lieu d'intensité/affluence",
-        "photos": [
-          "https://i.postimg.cc/9fYwwLTQ/M043.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/9fYwwLTQ/M043.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -2125,26 +1710,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.3990575700672139,
-              43.565495414180305
-            ],
-            [
-              1.3990575700672139,
-              43.56541163683198
-            ],
-            [
-              1.3998023036699578,
-              43.56541163683198
-            ],
-            [
-              1.3998023036699578,
-              43.565495414180305
-            ],
-            [
-              1.3990575700672139,
-              43.565495414180305
-            ]
+            [1.3990575700672139, 43.565495414180305],
+            [1.3990575700672139, 43.56541163683198],
+            [1.3998023036699578, 43.56541163683198],
+            [1.3998023036699578, 43.565495414180305],
+            [1.3990575700672139, 43.565495414180305]
           ]
         ]
       },
@@ -2152,9 +1722,7 @@
         "id": "M044",
         "name": "Commerces: Place Bellefontaine",
         "description": "Lieu d'intensité/affluence",
-        "photos": [
-          "https://i.postimg.cc/3xpvY8xp/M044.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/3xpvY8xp/M044.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -2189,18 +1757,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.3982445938549404,
-          43.56606131750996
-        ]
+        "coordinates": [1.3982445938549404, 43.56606131750996]
       },
       "properties": {
         "id": "M045",
         "name": "Métro Bellefontaine ",
         "description": "Lieu d'intensité/affluence",
-        "photos": [
-          "https://i.postimg.cc/0NsJNTz4/M045.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/0NsJNTz4/M045.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -2235,18 +1798,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.399959337988463,
-          43.56564399463036
-        ]
+        "coordinates": [1.399959337988463, 43.56564399463036]
       },
       "properties": {
         "id": "M046",
         "name": "Assise: Escaliers France Travail",
         "description": "Lieu d'intensité/affluence",
-        "photos": [
-          "https://i.postimg.cc/9Fs76RCC/M046.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/9Fs76RCC/M046.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": true,
@@ -2283,26 +1841,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.4031643178238369,
-              43.56794987730106
-            ],
-            [
-              1.4031643178238369,
-              43.56773210412854
-            ],
-            [
-              1.4034000509134046,
-              43.56773210412854
-            ],
-            [
-              1.4034000509134046,
-              43.56794987730106
-            ],
-            [
-              1.4031643178238369,
-              43.56794987730106
-            ]
+            [1.4031643178238369, 43.56794987730106],
+            [1.4031643178238369, 43.56773210412854],
+            [1.4034000509134046, 43.56773210412854],
+            [1.4034000509134046, 43.56794987730106],
+            [1.4031643178238369, 43.56794987730106]
           ]
         ]
       },
@@ -2310,9 +1853,7 @@
         "id": "M048",
         "name": "Skateparc ",
         "description": "Lieu délaissé",
-        "photos": [
-          "https://i.postimg.cc/7Ps7NtRC/M048.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/7Ps7NtRC/M048.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -2349,26 +1890,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.402988684428891,
-              43.572165066290324
-            ],
-            [
-              1.402988684428891,
-              43.57203944847589
-            ],
-            [
-              1.403186031751403,
-              43.57203944847589
-            ],
-            [
-              1.403186031751403,
-              43.572165066290324
-            ],
-            [
-              1.402988684428891,
-              43.572165066290324
-            ]
+            [1.402988684428891, 43.572165066290324],
+            [1.402988684428891, 43.57203944847589],
+            [1.403186031751403, 43.57203944847589],
+            [1.403186031751403, 43.572165066290324],
+            [1.402988684428891, 43.572165066290324]
           ]
         ]
       },
@@ -2376,9 +1902,7 @@
         "id": "M049",
         "name": "Parvis: nouvelle mairie",
         "description": "Lieu délaissé",
-        "photos": [
-          "https://i.postimg.cc/j2F7dCf6/M049.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/j2F7dCf6/M049.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -2415,26 +1939,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.3989599686849772,
-              43.57115574766391
-            ],
-            [
-              1.3995881935669559,
-              43.57112698284641
-            ],
-            [
-              1.3995391499886694,
-              43.57125388634955
-            ],
-            [
-              1.3990347017566478,
-              43.57126065452903
-            ],
-            [
-              1.3989599686849772,
-              43.57115574766391
-            ]
+            [1.3989599686849772, 43.57115574766391],
+            [1.3995881935669559, 43.57112698284641],
+            [1.3995391499886694, 43.57125388634955],
+            [1.3990347017566478, 43.57126065452903],
+            [1.3989599686849772, 43.57115574766391]
           ]
         ]
       },
@@ -2442,9 +1951,7 @@
         "id": "M050",
         "name": "Base nautique",
         "description": "Lieu investi",
-        "photos": [
-          "https://i.postimg.cc/RhFtBwWV/M050.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/RhFtBwWV/M050.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": true,
@@ -2479,18 +1986,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.401089544122982,
-          43.56990489080141
-        ]
+        "coordinates": [1.401089544122982, 43.56990489080141]
       },
       "properties": {
         "id": "M051",
         "name": "Jeu pour enfants (Poisson rouge)",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/jjHPQxVK/M051.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/jjHPQxVK/M051.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": true,
@@ -2527,26 +2029,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.4007330743893363,
-              43.567062316092006
-            ],
-            [
-              1.4008724652461524,
-              43.5669895973588
-            ],
-            [
-              1.4011428835079585,
-              43.56722795287956
-            ],
-            [
-              1.4010062804681809,
-              43.56730673119179
-            ],
-            [
-              1.4007330743893363,
-              43.567062316092006
-            ]
+            [1.4007330743893363, 43.567062316092006],
+            [1.4008724652461524, 43.5669895973588],
+            [1.4011428835079585, 43.56722795287956],
+            [1.4010062804681809, 43.56730673119179],
+            [1.4007330743893363, 43.567062316092006]
           ]
         ]
       },
@@ -2554,9 +2041,7 @@
         "id": "M052",
         "name": "Place: Médiathèque Grand M",
         "description": "Lieu délaissé",
-        "photos": [
-          "https://i.postimg.cc/nhQvrK0X/M052.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/nhQvrK0X/M052.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -2593,26 +2078,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.397288748567206,
-              43.56543810373782
-            ],
-            [
-              1.397288748567206,
-              43.56527019450283
-            ],
-            [
-              1.398263204598834,
-              43.56527019450283
-            ],
-            [
-              1.398263204598834,
-              43.56543810373782
-            ],
-            [
-              1.397288748567206,
-              43.56543810373782
-            ]
+            [1.397288748567206, 43.56543810373782],
+            [1.397288748567206, 43.56527019450283],
+            [1.398263204598834, 43.56527019450283],
+            [1.398263204598834, 43.56543810373782],
+            [1.397288748567206, 43.56543810373782]
           ]
         ]
       },
@@ -2620,9 +2090,7 @@
         "id": "M053",
         "name": "Locaux: Pôle Bastide",
         "description": "Lieu délaissé",
-        "photos": [
-          "https://i.postimg.cc/NMQTd3YX/M053.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/NMQTd3YX/M053.jpg"],
         "frequence_usage_aucun": true,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -2659,26 +2127,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.4011500036605185,
-              43.56117254928378
-            ],
-            [
-              1.4001659312649792,
-              43.559937336738216
-            ],
-            [
-              1.4017390842004147,
-              43.559238959589834
-            ],
-            [
-              1.40270826124285,
-              43.56059830835582
-            ],
-            [
-              1.4011500036605185,
-              43.56117254928378
-            ]
+            [1.4011500036605185, 43.56117254928378],
+            [1.4001659312649792, 43.559937336738216],
+            [1.4017390842004147, 43.559238959589834],
+            [1.40270826124285, 43.56059830835582],
+            [1.4011500036605185, 43.56117254928378]
           ]
         ]
       },
@@ -2686,9 +2139,7 @@
         "id": "M054",
         "name": "Collège de Bellefontaine",
         "description": "Abandonné",
-        "photos": [
-          "https://i.postimg.cc/tgQFx1M2/M054.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/tgQFx1M2/M054.jpg"],
         "frequence_usage_aucun": true,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -2725,46 +2176,16 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.4042658518644373,
-              43.56993060151268
-            ],
-            [
-              1.4038529348610211,
-              43.569408164077515
-            ],
-            [
-              1.4033968772756396,
-              43.56938583759097
-            ],
-            [
-              1.4033968772756396,
-              43.56926973972429
-            ],
-            [
-              1.4038406089800617,
-              43.56926527441749
-            ],
-            [
-              1.4042350371625503,
-              43.56876962328076
-            ],
-            [
-              1.4043891106712465,
-              43.568823207384526
-            ],
-            [
-              1.4039885195488466,
-              43.56933225398777
-            ],
-            [
-              1.4044137624331938,
-              43.569863622607784
-            ],
-            [
-              1.4042658518644373,
-              43.56993060151268
-            ]
+            [1.4042658518644373, 43.56993060151268],
+            [1.4038529348610211, 43.569408164077515],
+            [1.4033968772756396, 43.56938583759097],
+            [1.4033968772756396, 43.56926973972429],
+            [1.4038406089800617, 43.56926527441749],
+            [1.4042350371625503, 43.56876962328076],
+            [1.4043891106712465, 43.568823207384526],
+            [1.4039885195488466, 43.56933225398777],
+            [1.4044137624331938, 43.569863622607784],
+            [1.4042658518644373, 43.56993060151268]
           ]
         ]
       },
@@ -2772,9 +2193,7 @@
         "id": "M055",
         "name": "Lieu abandonné: Tripode Gluck",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/bN5xqVHX/M055.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/bN5xqVHX/M055.jpg"],
         "frequence_usage_aucun": true,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -2811,34 +2230,13 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.4042791371824421,
-              43.57001199155556
-            ],
-            [
-              1.404355712476871,
-              43.56997082799211
-            ],
-            [
-              1.4044149965764632,
-              43.56998335603603
-            ],
-            [
-              1.4045434454597512,
-              43.57012295406486
-            ],
-            [
-              1.4045582664853953,
-              43.570164117524314
-            ],
-            [
-              1.4044643999932305,
-              43.570232126656805
-            ],
-            [
-              1.4042791371824421,
-              43.57001199155556
-            ]
+            [1.4042791371824421, 43.57001199155556],
+            [1.404355712476871, 43.56997082799211],
+            [1.4044149965764632, 43.56998335603603],
+            [1.4045434454597512, 43.57012295406486],
+            [1.4045582664853953, 43.570164117524314],
+            [1.4044643999932305, 43.570232126656805],
+            [1.4042791371824421, 43.57001199155556]
           ]
         ]
       },
@@ -2846,9 +2244,7 @@
         "id": "M056",
         "name": "Place de prière: Auriacombe",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/qBjc5vNv/M056.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/qBjc5vNv/M056.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -2885,26 +2281,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.3985255797486218,
-              43.56611265582123
-            ],
-            [
-              1.398531583799894,
-              43.56601259622022
-            ],
-            [
-              1.3987825531845317,
-              43.56596039114464
-            ],
-            [
-              1.3987909588579726,
-              43.56610656524137
-            ],
-            [
-              1.3985255797486218,
-              43.56611265582123
-            ]
+            [1.3985255797486218, 43.56611265582123],
+            [1.398531583799894, 43.56601259622022],
+            [1.3987825531845317, 43.56596039114464],
+            [1.3987909588579726, 43.56610656524137],
+            [1.3985255797486218, 43.56611265582123]
           ]
         ]
       },
@@ -2912,9 +2293,7 @@
         "id": "M057",
         "name": "Métro de bellefontaine ",
         "description": "Conflit d'usage - métro/dealers/habitants",
-        "photos": [
-          "https://i.postimg.cc/BQjF7cWm/M057.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/BQjF7cWm/M057.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -2949,18 +2328,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.398712148715731,
-          43.56362109748545
-        ]
+        "coordinates": [1.398712148715731, 43.56362109748545]
       },
       "properties": {
         "id": "M058",
         "name": "Statue : le Monument de Taras Chevtchenko ",
         "description": "(disparu), Aujourd'hui panneau à la place",
-        "photos": [
-          "https://i.postimg.cc/wTM58YNc/M058.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/wTM58YNc/M058.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -2997,26 +2371,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.3983231710089967,
-              43.56440347418521
-            ],
-            [
-              1.3983231710089967,
-              43.563929987814475
-            ],
-            [
-              1.3983678933067551,
-              43.563929987814475
-            ],
-            [
-              1.3983678933067551,
-              43.56440347418521
-            ],
-            [
-              1.3983231710089967,
-              43.56440347418521
-            ]
+            [1.3983231710089967, 43.56440347418521],
+            [1.3983231710089967, 43.563929987814475],
+            [1.3983678933067551, 43.563929987814475],
+            [1.3983678933067551, 43.56440347418521],
+            [1.3983231710089967, 43.56440347418521]
           ]
         ]
       },
@@ -3059,18 +2418,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.395886170075073,
-          43.565784295654055
-        ]
+        "coordinates": [1.395886170075073, 43.565784295654055]
       },
       "properties": {
         "id": "M060",
         "name": "Calocèdre abattu, chemin de l'Estang",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/6qjd2Ykv/M060.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/6qjd2Ykv/M060.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -3105,18 +2459,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.3988030883013778,
-          43.56436811514206
-        ]
+        "coordinates": [1.3988030883013778, 43.56436811514206]
       },
       "properties": {
         "id": "M061",
         "name": "Maison de projet renouvellement urbain, centre Albin Minville",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/d0rmHRyb/M061.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/d0rmHRyb/M061.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -3152,23 +2501,15 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [
-            1.402872222792098,
-            43.57084843060434
-          ],
-          [
-            1.4086993434291912,
-            43.570876069752416
-          ]
+          [1.402872222792098, 43.57084843060434],
+          [1.4086993434291912, 43.570876069752416]
         ]
       },
       "properties": {
         "id": "M062",
         "name": "Route de Kiev",
         "description": "Axe majeur",
-        "photos": [
-          "https://i.postimg.cc/9MBPVW11/M062.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/9MBPVW11/M062.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -3204,39 +2545,19 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [
-            1.406653804282854,
-            43.56843855536317
-          ],
-          [
-            1.4068282892270645,
-            43.568418724246385
-          ],
-          [
-            1.4069514550706685,
-            43.56843607647403
-          ],
-          [
-            1.4070643570935601,
-            43.568584809650446
-          ],
-          [
-            1.4075467566453312,
-            43.56859720406533
-          ],
-          [
-            1.4077965096048217,
-            43.568569936349405
-          ]
+          [1.406653804282854, 43.56843855536317],
+          [1.4068282892270645, 43.568418724246385],
+          [1.4069514550706685, 43.56843607647403],
+          [1.4070643570935601, 43.568584809650446],
+          [1.4075467566453312, 43.56859720406533],
+          [1.4077965096048217, 43.568569936349405]
         ]
       },
       "properties": {
         "id": "M063",
         "name": "Chemin accès mosquée",
         "description": "Axe majeur",
-        "photos": [
-          "https://i.postimg.cc/PxHbBLbP/M063.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/PxHbBLbP/M063.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -3271,18 +2592,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4056302870618254,
-          43.56829427673591
-        ]
+        "coordinates": [1.4056302870618254, 43.56829427673591]
       },
       "properties": {
         "id": "M065",
         "name": "Appropriation des balcons: fil à linge (à dupliquer)",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/7hY3ZpW4/M065.png"
-        ],
+        "photos": ["https://i.postimg.cc/7hY3ZpW4/M065.png"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -3317,18 +2633,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4024771111279506,
-          43.57231643179418
-        ]
+        "coordinates": [1.4024771111279506, 43.57231643179418]
       },
       "properties": {
         "id": "M066",
         "name": "Approproation des balcons: filet (à dupliquer)",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/y8wyypkh/M066.png"
-        ],
+        "photos": ["https://i.postimg.cc/y8wyypkh/M066.png"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -3363,18 +2674,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4052671579437401,
-          43.568280136384146
-        ]
+        "coordinates": [1.4052671579437401, 43.568280136384146]
       },
       "properties": {
         "id": "M067",
         "name": "Approproation des balcons : occultations (à dupliquer)",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/4N25mxGS/M067.png"
-        ],
+        "photos": ["https://i.postimg.cc/4N25mxGS/M067.png"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -3409,18 +2715,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4045175582223521,
-          43.56798230402174
-        ]
+        "coordinates": [1.4045175582223521, 43.56798230402174]
       },
       "properties": {
         "id": "M068",
         "name": "Approproation des balcons : cabanes (à dupliquer)",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/DwWcs3yy/M068.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/DwWcs3yy/M068.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -3455,18 +2756,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4059139428624121,
-          43.571488689267284
-        ]
+        "coordinates": [1.4059139428624121, 43.571488689267284]
       },
       "properties": {
         "id": "M069",
         "name": "Approproation des balcons : vérandas (à dupliquer)",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/hPtsD7km/M069.png"
-        ],
+        "photos": ["https://i.postimg.cc/hPtsD7km/M069.png"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -3501,18 +2797,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.405880293310645,
-          43.56851870670167
-        ]
+        "coordinates": [1.405880293310645, 43.56851870670167]
       },
       "properties": {
         "id": "M070",
         "name": "Squat: jardin partagé La Pyramide",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/ryJg29Pc/M070.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/ryJg29Pc/M070.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -3547,18 +2838,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.406156024799543,
-          43.568532745395885
-        ]
+        "coordinates": [1.406156024799543, 43.568532745395885]
       },
       "properties": {
         "id": "M071",
         "name": "Jeu: La pyramide",
         "description": "Jeu pour enfants, symbole de Satie",
-        "photos": [
-          "https://i.postimg.cc/sxVcZB1t/M071.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/sxVcZB1t/M071.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -3595,54 +2881,18 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.4053896251066362,
-              43.569681932422355
-            ],
-            [
-              1.4054084288161732,
-              43.5694243583649
-            ],
-            [
-              1.4057155724557333,
-              43.5690267895547
-            ],
-            [
-              1.4058708698014755,
-              43.56908930054749
-            ],
-            [
-              1.4060882860852928,
-              43.56882925439007
-            ],
-            [
-              1.4063195065779723,
-              43.56892177093985
-            ],
-            [
-              1.4063781744641233,
-              43.56885175842842
-            ],
-            [
-              1.4067384568088528,
-              43.569001592718024
-            ],
-            [
-              1.4064064366980062,
-              43.56941505975297
-            ],
-            [
-              1.4062871169698496,
-              43.569373713177214
-            ],
-            [
-              1.4059084065303011,
-              43.569869870212585
-            ],
-            [
-              1.4053896251066362,
-              43.569681932422355
-            ]
+            [1.4053896251066362, 43.569681932422355],
+            [1.4054084288161732, 43.5694243583649],
+            [1.4057155724557333, 43.5690267895547],
+            [1.4058708698014755, 43.56908930054749],
+            [1.4060882860852928, 43.56882925439007],
+            [1.4063195065779723, 43.56892177093985],
+            [1.4063781744641233, 43.56885175842842],
+            [1.4067384568088528, 43.569001592718024],
+            [1.4064064366980062, 43.56941505975297],
+            [1.4062871169698496, 43.569373713177214],
+            [1.4059084065303011, 43.569869870212585],
+            [1.4053896251066362, 43.569681932422355]
           ]
         ]
       },
@@ -3650,9 +2900,7 @@
         "id": "M072",
         "name": "École Jean Galia abandonnée",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/L5NVkH1h/M072.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/L5NVkH1h/M072.jpg"],
         "frequence_usage_aucun": true,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -3687,18 +2935,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4058131045790105,
-          43.569257402240254
-        ]
+        "coordinates": [1.4058131045790105, 43.569257402240254]
       },
       "properties": {
         "id": "M073",
         "name": "Mémorial Jean Galia",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/Hx0zx0Ww/M073.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/Hx0zx0Ww/M073.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -3735,26 +2978,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.4066318355572207,
-              43.57217696068932
-            ],
-            [
-              1.4071058966723058,
-              43.571983342977205
-            ],
-            [
-              1.40727321235903,
-              43.57221063327165
-            ],
-            [
-              1.4068084465607456,
-              43.57240425025353
-            ],
-            [
-              1.4066318355572207,
-              43.57217696068932
-            ]
+            [1.4066318355572207, 43.57217696068932],
+            [1.4071058966723058, 43.571983342977205],
+            [1.40727321235903, 43.57221063327165],
+            [1.4068084465607456, 43.57240425025353],
+            [1.4066318355572207, 43.57217696068932]
           ]
         ]
       },
@@ -3762,9 +2990,7 @@
         "id": "M074",
         "name": "Stade Messager",
         "description": "Abandonné ",
-        "photos": [
-          "https://i.postimg.cc/26NTr9Yj/M074.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/26NTr9Yj/M074.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -3801,26 +3027,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.4072349775905195,
-              43.56857360656318
-            ],
-            [
-              1.4066813448589812,
-              43.56795834968
-            ],
-            [
-              1.4071451993101505,
-              43.567782173643735
-            ],
-            [
-              1.4076876097550723,
-              43.5683974323272
-            ],
-            [
-              1.4072349775905195,
-              43.56857360656318
-            ]
+            [1.4072349775905195, 43.56857360656318],
+            [1.4066813448589812, 43.56795834968],
+            [1.4071451993101505, 43.567782173643735],
+            [1.4076876097550723, 43.5683974323272],
+            [1.4072349775905195, 43.56857360656318]
           ]
         ]
       },
@@ -3828,9 +3039,7 @@
         "id": "M075",
         "name": "Stade Satié",
         "description": "Actif",
-        "photos": [
-          "https://i.postimg.cc/L87N0601/M075.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/L87N0601/M075.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": true,
@@ -3866,71 +3075,27 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [
-            1.398804773708008,
-            43.56737699180121
-          ],
-          [
-            1.3977027826616109,
-            43.56756386594304
-          ],
-          [
-            1.3976324428078328,
-            43.56862563983324
-          ],
-          [
-            1.3982420548759933,
-            43.569050344148934
-          ],
-          [
-            1.3986172007643063,
-            43.56906733225904
-          ],
-          [
-            1.3992619827593273,
-            43.56888895686154
-          ],
-          [
-            1.4002090679857133,
-            43.56870205003682
-          ],
-          [
-            1.4004430263465508,
-            43.568317816692996
-          ],
-          [
-            1.4006691860947171,
-            43.568114398048436
-          ],
-          [
-            1.400825158334925,
-            43.5680296400769
-          ],
-          [
-            1.4007939638872813,
-            43.567588896702716
-          ],
-          [
-            1.4003391911188032,
-            43.56758972457277
-          ],
-          [
-            1.4002696485418653,
-            43.567104166512934
-          ],
-          [
-            1.3990138098150737,
-            43.56732736754458
-          ]
+          [1.398804773708008, 43.56737699180121],
+          [1.3977027826616109, 43.56756386594304],
+          [1.3976324428078328, 43.56862563983324],
+          [1.3982420548759933, 43.569050344148934],
+          [1.3986172007643063, 43.56906733225904],
+          [1.3992619827593273, 43.56888895686154],
+          [1.4002090679857133, 43.56870205003682],
+          [1.4004430263465508, 43.568317816692996],
+          [1.4006691860947171, 43.568114398048436],
+          [1.400825158334925, 43.5680296400769],
+          [1.4007939638872813, 43.567588896702716],
+          [1.4003391911188032, 43.56758972457277],
+          [1.4002696485418653, 43.567104166512934],
+          [1.3990138098150737, 43.56732736754458]
         ]
       },
       "properties": {
         "id": "M076",
         "name": "Zone Résidentialisée : Reynerie",
         "description": "Pavillons",
-        "photos": [
-          "https://i.postimg.cc/q73jfV9Z/M076.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/q73jfV9Z/M076.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -3966,18 +3131,9 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [
-            1.4037344910545073,
-            43.572973574599814
-          ],
-          [
-            1.4036693312082207,
-            43.572770857046066
-          ],
-          [
-            1.4039644946876706,
-            43.57204541346033
-          ]
+          [1.4037344910545073, 43.572973574599814],
+          [1.4036693312082207, 43.572770857046066],
+          [1.4039644946876706, 43.57204541346033]
         ]
       },
       "properties": {
@@ -4019,18 +3175,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4045666569675177,
-          43.5711293037202
-        ]
+        "coordinates": [1.4045666569675177, 43.5711293037202]
       },
       "properties": {
         "id": "M078",
         "name": "Point de deal: Poulenc",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/nc3dB14T/M078.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/nc3dB14T/M078.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -4065,18 +3216,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4064961288806046,
-          43.571896563437946
-        ]
+        "coordinates": [1.4064961288806046, 43.571896563437946]
       },
       "properties": {
         "id": "M079",
         "name": "Jeu d'enfant abandonné: Messager",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/9Fm8Dk7r/M079.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/9Fm8Dk7r/M079.jpg"],
         "frequence_usage_aucun": true,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -4111,18 +3257,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4062992503452278,
-          43.57162029551924
-        ]
+        "coordinates": [1.4062992503452278, 43.57162029551924]
       },
       "properties": {
         "id": "M080",
         "name": "Déchetterie sauvage Messager",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/XNc17WXR/M080.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/XNc17WXR/M080.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -4157,18 +3298,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4073017656582465,
-          43.57185883512051
-        ]
+        "coordinates": [1.4073017656582465, 43.57185883512051]
       },
       "properties": {
         "id": "M081",
         "name": "Déchetterie sauvage Messager",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/vTz0PrpY/M081.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/vTz0PrpY/M081.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -4203,18 +3339,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4015165747737512,
-          43.5727525073477
-        ]
+        "coordinates": [1.4015165747737512, 43.5727525073477]
       },
       "properties": {
         "id": "M082",
         "name": "Jeu d'enfants : Jean Gilles",
         "description": "Lieu d'intensité/affluence",
-        "photos": [
-          "https://i.postimg.cc/Vv17BGZZ/M082.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/Vv17BGZZ/M082.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": true,
@@ -4249,18 +3380,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4024742775478956,
-          43.57260497016853
-        ]
+        "coordinates": [1.4024742775478956, 43.57260497016853]
       },
       "properties": {
         "id": "M083",
         "name": "Assise: canapés sous Jean Gilles",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/KztqTSfg/M083.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/KztqTSfg/M083.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": true,
@@ -4295,18 +3421,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4023797574692196,
-          43.572414178450146
-        ]
+        "coordinates": [1.4023797574692196, 43.572414178450146]
       },
       "properties": {
         "id": "M084",
         "name": "Association: France Asie Culture et Amitié",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/pL16bByy/M084.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/pL16bByy/M084.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": true,
@@ -4341,16 +3462,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4016561577412858,
-          43.57204333848807
-        ]
+        "coordinates": [1.4016561577412858, 43.57204333848807]
       },
       "properties": {
         "id": "M085",
         "name": "Squat: Dalle Jean Gilles 1",
         "description": "-",
-        "photos": [],
+        "photos": ["https://i.postimg.cc/vH2JY3GN/M085.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -4385,18 +3503,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.402113532963341,
-          43.572134521354315
-        ]
+        "coordinates": [1.402113532963341, 43.572134521354315]
       },
       "properties": {
         "id": "M086",
         "name": "Squat: Dalle Jean Gilles 2",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/JhDd1BBx/M086.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/JhDd1BBx/M086.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -4431,10 +3544,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.402184134507678,
-          43.572038890540085
-        ]
+        "coordinates": [1.402184134507678, 43.572038890540085]
       },
       "properties": {
         "id": "M087",
@@ -4475,18 +3585,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.401692993329533,
-          43.57202999464249
-        ]
+        "coordinates": [1.401692993329533, 43.57202999464249]
       },
       "properties": {
         "id": "M088",
         "name": "Zone pour chats",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/sg2NNLjt/M088.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/sg2NNLjt/M088.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -4521,18 +3626,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4016070436232724,
-          43.5719543794616
-        ]
+        "coordinates": [1.4016070436232724, 43.5719543794616]
       },
       "properties": {
         "id": "M089",
         "name": "Voir et comprendre",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/28GtTYDQ/M089.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/28GtTYDQ/M089.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -4567,18 +3667,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4025309069558318,
-          43.571980550198504
-        ]
+        "coordinates": [1.4025309069558318, 43.571980550198504]
       },
       "properties": {
         "id": "M090",
         "name": "Tag témoin passé: festival racines",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/C5HQ3TfV/M090.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/C5HQ3TfV/M090.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -4613,18 +3708,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.3997679315443747,
-          43.57381983811098
-        ]
+        "coordinates": [1.3997679315443747, 43.57381983811098]
       },
       "properties": {
         "id": "M091",
         "name": "Appropriation RDC : Bosquets, extension jardin (à dupliquer)",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/63ZShGWq/M091.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/63ZShGWq/M091.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -4660,39 +3750,19 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [
-            1.4002077391882608,
-            43.57113298729536
-          ],
-          [
-            1.4002104781265814,
-            43.570843998974766
-          ],
-          [
-            1.400212093686747,
-            43.570798349064574
-          ],
-          [
-            1.400641832714399,
-            43.57080771315165
-          ],
-          [
-            1.4007016084434838,
-            43.571026598268276
-          ],
-          [
-            1.400699515098637,
-            43.571321104683705
-          ]
+          [1.4002077391882608, 43.57113298729536],
+          [1.4002104781265814, 43.570843998974766],
+          [1.400212093686747, 43.570798349064574],
+          [1.400641832714399, 43.57080771315165],
+          [1.4007016084434838, 43.571026598268276],
+          [1.400699515098637, 43.571321104683705]
         ]
       },
       "properties": {
         "id": "M092",
         "name": "Résidentialisation: Balcons du Lac",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/mkGnp2kw/M092.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/mkGnp2kw/M092.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -4729,26 +3799,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.4006922578315084,
-              43.5716525975036
-            ],
-            [
-              1.4006922578315084,
-              43.57146973796512
-            ],
-            [
-              1.4018006886451246,
-              43.57146973796512
-            ],
-            [
-              1.4018006886451246,
-              43.5716525975036
-            ],
-            [
-              1.4006922578315084,
-              43.5716525975036
-            ]
+            [1.4006922578315084, 43.5716525975036],
+            [1.4006922578315084, 43.57146973796512],
+            [1.4018006886451246, 43.57146973796512],
+            [1.4018006886451246, 43.5716525975036],
+            [1.4006922578315084, 43.5716525975036]
           ]
         ]
       },
@@ -4793,26 +3848,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.4015150199153368,
-              43.57144424781694
-            ],
-            [
-              1.4015150199153368,
-              43.57132071721992
-            ],
-            [
-              1.4017562162142667,
-              43.57132071721992
-            ],
-            [
-              1.4017562162142667,
-              43.57144424781694
-            ],
-            [
-              1.4015150199153368,
-              43.57144424781694
-            ]
+            [1.4015150199153368, 43.57144424781694],
+            [1.4015150199153368, 43.57132071721992],
+            [1.4017562162142667, 43.57132071721992],
+            [1.4017562162142667, 43.57144424781694],
+            [1.4015150199153368, 43.57144424781694]
           ]
         ]
       },
@@ -4820,9 +3860,7 @@
         "id": "M094",
         "name": "Parc résidentialisé",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/HLRR5tCF/M094.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/HLRR5tCF/M094.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -4859,26 +3897,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.400835711352272,
-              43.57125077679038
-            ],
-            [
-              1.400835711352272,
-              43.57120059708822
-            ],
-            [
-              1.401533373436564,
-              43.57120059708822
-            ],
-            [
-              1.401533373436564,
-              43.57125077679038
-            ],
-            [
-              1.400835711352272,
-              43.57125077679038
-            ]
+            [1.400835711352272, 43.57125077679038],
+            [1.400835711352272, 43.57120059708822],
+            [1.401533373436564, 43.57120059708822],
+            [1.401533373436564, 43.57125077679038],
+            [1.400835711352272, 43.57125077679038]
           ]
         ]
       },
@@ -4886,9 +3909,7 @@
         "id": "M095",
         "name": "Bancs: bords du lac",
         "description": "Lieu d'intensité ",
-        "photos": [
-          "https://i.postimg.cc/ZqCXCMXr/M095.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/ZqCXCMXr/M095.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -4923,18 +3944,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.3981726072130414,
-          43.57252214132319
-        ]
+        "coordinates": [1.3981726072130414, 43.57252214132319]
       },
       "properties": {
         "id": "M096",
         "name": "Lieu de repos : Parc",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/0ytL5sXk/M096.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/0ytL5sXk/M096.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": true,
@@ -4971,26 +3987,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.397894368759097,
-              43.57267709756843
-            ],
-            [
-              1.3977871790102085,
-              43.57246441731766
-            ],
-            [
-              1.3979467455675092,
-              43.572426470139874
-            ],
-            [
-              1.398050281119879,
-              43.5726338555867
-            ],
-            [
-              1.397894368759097,
-              43.57267709756843
-            ]
+            [1.397894368759097, 43.57267709756843],
+            [1.3977871790102085, 43.57246441731766],
+            [1.3979467455675092, 43.572426470139874],
+            [1.398050281119879, 43.5726338555867],
+            [1.397894368759097, 43.57267709756843]
           ]
         ]
       },
@@ -4998,7 +3999,7 @@
         "id": "M097",
         "name": "Chateau de La Reynerie ",
         "description": "Lieu patrimonial institutionnel",
-        "photos": [],
+        "photos": ["https://i.postimg.cc/VLNyP3Pt/M097.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -5033,18 +4034,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.3960964359434627,
-          43.567851974393164
-        ]
+        "coordinates": [1.3960964359434627, 43.567851974393164]
       },
       "properties": {
         "id": "M098",
         "name": "Squat : Basso Cambo zone industrielle",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/ZKxGg3ry/M098.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/ZKxGg3ry/M098.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -5081,26 +4077,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.3943266271687662,
-              43.56880255196299
-            ],
-            [
-              1.3943266271687662,
-              43.56819775993924
-            ],
-            [
-              1.3960780769263579,
-              43.56819775993924
-            ],
-            [
-              1.3960780769263579,
-              43.56880255196299
-            ],
-            [
-              1.3943266271687662,
-              43.56880255196299
-            ]
+            [1.3943266271687662, 43.56880255196299],
+            [1.3943266271687662, 43.56819775993924],
+            [1.3960780769263579, 43.56819775993924],
+            [1.3960780769263579, 43.56880255196299],
+            [1.3943266271687662, 43.56880255196299]
           ]
         ]
       },
@@ -5108,9 +4089,7 @@
         "id": "M099",
         "name": "Géant Basso Cambo: abandonné ",
         "description": "Lieu abandonné",
-        "photos": [
-          "https://i.postimg.cc/Gm3W12Qg/M099.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/Gm3W12Qg/M099.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -5147,42 +4126,15 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.3927997327858748,
-              43.56860615783245
-            ],
-            [
-              1.393465266023071,
-              43.56750915021894
-            ],
-            [
-              1.393783569522725,
-              43.56750918304823
-            ],
-            [
-              1.393811543328468,
-              43.56884765139836
-            ],
-            [
-              1.39371036227422,
-              43.56914089228431
-            ],
-            [
-              1.393579422086134,
-              43.56920126523059
-            ],
-            [
-              1.393246119789552,
-              43.569166766411456
-            ],
-            [
-              1.3931806496964043,
-              43.568744154274754
-            ],
-            [
-              1.3927997327858748,
-              43.56860615783245
-            ]
+            [1.3927997327858748, 43.56860615783245],
+            [1.393465266023071, 43.56750915021894],
+            [1.393783569522725, 43.56750918304823],
+            [1.393811543328468, 43.56884765139836],
+            [1.39371036227422, 43.56914089228431],
+            [1.393579422086134, 43.56920126523059],
+            [1.393246119789552, 43.569166766411456],
+            [1.3931806496964043, 43.568744154274754],
+            [1.3927997327858748, 43.56860615783245]
           ]
         ]
       },
@@ -5190,7 +4142,7 @@
         "id": "M100",
         "name": "Intensité usage: Parking Basso Cambo",
         "description": "-",
-        "photos": [],
+        "photos": ["https://i.postimg.cc/sD2FCtCY/M100.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -5225,18 +4177,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4025350228733657,
-          43.57115039447598
-        ]
+        "coordinates": [1.4025350228733657, 43.57115039447598]
       },
       "properties": {
         "id": "M101",
         "name": "Jeu enfants: Place Abbal",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/kMK3QLGs/M101.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/kMK3QLGs/M101.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -5271,18 +4218,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4001166579805044,
-          43.571173154766626
-        ]
+        "coordinates": [1.4001166579805044, 43.571173154766626]
       },
       "properties": {
         "id": "M102",
         "name": "\"Silence\" : conflit d'usage",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/zXNm0pRr/M102.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/zXNm0pRr/M102.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -5319,50 +4261,17 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.4021686136253209,
-              43.57056482874668
-            ],
-            [
-              1.4024576735641858,
-              43.5705779182112
-            ],
-            [
-              1.4026985568473265,
-              43.570804801812415
-            ],
-            [
-              1.407583741538815,
-              43.570822931424715
-            ],
-            [
-              1.4075559141851102,
-              43.570964062153706
-            ],
-            [
-              1.4027696093402824,
-              43.570930459629466
-            ],
-            [
-              1.4027788851244338,
-              43.571246322619544
-            ],
-            [
-              1.4021852349108883,
-              43.571246322619544
-            ],
-            [
-              1.4019997192193898,
-              43.570957341650654
-            ],
-            [
-              1.4019626160815903,
-              43.57071540302849
-            ],
-            [
-              1.4021686136253209,
-              43.57056482874668
-            ]
+            [1.4021686136253209, 43.57056482874668],
+            [1.4024576735641858, 43.5705779182112],
+            [1.4026985568473265, 43.570804801812415],
+            [1.407583741538815, 43.570822931424715],
+            [1.4075559141851102, 43.570964062153706],
+            [1.4027696093402824, 43.570930459629466],
+            [1.4027788851244338, 43.571246322619544],
+            [1.4021852349108883, 43.571246322619544],
+            [1.4019997192193898, 43.570957341650654],
+            [1.4019626160815903, 43.57071540302849],
+            [1.4021686136253209, 43.57056482874668]
           ]
         ]
       },
@@ -5370,9 +4279,7 @@
         "id": "M103",
         "name": "Marché Reynerie - Jeudi",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/SRWBmY33/M103.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/SRWBmY33/M103.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": true,
@@ -5409,26 +4316,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.3983451151458723,
-              43.564648498502464
-            ],
-            [
-              1.3983451151458723,
-              43.56449412730382
-            ],
-            [
-              1.399047786179068,
-              43.56449412730382
-            ],
-            [
-              1.399047786179068,
-              43.564648498502464
-            ],
-            [
-              1.3983451151458723,
-              43.564648498502464
-            ]
+            [1.3983451151458723, 43.564648498502464],
+            [1.3983451151458723, 43.56449412730382],
+            [1.399047786179068, 43.56449412730382],
+            [1.399047786179068, 43.564648498502464],
+            [1.3983451151458723, 43.564648498502464]
           ]
         ]
       },
@@ -5436,9 +4328,7 @@
         "id": "M104",
         "name": "Marché Bellefontaine - Mercredi",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/C1fy6QNF/M104.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/C1fy6QNF/M104.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": true,
@@ -5473,18 +4363,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.3942901011046729,
-          43.56460660109536
-        ]
+        "coordinates": [1.3942901011046729, 43.56460660109536]
       },
       "properties": {
         "id": "M105",
         "name": "Jardins partagés: Pergaud",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/mkfxxyX7/M105.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/mkfxxyX7/M105.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -5519,18 +4404,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4067845534232788,
-          43.571476692637134
-        ]
+        "coordinates": [1.4067845534232788, 43.571476692637134]
       },
       "properties": {
         "id": "M106",
         "name": "Vitres cassées : Messager",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/W4yL8v0W/M106.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/W4yL8v0W/M106.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -5565,18 +4445,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.402818206429174,
-          43.57043535428198
-        ]
+        "coordinates": [1.402818206429174, 43.57043535428198]
       },
       "properties": {
         "id": "M107",
         "name": "Marelle: Dalle Abbal",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/zfvYTBHH/M107.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/zfvYTBHH/M107.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -5611,18 +4486,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.406014571687166,
-          43.56854933555323
-        ]
+        "coordinates": [1.406014571687166, 43.56854933555323]
       },
       "properties": {
         "id": "M108",
         "name": "Passage ouvert: jardin partagé la pyramide",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/htpqJxvq/M108.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/htpqJxvq/M108.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -5657,18 +4527,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4053859062417757,
-          43.56838950211639
-        ]
+        "coordinates": [1.4053859062417757, 43.56838950211639]
       },
       "properties": {
         "id": "M109",
         "name": "Architecture anti-squat RDC Satié",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/nhHJcTHk/M109.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/nhHJcTHk/M109.jpg"],
         "frequence_usage_aucun": true,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -5703,18 +4568,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.402376371931382,
-          43.57029551117378
-        ]
+        "coordinates": [1.402376371931382, 43.57029551117378]
       },
       "properties": {
         "id": "M110",
         "name": "Squat patio dalle Abbal",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/sDPzrbRx/M110.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/sDPzrbRx/M110.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -5749,18 +4609,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4042331321195718,
-          43.5699087005014
-        ]
+        "coordinates": [1.4042331321195718, 43.5699087005014]
       },
       "properties": {
         "id": "M111",
         "name": "Point de deal Gluck",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/J0ZLt2DT/M111.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/J0ZLt2DT/M111.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -5795,18 +4650,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.3998514787876957,
-          43.5714629254484
-        ]
+        "coordinates": [1.3998514787876957, 43.5714629254484]
       },
       "properties": {
         "id": "M112",
         "name": "Accès bloqué: Parc ",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/sDCzbsqb/M112.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/sDCzbsqb/M112.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -5842,31 +4692,17 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [
-            1.3958492212599367,
-            43.56435211698013
-          ],
-          [
-            1.3956184351958711,
-            43.56376270476855
-          ],
-          [
-            1.3959475890908664,
-            43.563702392496424
-          ],
-          [
-            1.3961708083980682,
-            43.564256166548205
-          ]
+          [1.3958492212599367, 43.56435211698013],
+          [1.3956184351958711, 43.56376270476855],
+          [1.3959475890908664, 43.563702392496424],
+          [1.3961708083980682, 43.564256166548205]
         ]
       },
       "properties": {
         "id": "M113",
         "name": "Résidentialisation Pergaud",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/1tLSmQtn/M113.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/1tLSmQtn/M113.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -5901,10 +4737,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.3959944985843151,
-          43.56113046985854
-        ]
+        "coordinates": [1.3959944985843151, 43.56113046985854]
       },
       "properties": {
         "id": "M114",
@@ -5947,26 +4780,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.396477701288319,
-              43.56074721259691
-            ],
-            [
-              1.396477701288319,
-              43.56055856683125
-            ],
-            [
-              1.3966190224352601,
-              43.56055856683125
-            ],
-            [
-              1.3966190224352601,
-              43.56074721259691
-            ],
-            [
-              1.396477701288319,
-              43.56074721259691
-            ]
+            [1.396477701288319, 43.56074721259691],
+            [1.396477701288319, 43.56055856683125],
+            [1.3966190224352601, 43.56055856683125],
+            [1.3966190224352601, 43.56074721259691],
+            [1.396477701288319, 43.56074721259691]
           ]
         ]
       },
@@ -5974,9 +4792,7 @@
         "id": "M115",
         "name": "Jardin partagé : Tintoret (Jardin Orlaya)",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/SQMqZJTW/M115.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/SQMqZJTW/M115.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -6011,10 +4827,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.3974579463378802,
-          43.559778979018375
-        ]
+        "coordinates": [1.3974579463378802, 43.559778979018375]
       },
       "properties": {
         "id": "M116",
@@ -6057,30 +4870,12 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.396320271900322,
-              43.562480557091874
-            ],
-            [
-              1.3964562341965063,
-              43.562409950013745
-            ],
-            [
-              1.3965831323388045,
-              43.56241816014341
-            ],
-            [
-              1.3967689474753229,
-              43.56247398899498
-            ],
-            [
-              1.3965378115733813,
-              43.56261684493876
-            ],
-            [
-              1.396320271900322,
-              43.562480557091874
-            ]
+            [1.396320271900322, 43.562480557091874],
+            [1.3964562341965063, 43.562409950013745],
+            [1.3965831323388045, 43.56241816014341],
+            [1.3967689474753229, 43.56247398899498],
+            [1.3965378115733813, 43.56261684493876],
+            [1.396320271900322, 43.562480557091874]
           ]
         ]
       },
@@ -6088,9 +4883,7 @@
         "id": "M118",
         "name": "Jeu d'enfant: Petit Bois",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/PqVh7ZnM/M118.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/PqVh7ZnM/M118.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": true,
@@ -6125,18 +4918,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4017076974923555,
-          43.56120004605552
-        ]
+        "coordinates": [1.4017076974923555, 43.56120004605552]
       },
       "properties": {
         "id": "M119",
         "name": "Dépot : Goya",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/7LZwX9d6/M119.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/7LZwX9d6/M119.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": true,
@@ -6171,18 +4959,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4005309119559683,
-          43.56183184411185
-        ]
+        "coordinates": [1.4005309119559683, 43.56183184411185]
       },
       "properties": {
         "id": "M120",
         "name": "Modification lumières : bleues",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/jSXRzm8m/M120.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/jSXRzm8m/M120.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -6217,18 +5000,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.3975966636647854,
-          43.56168987469539
-        ]
+        "coordinates": [1.3975966636647854, 43.56168987469539]
       },
       "properties": {
         "id": "M121",
         "name": "Modification lumières : rouges",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/sD5j2v5V/M121.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/sD5j2v5V/M121.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -6265,26 +5043,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.3945627119380788,
-              43.56441318712615
-            ],
-            [
-              1.3945627119380788,
-              43.564303077682894
-            ],
-            [
-              1.3947212065847054,
-              43.564303077682894
-            ],
-            [
-              1.3947212065847054,
-              43.56441318712615
-            ],
-            [
-              1.3945627119380788,
-              43.56441318712615
-            ]
+            [1.3945627119380788, 43.56441318712615],
+            [1.3945627119380788, 43.564303077682894],
+            [1.3947212065847054, 43.564303077682894],
+            [1.3947212065847054, 43.56441318712615],
+            [1.3945627119380788, 43.56441318712615]
           ]
         ]
       },
@@ -6292,9 +5055,7 @@
         "id": "M122",
         "name": "Jeu d'enfants: Pergaud",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/6pw94thC/M122.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/6pw94thC/M122.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -6329,18 +5090,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.3948231208823643,
-          43.564373377332146
-        ]
+        "coordinates": [1.3948231208823643, 43.564373377332146]
       },
       "properties": {
         "id": "M123",
         "name": "Adaptation balcons : cabane",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/CM3MYjBP/M123.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/CM3MYjBP/M123.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -6375,18 +5131,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.3936616281870897,
-          43.564225482697054
-        ]
+        "coordinates": [1.3936616281870897, 43.564225482697054]
       },
       "properties": {
         "id": "M124",
         "name": "Adaptation des villas a Patio-Tourasse Lestang (à dupliquer)",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/vDFNj8mh/M124.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/vDFNj8mh/M124.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -6423,26 +5174,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.3979974830867263,
-              43.56623113041945
-            ],
-            [
-              1.3982805913017273,
-              43.56617045194312
-            ],
-            [
-              1.3984254134440448,
-              43.56654521888703
-            ],
-            [
-              1.3981426654515303,
-              43.56660518138145
-            ],
-            [
-              1.3979974830867263,
-              43.56623113041945
-            ]
+            [1.3979974830867263, 43.56623113041945],
+            [1.3982805913017273, 43.56617045194312],
+            [1.3984254134440448, 43.56654521888703],
+            [1.3981426654515303, 43.56660518138145],
+            [1.3979974830867263, 43.56623113041945]
           ]
         ]
       },
@@ -6450,9 +5186,7 @@
         "id": "M126",
         "name": "Les Imaginations Fertiles : Tiers Lieu",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/RC6CjPFJ/M126.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/RC6CjPFJ/M126.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": true,
@@ -6487,18 +5221,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.400314439114652,
-          43.565783661774816
-        ]
+        "coordinates": [1.400314439114652, 43.565783661774816]
       },
       "properties": {
         "id": "M127",
         "name": "Vélo hommage à Odile",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/Bb1zMPJt/M127.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/Bb1zMPJt/M127.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -6533,18 +5262,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4014079094746137,
-          43.566273484605574
-        ]
+        "coordinates": [1.4014079094746137, 43.566273484605574]
       },
       "properties": {
         "id": "M128",
         "name": "Sous dalle : Clairfont",
         "description": "Lieu de cachette/réunion ",
-        "photos": [
-          "https://i.postimg.cc/ydG5my4w/M128.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/ydG5my4w/M128.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": true,
@@ -6579,18 +5303,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.3992922372071916,
-          43.563465605065176
-        ]
+        "coordinates": [1.3992922372071916, 43.563465605065176]
       },
       "properties": {
         "id": "M129",
         "name": "Passage muré",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/G2tVTSNF/M129.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/G2tVTSNF/M129.jpg"],
         "frequence_usage_aucun": true,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -6625,18 +5344,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4001761940779431,
-          43.568768013616705
-        ]
+        "coordinates": [1.4001761940779431, 43.568768013616705]
       },
       "properties": {
         "id": "M130",
         "name": "Intrusion ",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/d04g1KWQ/M130.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/d04g1KWQ/M130.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -6672,23 +5386,15 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [
-            1.3956742885938525,
-            43.57175424455781
-          ],
-          [
-            1.395970163590647,
-            43.57175424455781
-          ]
+          [1.3956742885938525, 43.57175424455781],
+          [1.395970163590647, 43.57175424455781]
         ]
       },
       "properties": {
         "id": "M131",
         "name": "Résidentialisation: Basso Cambo",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/43Jrs3QF/M131.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/43Jrs3QF/M131.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -6724,25 +5430,16 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [
-            1.3949606348371333,
-            43.57254239536175
-          ],
-          [
-            1.3950143974417415,
-            43.57254528063078
-          ],
-          [
-            1.395010415026718,
-            43.57282515104134
-          ]
+          [1.3949606348371333, 43.57254239536175],
+          [1.3950143974417415, 43.57254528063078],
+          [1.395010415026718, 43.57282515104134]
         ]
       },
       "properties": {
         "id": "M132",
         "name": "Résidentialisation: Basso Cambo ",
         "description": "-",
-        "photos": [],
+        "photos": ["https://i.postimg.cc/RV0rxjxG/M132.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -6778,23 +5475,15 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [
-            1.3977403565963868,
-            43.57147322271163
-          ],
-          [
-            1.3969159168729846,
-            43.571680985500365
-          ]
+          [1.3977403565963868, 43.57147322271163],
+          [1.3969159168729846, 43.571680985500365]
         ]
       },
       "properties": {
         "id": "M133",
         "name": "Chemin d'usage ",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/ht8HkmTd/M133.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/ht8HkmTd/M133.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -6831,26 +5520,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.3940743487542022,
-              43.56725152852218
-            ],
-            [
-              1.3940743487542022,
-              43.566868958348834
-            ],
-            [
-              1.3946943199656516,
-              43.566868958348834
-            ],
-            [
-              1.3946943199656516,
-              43.56725152852218
-            ],
-            [
-              1.3940743487542022,
-              43.56725152852218
-            ]
+            [1.3940743487542022, 43.56725152852218],
+            [1.3940743487542022, 43.566868958348834],
+            [1.3946943199656516, 43.566868958348834],
+            [1.3946943199656516, 43.56725152852218],
+            [1.3940743487542022, 43.56725152852218]
           ]
         ]
       },
@@ -6858,9 +5532,7 @@
         "id": "M134",
         "name": "Mosquée de Basso Cambo",
         "description": "Lieu d'affluence",
-        "photos": [
-          "https://i.postimg.cc/J4XwQvhK/M134.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/J4XwQvhK/M134.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -6895,18 +5567,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.399068581738419,
-          43.561619435431794
-        ]
+        "coordinates": [1.399068581738419, 43.561619435431794]
       },
       "properties": {
         "id": "M135",
         "name": "Squat sous la dalle du Tintoret",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/9QH6gbR2/M135.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/9QH6gbR2/M135.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -6941,18 +5608,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.3971804634691978,
-          43.56467504675189
-        ]
+        "coordinates": [1.3971804634691978, 43.56467504675189]
       },
       "properties": {
         "id": "M136",
         "name": "Jeu d'enfant :  Petit Bois",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/ZY2tp4JC/M136.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/ZY2tp4JC/M136.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": true,
@@ -6988,55 +5650,23 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [
-            1.402995060353959,
-            43.56360582425299
-          ],
-          [
-            1.4019763363717743,
-            43.56232454567214
-          ],
-          [
-            1.4018817405730601,
-            43.56216636124205
-          ],
-          [
-            1.4018849860813702,
-            43.56180472910876
-          ],
-          [
-            1.402793412999813,
-            43.5616337484264
-          ],
-          [
-            1.4042199538395153,
-            43.56279467749442
-          ],
-          [
-            1.404498265751954,
-            43.562808747509735
-          ],
-          [
-            1.4046792679317548,
-            43.56331405841914
-          ],
-          [
-            1.4032054692903273,
-            43.56364361529231
-          ],
-          [
-            1.4029982163562522,
-            43.563606070928984
-          ]
+          [1.402995060353959, 43.56360582425299],
+          [1.4019763363717743, 43.56232454567214],
+          [1.4018817405730601, 43.56216636124205],
+          [1.4018849860813702, 43.56180472910876],
+          [1.402793412999813, 43.5616337484264],
+          [1.4042199538395153, 43.56279467749442],
+          [1.404498265751954, 43.562808747509735],
+          [1.4046792679317548, 43.56331405841914],
+          [1.4032054692903273, 43.56364361529231],
+          [1.4029982163562522, 43.563606070928984]
         ]
       },
       "properties": {
         "id": "M137",
         "name": "Résidentialisation: Mûriers",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/DZYVCKsp/M137.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/DZYVCKsp/M137.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -7072,18 +5702,9 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [
-            1.4072986195561157,
-            43.56284204211369
-          ],
-          [
-            1.4028917612799034,
-            43.56373568091587
-          ],
-          [
-            1.4001785836112504,
-            43.56576121312432
-          ]
+          [1.4072986195561157, 43.56284204211369],
+          [1.4028917612799034, 43.56373568091587],
+          [1.4001785836112504, 43.56576121312432]
         ]
       },
       "properties": {
@@ -7126,26 +5747,11 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [
-            1.4063904510289547,
-            43.56748962096981
-          ],
-          [
-            1.4019511282095038,
-            43.56748962054306
-          ],
-          [
-            1.4014248865570096,
-            43.56732341469049
-          ],
-          [
-            1.4007097376456272,
-            43.56667814056328
-          ],
-          [
-            1.4003724032529306,
-            43.56597419726825
-          ]
+          [1.4063904510289547, 43.56748962096981],
+          [1.4019511282095038, 43.56748962054306],
+          [1.4014248865570096, 43.56732341469049],
+          [1.4007097376456272, 43.56667814056328],
+          [1.4003724032529306, 43.56597419726825]
         ]
       },
       "properties": {
@@ -7187,18 +5793,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4028559585531752,
-          43.57054873150855
-        ]
+        "coordinates": [1.4028559585531752, 43.57054873150855]
       },
       "properties": {
         "id": "M140",
         "name": "Générateurs Place Abbal",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/76L8MLCT/M140.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/76L8MLCT/M140.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": true,
@@ -7233,16 +5834,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4062086574065802,
-          43.571577214330176
-        ]
+        "coordinates": [1.4062086574065802, 43.571577214330176]
       },
       "properties": {
         "id": "M141",
         "name": "Incendies à Messager",
         "description": "-",
-        "photos": [],
+        "photos": ["https://i.postimg.cc/L4Dd7mwf/M141.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -7277,18 +5875,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4022955207891243,
-          43.561381581581344
-        ]
+        "coordinates": [1.4022955207891243, 43.561381581581344]
       },
       "properties": {
         "id": "M142",
         "name": "Squat tente : Goya",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/PqynwDqj/M142.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/PqynwDqj/M142.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -7323,18 +5916,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.3986660716034862,
-          43.563922000584114
-        ]
+        "coordinates": [1.3986660716034862, 43.563922000584114]
       },
       "properties": {
         "id": "M144",
         "name": "Jeu enfants ruisseau Albin Minville",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/Gpd1tKdK/M144.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/Gpd1tKdK/M144.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -7369,18 +5957,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.397693581189401,
-          43.5669717736545
-        ]
+        "coordinates": [1.397693581189401, 43.5669717736545]
       },
       "properties": {
         "id": "M145",
         "name": "Dépot - Imaginations fertiles",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/4xzgXqkn/M145.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/4xzgXqkn/M145.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -7415,16 +5998,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.401796755086906,
-          43.5672409120842
-        ]
+        "coordinates": [1.401796755086906, 43.5672409120842]
       },
       "properties": {
         "id": "M146",
         "name": "Dalle coupée - Clairefontaine",
         "description": "Tracé de l'ancienne dalle",
-        "photos": [],
+        "photos": ["https://i.postimg.cc/zX2sz0JJ/M146.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -7461,26 +6041,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.402836832362567,
-              43.56305830526884
-            ],
-            [
-              1.4028278247344872,
-              43.56294734489731
-            ],
-            [
-              1.4030007711961048,
-              43.56288337941402
-            ],
-            [
-              1.4031520993500806,
-              43.5629395123932
-            ],
-            [
-              1.402836832362567,
-              43.56305830526884
-            ]
+            [1.402836832362567, 43.56305830526884],
+            [1.4028278247344872, 43.56294734489731],
+            [1.4030007711961048, 43.56288337941402],
+            [1.4031520993500806, 43.5629395123932],
+            [1.402836832362567, 43.56305830526884]
           ]
         ]
       },
@@ -7488,9 +6053,7 @@
         "id": "M147",
         "name": "Muriers: Place des voisins",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/wjKz8HrS/M147.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/wjKz8HrS/M147.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -7525,18 +6088,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4022879031331286,
-          43.562375841659644
-        ]
+        "coordinates": [1.4022879031331286, 43.562375841659644]
       },
       "properties": {
         "id": "M148",
         "name": "Muriers: Appropriation des patios",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/654KmTMr/M148.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/654KmTMr/M148.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -7571,18 +6129,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.402459624944612,
-          43.562470526500505
-        ]
+        "coordinates": [1.402459624944612, 43.562470526500505]
       },
       "properties": {
         "id": "M149",
         "name": "Muriers: Jardinets entrées",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/J72mxj57/M149.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/J72mxj57/M149.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": true,
@@ -7617,10 +6170,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.397830703042672,
-          43.56162162974098
-        ]
+        "coordinates": [1.397830703042672, 43.56162162974098]
       },
       "properties": {
         "id": "M150",
@@ -7661,18 +6211,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.3979046695799013,
-          43.56158813058167
-        ]
+        "coordinates": [1.3979046695799013, 43.56158813058167]
       },
       "properties": {
         "id": "M151",
         "name": "Epicerie solidaire  - Tintoret",
         "description": "Remplace le local pour le collectif des habitants du Tintoret",
-        "photos": [
-          "https://i.postimg.cc/NFSc0wj2/M151.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/NFSc0wj2/M151.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -7709,26 +6254,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.4029750632240052,
-              43.56275523368316
-            ],
-            [
-              1.4029750632240052,
-              43.56243285794193
-            ],
-            [
-              1.4030037656880268,
-              43.56243285794193
-            ],
-            [
-              1.4030037656880268,
-              43.56275523368316
-            ],
-            [
-              1.4029750632240052,
-              43.56275523368316
-            ]
+            [1.4029750632240052, 43.56275523368316],
+            [1.4029750632240052, 43.56243285794193],
+            [1.4030037656880268, 43.56243285794193],
+            [1.4030037656880268, 43.56275523368316],
+            [1.4029750632240052, 43.56275523368316]
           ]
         ]
       },
@@ -7736,9 +6266,7 @@
         "id": "M152",
         "name": "Muriers : arbres plantés par la femme de l'architecte dans les années 70",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/tJYbygpH/M152.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/tJYbygpH/M152.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -7773,18 +6301,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4030709836739277,
-          43.57077258902683
-        ]
+        "coordinates": [1.4030709836739277, 43.57077258902683]
       },
       "properties": {
         "id": "M153",
         "name": "Vente : Dalle Abbal",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/DZfFjgN0/M153.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/DZfFjgN0/M153.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -7819,18 +6342,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.3959897229737237,
-          43.56015213800015
-        ]
+        "coordinates": [1.3959897229737237, 43.56015213800015]
       },
       "properties": {
         "id": "M154",
         "name": "Point de deal: Tintoret",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/8CmNm3tx/M154.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/8CmNm3tx/M154.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -7865,18 +6383,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.397035717205199,
-          43.56159684636185
-        ]
+        "coordinates": [1.397035717205199, 43.56159684636185]
       },
       "properties": {
         "id": "M155",
         "name": "Banc d'époque abandonné: Tintoret",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/C1v0W8yN/M155.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/C1v0W8yN/M155.jpg"],
         "frequence_usage_aucun": true,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -7913,26 +6426,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.4022253118139076,
-              43.571227591209976
-            ],
-            [
-              1.4022253118139076,
-              43.57115561638088
-            ],
-            [
-              1.4025517199321769,
-              43.57115561638088
-            ],
-            [
-              1.4025517199321769,
-              43.571227591209976
-            ],
-            [
-              1.4022253118139076,
-              43.571227591209976
-            ]
+            [1.4022253118139076, 43.571227591209976],
+            [1.4022253118139076, 43.57115561638088],
+            [1.4025517199321769, 43.57115561638088],
+            [1.4025517199321769, 43.571227591209976],
+            [1.4022253118139076, 43.571227591209976]
           ]
         ]
       },
@@ -7940,9 +6438,7 @@
         "id": "M156",
         "name": "Conteneurs associatifs",
         "description": "Remplacement des associations de la dalle Abbal, installé par la mairie",
-        "photos": [
-          "https://i.postimg.cc/vmdbyGJL/M156.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/vmdbyGJL/M156.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": true,
@@ -7977,18 +6473,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4026224507972245,
-          43.57071392055204
-        ]
+        "coordinates": [1.4026224507972245, 43.57071392055204]
       },
       "properties": {
         "id": "M157",
         "name": "Parking à chariots",
         "description": "Chariots de transport utilisés par vendeurs du marché sauvage",
-        "photos": [
-          "https://i.postimg.cc/cLchTmB7/M157.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/cLchTmB7/M157.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": true,
@@ -8023,18 +6514,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.3986752362075094,
-          43.56445309038597
-        ]
+        "coordinates": [1.3986752362075094, 43.56445309038597]
       },
       "properties": {
         "id": "M158",
         "name": "Assises: marches centre Alban Minville",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/RF1ZnWB0/M158.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/RF1ZnWB0/M158.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -8071,38 +6557,14 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.4067347592304031,
-              43.56881116235044
-            ],
-            [
-              1.4066380421076587,
-              43.56874926174956
-            ],
-            [
-              1.4066896245728344,
-              43.56865349088409
-            ],
-            [
-              1.4067895655997518,
-              43.568569399266266
-            ],
-            [
-              1.4069427010452102,
-              43.5685880863027
-            ],
-            [
-              1.4069459249486727,
-              43.56869086489834
-            ],
-            [
-              1.4068363122098333,
-              43.568800650932104
-            ],
-            [
-              1.4067347592304031,
-              43.56881116235044
-            ]
+            [1.4067347592304031, 43.56881116235044],
+            [1.4066380421076587, 43.56874926174956],
+            [1.4066896245728344, 43.56865349088409],
+            [1.4067895655997518, 43.568569399266266],
+            [1.4069427010452102, 43.5685880863027],
+            [1.4069459249486727, 43.56869086489834],
+            [1.4068363122098333, 43.568800650932104],
+            [1.4067347592304031, 43.56881116235044]
           ]
         ]
       },
@@ -8110,9 +6572,7 @@
         "id": "M159",
         "name": "Assises: Rue Georges Candilis",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/cHzXwLMV/M159.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/cHzXwLMV/M159.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -8148,47 +6608,21 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [
-            1.4027961539497085,
-            43.57128018897669
-          ],
-          [
-            1.402814149909915,
-            43.57089627969157
-          ],
-          [
-            1.4027081737003186,
-            43.57085716426812
-          ],
-          [
-            1.402574203775913,
-            43.57067752274011
-          ],
-          [
-            1.402396243726372,
-            43.570592047953824
-          ],
-          [
-            1.4018963559474855,
-            43.57056162469544
-          ],
-          [
-            1.40188635819203,
-            43.57126715058814
-          ],
-          [
-            1.4027921548473046,
-            43.57128308639605
-          ]
+          [1.4027961539497085, 43.57128018897669],
+          [1.402814149909915, 43.57089627969157],
+          [1.4027081737003186, 43.57085716426812],
+          [1.402574203775913, 43.57067752274011],
+          [1.402396243726372, 43.570592047953824],
+          [1.4018963559474855, 43.57056162469544],
+          [1.40188635819203, 43.57126715058814],
+          [1.4027921548473046, 43.57128308639605]
         ]
       },
       "properties": {
         "id": "M160",
         "name": "Place Abbal : fermée",
         "description": "Restriction d'accès pour éviter l'installation du marché sauvage",
-        "photos": [
-          "https://i.postimg.cc/nhMKYJMx/M160.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/nhMKYJMx/M160.jpg"],
         "frequence_usage_aucun": true,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -8223,18 +6657,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.4024630788450168,
-          43.57010952063692
-        ]
+        "coordinates": [1.4024630788450168, 43.57010952063692]
       },
       "properties": {
         "id": "M161",
         "name": "Pont fermé: Cambert",
         "description": "Restriction d'accès pré-démolition",
-        "photos": [
-          "https://i.postimg.cc/zXx6G89Y/M161.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/zXx6G89Y/M161.jpg"],
         "frequence_usage_aucun": true,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": false,
@@ -8269,18 +6698,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.404882468420908,
-          43.572267056226394
-        ]
+        "coordinates": [1.404882468420908, 43.572267056226394]
       },
       "properties": {
         "id": "M162",
         "name": "Jeu : parc André Messager",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/mk3xwnZ3/M162.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/mk3xwnZ3/M162.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": true,
@@ -8315,18 +6739,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.3978608563760133,
-          43.56155519808638
-        ]
+        "coordinates": [1.3978608563760133, 43.56155519808638]
       },
       "properties": {
         "id": "M163",
         "name": "Réunion bas d'immeuble tintoret pour organisation anti-démolition",
         "description": "Organisation habitante anti-démolition",
-        "photos": [
-          "https://i.postimg.cc/fLBm9zmY/M163.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/fLBm9zmY/M163.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -8361,18 +6780,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.3978898284597108,
-          43.56427225011018
-        ]
+        "coordinates": [1.3978898284597108, 43.56427225011018]
       },
       "properties": {
         "id": "M164",
         "name": "Réunion place pétanque 1er mai CPES",
         "description": "Organisation habitante fête du travail",
-        "photos": [
-          "https://i.postimg.cc/G2GYXFWJ/M164.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/G2GYXFWJ/M164.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,
@@ -8407,18 +6821,13 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          1.403259215649996,
-          43.56980622370307
-        ]
+        "coordinates": [1.403259215649996, 43.56980622370307]
       },
       "properties": {
         "id": "M165",
         "name": "Point de rencontre: parking Gluck",
         "description": "-",
-        "photos": [
-          "https://i.postimg.cc/T1hxR0Tn/M165.png"
-        ],
+        "photos": ["https://i.postimg.cc/T1hxR0Tn/M165.png"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": false,
         "frequence_usage_regulier": true,
@@ -8455,26 +6864,11 @@
         "type": "Polygon",
         "coordinates": [
           [
-            [
-              1.4034628127586757,
-              43.57040720044566
-            ],
-            [
-              1.4034628127586757,
-              43.57018593242836
-            ],
-            [
-              1.40370034263114,
-              43.57018593242836
-            ],
-            [
-              1.40370034263114,
-              43.57040720044566
-            ],
-            [
-              1.4034628127586757,
-              43.57040720044566
-            ]
+            [1.4034628127586757, 43.57040720044566],
+            [1.4034628127586757, 43.57018593242836],
+            [1.40370034263114, 43.57018593242836],
+            [1.40370034263114, 43.57040720044566],
+            [1.4034628127586757, 43.57040720044566]
           ]
         ]
       },
@@ -8482,9 +6876,7 @@
         "id": "M166",
         "name": "Dalle Abbal: atelier B",
         "description": "Occupation habitante",
-        "photos": [
-          "https://i.postimg.cc/3Rt75VQK/M166.jpg"
-        ],
+        "photos": ["https://i.postimg.cc/3Rt75VQK/M166.jpg"],
         "frequence_usage_aucun": false,
         "frequence_usage_ponctuel": true,
         "frequence_usage_regulier": false,

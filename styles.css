@@ -1,161 +1,155 @@
 body {
-            font-family: 'Consolas', monospace;
-        }
-        body {
-            margin: 0;
-            display: flex;
-            height: 100vh;
-            position: relative;
-            overflow: hidden;
-        }
-        #map {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1; 
-        }
-        #proxemic-view {
-            display: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000; 
-            z-index: 100; 
-            overflow: auto;
-            cursor: grab;
-        }
-
-        #filters {
-            position: absolute;
-            color: white;
-            top: 90px;
-            left: 10px;
-            background: rgb(0, 0, 0);
-            padding: 10px;
-            z-index: 1000;
-            max-height: 90vh;
-            overflow-y: auto;
-            border: 1px solid #ffffff;
-        }
-        
-
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: rgb(0, 0, 0);
-            color: white;
-            border: none;
-            padding: 5px;
-            cursor: pointer;
-            z-index: 110; 
-        }
-
-        
-        .sidebar {
-    width: 350px;
-    background: #f9f9f9;
-    padding: 1rem;
-    overflow-y: auto;
-    border-left: 1px solid #ccc;
-    display: none;
-    position: absolute;
-    top: 15%;
-    right: 0;
-    z-index: 200;
-    max-height: 80vh; 
+  margin: 0;
+  font-family: "Consolas", monospace;
+  display: flex;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
 }
-        
-        #info-btn {
-            font-size: 16px;
-            cursor: pointer;
-            background: none;
-            border: none;
-        }
-        #about {
-            display: none;
-            position: absolute;
-            top: 90px;
-            right: 10px;
-            width: 300px;
-            background: rgb(0, 0, 0);
-            color: white;
-            border: 1px solid #ccc;
-            padding: 15px;
-            font-family: 'Consolas', monospace;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            z-index: 10000000;
-        }
-        #about h2 {
-            margin-top: 0;
-            font-size: 16px;
-        }
-        #info-btn {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: #000000;
-            color: white;
-            border: none;
-            font-weight: bold;
-            font-family: sans-serif;
-            cursor: pointer;
-        }
+#map {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+#proxemic-view {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  z-index: 100;
+  overflow: auto;
+  cursor: grab;
+}
 
-        input[type="checkbox"]:checked {
-    accent-color: black;
+#filters {
+  position: absolute;
+  color: white;
+  top: 90px;
+  left: 10px;
+  background: rgb(0, 0, 0);
+  padding: 10px;
+  z-index: 1000;
+  max-height: 90vh;
+  overflow-y: auto;
+  border: 1px solid #ffffff;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgb(0, 0, 0);
+  color: white;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  z-index: 110;
+}
+
+.sidebar {
+  width: 350px;
+  background: #f9f9f9;
+  padding: 1rem;
+  overflow-y: auto;
+  border-left: 1px solid #ccc;
+  display: none;
+  position: absolute;
+  top: 15%;
+  right: 0;
+  z-index: 200;
+  max-height: 80vh;
+}
+
+#info-btn {
+  font-size: 16px;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+#about {
+  display: none;
+  position: absolute;
+  top: 90px;
+  right: 10px;
+  width: 300px;
+  background: rgb(0, 0, 0);
+  color: white;
+  border: 1px solid #ccc;
+  padding: 15px;
+  font-family: "Consolas", monospace;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 10000000;
+}
+#about h2 {
+  margin-top: 0;
+  font-size: 16px;
+}
+#info-btn {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #000000;
+  color: white;
+  border: none;
+  font-weight: bold;
+  font-family: sans-serif;
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+  accent-color: black;
 }
 
 input[type="range"] {
-    accent-color: black;
+  accent-color: black;
 }
-
-
 
 /* Conteneur de la barre d'onglets */
 .navbar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 2000;
-    display: flex;
-    align-items: flex-end;
-    background-color: #000;
-    border-bottom: 2px solid #444;
-    padding-left: 10px;
-    gap: 2px;
-    font-family: 'Consolas', monospace;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: flex-end;
+  background-color: #000;
+  border-bottom: 2px solid #444;
+  padding-left: 10px;
+  gap: 2px;
+  font-family: "Consolas", monospace;
 }
 
 /* Boutons onglets */
 .tab-btn {
-    background-color: #111;
-    color: white;
-    border: 1px solid #444;
-    border-bottom: none;
-    border-radius: 8px 8px 0 0;
-    padding: 10px 18px;
-    cursor: pointer;
-    font-size: 14px;
-    font-family: 'Consolas', monospace;
-    transition: background-color 0.2s ease;
+  background-color: #111;
+  color: white;
+  border: 1px solid #444;
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  padding: 10px 18px;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: "Consolas", monospace;
+  transition: background-color 0.2s ease;
 }
 
 /* Onglet actif */
 .tab-btn.active {
-    background-color: #fff;
-    color: #000;
-    font-weight: bold;
-    position: relative;
-    top: 2px;
-    z-index: 2;
-    border-color: #888;
-    box-shadow: 0 -2px 5px rgba(255,255,255,0.2);
+  background-color: #fff;
+  color: #000;
+  font-weight: bold;
+  position: relative;
+  top: 2px;
+  z-index: 2;
+  border-color: #888;
+  box-shadow: 0 -2px 5px rgba(255, 255, 255, 0.2);
 }
 
 .subnav {
@@ -169,48 +163,47 @@ input[type="range"] {
   margin-left: auto; /* pousse le bouton à droite */
   opacity: 0.85;
 }
-.view { /* optionnel si tu préfères tout piloter en inline via JS */
+.view {
+  /* optionnel si tu préfères tout piloter en inline via JS */
   width: 100%;
   height: 100%;
 }
-
-
 
 /* La sous-barre Patterns, au-dessus de la carte aussi */
 /* Sub-bar: always visible under the main navbar */
 #subnav-patterns {
   position: absolute;
-  top: 38px;              /* just under the navbar */
+  top: 38px; /* just under the navbar */
   left: 0;
   right: 0;
   z-index: 1060;
   background: #000;
   border-bottom: 1px solid #4d4d4d;
   padding: 6px 10px;
-  display: flex;          /* always displayed */
+  display: flex; /* always displayed */
   gap: 8px;
   align-items: center;
-  min-height: 36px;       /* consistent height across views */
+  min-height: 36px; /* consistent height across views */
 }
 
-/* When not on “Patterns”, keep the bar but hide the controls */
+/* on n’empêche plus les clics au niveau du conteneur */
 #subnav-patterns.subnav--inactive {
-  pointer-events: none;   /* no interaction */
+  pointer-events: auto;
 }
 
+/* on ne montre simplement pas les contrôles */
 #subnav-patterns.subnav--inactive .sub-tab,
 #subnav-patterns.subnav--inactive .sub-action {
-  visibility: hidden;     /* hide buttons but keep bar height */
+  display: none; /* au lieu de visibility:hidden */
 }
 
-
-
 /* (optionnel) si ton bouton est sous la sous-barre, descends-le un peu */
-#toggle-location-btn { top: 90px; }
-
+#toggle-location-btn {
+  top: 90px;
+}
 
 .brand-chip {
-  margin-left: auto;                /* pousse à droite */
+  margin-left: auto; /* pousse à droite */
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -218,38 +211,47 @@ input[type="range"] {
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 999px;
-  font-family: 'Consolas', monospace;
+  font-family: "Consolas", monospace;
   font-size: 14px;
   line-height: 1;
 }
 
 .brand-chip .brand-info {
-  width: 22px; height: 22px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   border: 1px solid #000;
   background: #000;
   color: #fff;
   cursor: pointer;
-  display: inline-flex; align-items: center; justify-content: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 0;
 }
 
 /* Optionnel : harmoniser avec tes .tab-btn au survol */
-.brand-chip:hover { border-color: #aaa; }
-.brand-chip .brand-info:hover { filter: brightness(1.1); }
+.brand-chip:hover {
+  border-color: #aaa;
+}
+.brand-chip .brand-info:hover {
+  filter: brightness(1.1);
+}
 
 /* Info-bulle des fragments (Patterns map) */
 .leaflet-tooltip.pattern-tip {
   font-family: Consolas, monospace;
   font-size: 13px;
-  background: rgba(0,0,0,0.9);
+  background: rgba(0, 0, 0, 0.9);
   color: #fff;
   border: 1px solid #555;
   padding: 8px 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,.45);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
 }
 
-.leaflet-tooltip-pane { z-index: 2000 !important; }
+.leaflet-tooltip-pane {
+  z-index: 2000 !important;
+}
 
 .leaflet-tooltip.pattern-tip .pt-title {
   font-weight: 700;
@@ -257,31 +259,31 @@ input[type="range"] {
 }
 
 .leaflet-tooltip.pattern-tip .pt-sub {
-  opacity: .9;
+  opacity: 0.9;
 }
-
 
 /* ======== GALERIE (Patterns) ======== */
 
 #gallery-view {
   width: 100%;
-  margin: 0;               /* pas d'écart à gauche */
+  margin: 0; /* pas d'écart à gauche */
   padding: 0;
   box-sizing: border-box;
-  overflow-x: hidden;        /* évite tout débordement horizontal */
+  overflow-x: hidden; /* évite tout débordement horizontal */
   font-family: Consolas, monospace;
+  z-index: 1500;
 }
 
 #gallery-view .gallery-wrapper {
-  max-width: 1000px;         /* largeur lisible, centrée */
+  max-width: 1000px; /* largeur lisible, centrée */
   margin: 0 auto;
-  padding: 24px 16px;        /* bords internes réguliers */
+  padding: 24px 16px; /* bords internes réguliers */
   box-sizing: border-box;
 }
 
 #gallery-view .pattern-block {
   padding: 16px 0 24px;
-  border-bottom: 1px solid #2a2a2a;  /* séparateur discret */
+  border-bottom: 1px solid #2a2a2a; /* séparateur discret */
 }
 
 #gallery-view .pattern-title {
@@ -289,18 +291,18 @@ input[type="range"] {
   font-weight: 700;
   font-size: 20px;
   line-height: 1.3;
-  overflow-wrap: anywhere;   /* titres longs -> retour à la ligne */
+  overflow-wrap: anywhere; /* titres longs -> retour à la ligne */
 }
 
 #gallery-view .photo-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 12px;                 /* espace régulier entre vignettes */
+  gap: 12px; /* espace régulier entre vignettes */
 }
 
 #gallery-view .photo-cell {
   position: relative;
-  aspect-ratio: 4 / 3;       /* vignettes homogènes */
+  aspect-ratio: 4 / 3; /* vignettes homogènes */
   border: 1px solid #444;
   border-radius: 8px;
   background: #111;
@@ -310,126 +312,163 @@ input[type="range"] {
 #gallery-view .photo-cell img {
   width: 100%;
   height: 100%;
-  object-fit: cover;         /* recadre proprement */
+  object-fit: cover; /* recadre proprement */
   display: block;
   cursor: pointer;
 }
 
-
 /* Mode création d’unité : curseur précis sur la carte Patterns */
-.patterns-creating { cursor: crosshair !important; }
+.patterns-creating {
+  cursor: crosshair !important;
+}
 
 /* Assure que le hint passe au-dessus de tout */
-#unit-hint { z-index: 2147483647 !important; }
-
+#unit-hint {
+  z-index: 2147483647 !important;
+}
 
 /* Curseur et état visuel quand on est en création d’UP */
-.leaflet-container.patterns-creating { cursor: crosshair; }
+.leaflet-container.patterns-creating {
+  cursor: crosshair;
+}
 
 /* Petit feedback visuel sur le bouton quand armé */
 .tab-btn.sub-action.is-armed {
-  background:#fff; color:#000; font-weight:bold;
-  border-color:#888; box-shadow:0 -2px 5px rgba(255,255,255,.2) inset;
+  background: #fff;
+  color: #000;
+  font-weight: bold;
+  border-color: #888;
+  box-shadow: 0 -2px 5px rgba(255, 255, 255, 0.2) inset;
 }
-
 
 /* ===== Explicabilité locale (Pourquoi moi ?) ===== */
 
 /* ===== Panneau Pattern : alignement solide ===== */
 
 /* conteneur global des membres */
-.pattern-members{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  margin-top:12px;
+.pattern-members {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
 }
 
 /* une ligne "membre" = vignette fixe + contenu fluide */
-.member-row{
-  display:grid;
-  grid-template-columns:70px minmax(0,1fr); /* << clé : 2e colonne peut rétrécir */
-  gap:12px;
-  padding:10px;
-  border:1px solid #2a2a2a;
-  border-radius:6px;
-  background:#0f0f0f;
-  box-sizing:border-box; /* pas de débordement à cause des bordures */
+.member-row {
+  display: grid;
+  grid-template-columns: 70px minmax(0, 1fr); /* << clé : 2e colonne peut rétrécir */
+  gap: 12px;
+  padding: 10px;
+  border: 1px solid #2a2a2a;
+  border-radius: 6px;
+  background: #0f0f0f;
+  box-sizing: border-box; /* pas de débordement à cause des bordures */
 }
 
-.member-thumb{
-  width:70px; height:55px;
-  border:1px solid #444; border-radius:4px;
-  background:#1a1a1a center/cover no-repeat;
+.member-thumb {
+  width: 70px;
+  height: 55px;
+  border: 1px solid #444;
+  border-radius: 4px;
+  background: #1a1a1a center/cover no-repeat;
 }
 
-.member-right{ display:flex; flex-direction:column; gap:6px; }
+.member-right {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
 
-.member-title{
-  font-weight:600; color:#fff; font-size:14px; line-height:1.2;
+.member-title {
+  font-weight: 600;
+  color: #fff;
+  font-size: 14px;
+  line-height: 1.2;
 }
 
 /* lignes Partagés / Manquants / Différents */
-.crit-row{
-  display:grid;
-  grid-template-columns:110px minmax(0,1fr);
-  gap:8px;
-  align-items:start;
+.crit-row {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 8px;
+  align-items: start;
 }
 
 /* label à gauche, bien calé */
-.crit-label{
-  font-size:12px; color:#bbb; line-height:20px;
-  white-space:nowrap; text-align:right;
+.crit-label {
+  font-size: 12px;
+  color: #bbb;
+  line-height: 20px;
+  white-space: nowrap;
+  text-align: right;
 }
 
 /* zone badges (la 2e colonne) : force le wrap et empêche les débords */
-.crit-row > :last-child{
-  min-width:0;                 /* la colonne peut se comprimer */
-  display:flex;
-  flex-wrap:wrap;              /* les badges passent à la ligne suivante */
-  gap:6px 6px;
+.crit-row > :last-child {
+  min-width: 0; /* la colonne peut se comprimer */
+  display: flex;
+  flex-wrap: wrap; /* les badges passent à la ligne suivante */
+  gap: 6px 6px;
 }
 
 /* badges */
-.crit-badge{
-  display:inline-block;
-  padding:2px 6px;
-  font-size:11px;
-  line-height:1.25;           /* + lisible en multilignes */
-  border-radius:4px;
-  border:1px solid transparent;
-  max-width:100%;             /* ne dépasse jamais sa colonne */
-  white-space:normal;         /* << autorise le retour à la ligne */
-  overflow-wrap:anywhere;     /* << casse les mots si besoin */
-  word-break:break-word;      /* << garde le badge dans la colonne */
+.crit-badge {
+  display: inline-block;
+  padding: 2px 6px;
+  font-size: 11px;
+  line-height: 1.25; /* + lisible en multilignes */
+  border-radius: 4px;
+  border: 1px solid transparent;
+  max-width: 100%; /* ne dépasse jamais sa colonne */
+  white-space: normal; /* << autorise le retour à la ligne */
+  overflow-wrap: anywhere; /* << casse les mots si besoin */
+  word-break: break-word; /* << garde le badge dans la colonne */
 }
 
-.crit-badge{ max-width:240px; }
+.crit-badge {
+  max-width: 240px;
+}
 
 /* variantes couleurs */
-.badge-shared    { background:#083d18; color:#d7ffe5; border-color:#0f5a28; }
-.badge-different { background:#3a0f12; color:#ffd9dd; border-color:#5a1a1f; }
+.badge-shared {
+  background: #083d18;
+  color: #d7ffe5;
+  border-color: #0f5a28;
+}
+.badge-different {
+  background: #3a0f12;
+  color: #ffd9dd;
+  border-color: #5a1a1f;
+}
 
-.crit-empty{ color:#808080; font-style:italic; }
+.crit-empty {
+  color: #808080;
+  font-style: italic;
+}
 
 /* petits affinages pour éviter les micro-décalages */
-#tabbed-sidebar, #tabbed-sidebar-content, .member-row, .crit-row{ overflow:hidden; }
-
+#tabbed-sidebar,
+#tabbed-sidebar-content,
+.member-row,
+.crit-row {
+  overflow: hidden;
+}
 
 /* Donne de l'air en bas des panneaux sidebar/tabbed */
 #tabbed-sidebar-content {
-  padding-bottom: 60px;   /* marge blanche pour que le dernier fragment ne colle pas */
+  padding-bottom: 60px; /* marge blanche pour que le dernier fragment ne colle pas */
   box-sizing: border-box;
 }
 
 #spatial-sidebar,
 #discourse-sidebar {
-  padding-bottom: 40px;   /* idem pour les autres sidebars si besoin */
+  padding-bottom: 40px; /* idem pour les autres sidebars si besoin */
   box-sizing: border-box;
 }
 
-#three-window { box-shadow: 0 10px 40px rgba(0,0,0,.45); }
+#three-window {
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+}
 
 /* rangée de petits boutons dans les panneaux */
 .btn-row {
@@ -457,25 +496,96 @@ input[type="range"] {
 }
 
 /* rangée de petits boutons (déjà utilisée pour 3D) */
-.btn-row { display:flex; gap:6px; margin:8px 0 14px; }
-.tab-btn.btn-sm { padding:6px 8px; font-size:12px; line-height:1; }
-.tab-btn.btn-xs { padding:4px 6px; font-size:11px; line-height:1; }
-.tab-btn.primary { background:#111; color:#fff; border:1px solid #333; }
-.tab-btn.danger { background:#300; color:#fff; border:1px solid #a44; }
+.btn-row {
+  display: flex;
+  gap: 6px;
+  margin: 8px 0 14px;
+}
+.tab-btn.btn-sm {
+  padding: 6px 8px;
+  font-size: 12px;
+  line-height: 1;
+}
+.tab-btn.btn-xs {
+  padding: 4px 6px;
+  font-size: 11px;
+  line-height: 1;
+}
+.tab-btn.primary {
+  background: #111;
+  color: #fff;
+  border: 1px solid #333;
+}
+.tab-btn.danger {
+  background: #300;
+  color: #fff;
+  border: 1px solid #a44;
+}
 
 /* blocs meta */
-.meta-box { border:1px dashed #ccc; padding:8px; margin:10px 0; }
-.meta-head { margin-bottom:6px; }
-.meta-add-row { display:flex; gap:8px; align-items:flex-start; }
-.meta-ta { flex:1; width:100%; resize:vertical; font-family:inherit; }
-.meta-list { margin-top:10px; display:flex; flex-direction:column; gap:6px; }
-.meta-item { display:flex; justify-content:space-between; gap:8px; border:1px solid #eee; padding:6px; }
-.meta-item-left { display:flex; gap:8px; align-items:flex-start; flex:1; }
-.meta-item-right { display:flex; gap:6px; align-items:center; }
-.meta-item-text { white-space:pre-wrap; cursor:pointer; }
-.meta-empty { color:#888; font-style:italic; padding:6px; }
-.meta-edit-row { display:flex; gap:6px; align-items:flex-start; width:100%; }
-.meta-edit { flex:1; resize:vertical; font-family:inherit; }
+.meta-box {
+  border: 1px dashed #ccc;
+  padding: 8px;
+  margin: 10px 0;
+}
+.meta-head {
+  margin-bottom: 6px;
+}
+.meta-add-row {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+.meta-ta {
+  flex: 1;
+  width: 100%;
+  resize: vertical;
+  font-family: inherit;
+}
+.meta-list {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.meta-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  border: 1px solid #eee;
+  padding: 6px;
+}
+.meta-item-left {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  flex: 1;
+}
+.meta-item-right {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.meta-item-text {
+  white-space: pre-wrap;
+  cursor: pointer;
+}
+.meta-empty {
+  color: #888;
+  font-style: italic;
+  padding: 6px;
+}
+.meta-edit-row {
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+  width: 100%;
+}
+.meta-edit {
+  flex: 1;
+  resize: vertical;
+  font-family: inherit;
+}
 
 /* === Labels 3D (CSS2D) === */
 .three-label {
@@ -483,25 +593,63 @@ input[type="range"] {
   font-size: 12px;
   line-height: 1.2;
   padding: 4px 6px;
-  border: 1px solid rgba(255,255,255,.25);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 4px;
-  background: rgba(0,0,0,.65);
-  white-space: pre-wrap;        /* multi-ligne */
-  max-width: 220px;             /* évite de trop larges blocs */
-  pointer-events: none;         /* clics passent à travers */
-  backdrop-filter: blur(2px);   /* lisibilité */
+  background: rgba(0, 0, 0, 0.65);
+  white-space: pre-wrap; /* multi-ligne */
+  max-width: 220px; /* évite de trop larges blocs */
+  pointer-events: none; /* clics passent à travers */
+  backdrop-filter: blur(2px); /* lisibilité */
 }
-.three-label.usage   { color: #ff3b3b; border-color: rgba(255,59,59,.35); }
-.three-label.discours{ color: #fff;    border-color: rgba(255,255,255,.25); }
+.three-label.usage {
+  color: #ff3b3b;
+  border-color: rgba(255, 59, 59, 0.35);
+}
+.three-label.discours {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.25);
+}
 
 /* ====== Inspecteur Unité (V1/V2/Compare) ====== */
 /* mêmes styles que la modale 3D */
-#unit-modal.modal { position:fixed; inset:0; z-index:4002; }
-#unit-modal .modal__backdrop { position:absolute; inset:0; background:rgba(0,0,0,.55); }
-#unit-modal .modal__dialog { position:relative; margin:4vh auto; width:min(1100px, 92vw); height:min(84vh, 92vh); background:#111; border:1px solid #333; border-radius:8px; display:flex; flex-direction:column; }
-#unit-modal .modal__head { display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border-bottom:1px solid #222; background:#0b0b0b; }
-#unit-modal .modal__body { position:relative; flex:1; padding:0; }
-#unit-modal .three-host { width:100%; height:100%; }
+#unit-modal.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 4002;
+}
+#unit-modal .modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+}
+#unit-modal .modal__dialog {
+  position: relative;
+  margin: 4vh auto;
+  width: min(1100px, 92vw);
+  height: min(84vh, 92vh);
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+#unit-modal .modal__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-bottom: 1px solid #222;
+  background: #0b0b0b;
+}
+#unit-modal .modal__body {
+  position: relative;
+  flex: 1;
+  padding: 0;
+}
+#unit-modal .three-host {
+  width: 100%;
+  height: 100%;
+}
 /* Par défaut on cache la vue comparer — le JS l’affiche au besoin */
 #unit-modal .compare-host {
   display: none;
@@ -517,76 +665,132 @@ input[type="range"] {
   display: block;
 }
 
-#unit-modal .unit-col { flex:1; background:#0a0a0a; border:1px solid #222; border-radius:6px; overflow:hidden; }
-#unit-modal .modal__actions .tab-btn { margin-left:6px; }
-
+#unit-modal .unit-col {
+  flex: 1;
+  background: #0a0a0a;
+  border: 1px solid #222;
+  border-radius: 6px;
+  overflow: hidden;
+}
+#unit-modal .modal__actions .tab-btn {
+  margin-left: 6px;
+}
 
 /* Tous les conteneurs qui reçoivent un viewer Three.js */
 .three-host {
-  position: relative;   /* indispensable pour CSS2DRenderer (labels) */
+  position: relative; /* indispensable pour CSS2DRenderer (labels) */
   width: 100%;
   height: 100%;
-  overflow: hidden;     /* évite tout débordement d’éléments internes */
+  overflow: hidden; /* évite tout débordement d’éléments internes */
 }
 
 /* Dans la modale Unité */
-#unit-modal .three-host { position: relative; }
+#unit-modal .three-host {
+  position: relative;
+}
 
 /* Colonnes du mode comparer */
-#unit-modal .unit-col > div { position: relative; }
-
+#unit-modal .unit-col > div {
+  position: relative;
+}
 
 /* ---- En-tête de modale partagé (3D & Unité) ---- */
-.modal__head{
-  display:flex; align-items:center; justify-content:space-between;
-  padding:10px 12px; border-bottom:1px solid #222; background:#0b0b0b;
+.modal__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-bottom: 1px solid #222;
+  background: #0b0b0b;
 }
-.modal__actions .tab-btn{ margin-left:6px; }
+.modal__actions .tab-btn {
+  margin-left: 6px;
+}
 
 /* ---- Modale 3D : même gabarit que l’Unité ---- */
-#three-modal{ position:fixed; inset:0; z-index:4005; }
-#three-modal .modal__backdrop{ position:absolute; inset:0; background:rgba(0,0,0,.55); }
-#three-modal .modal__dialog{
-  position:relative;
-  margin:8vh auto;
-  width:min(900px, 92vw);
-  height:min(700px, 80vh);
-  background:#111;
-  border:1px solid #333;
-  border-radius:8px;
-  display:flex; flex-direction:column;
-  box-shadow:0 10px 40px rgba(0,0,0,.45);
+#three-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 4005;
 }
-#three-modal .three-host{ flex:1; min-height:300px; }
+#three-modal .modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+}
+#three-modal .modal__dialog {
+  position: relative;
+  margin: 8vh auto;
+  width: min(900px, 92vw);
+  height: min(700px, 80vh);
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+}
+#three-modal .three-host {
+  flex: 1;
+  min-height: 300px;
+}
 
 /* Optionnel : si tu veux exactement le même espacement que l’Unité */
-#three-window .modal__actions .tab-btn{ margin-left:6px; }
+#three-window .modal__actions .tab-btn {
+  margin-left: 6px;
+}
 
-.photo { width: 100%; margin: 5px 0; }
-
-#gallery-view { z-index: 1500; }
-
+.photo {
+  width: 100%;
+  margin: 5px 0;
+}
 
 .saved-item {
-  border:1px solid #222; border-radius:8px; background:#0d0d0d;
-  padding:10px; margin-bottom:10px; color:#eee;
+  border: 1px solid #222;
+  border-radius: 8px;
+  background: #0d0d0d;
+  padding: 10px;
+  margin-bottom: 10px;
+  color: #eee;
 }
-.saved-item h4 { margin:0 0 6px; font-size:15px; }
-.saved-item .meta { color:#aaa; font-size:12px; margin-bottom:6px; }
-.saved-item .row { display:flex; gap:6px; flex-wrap:wrap; }
+.saved-item h4 {
+  margin: 0 0 6px;
+  font-size: 15px;
+}
+.saved-item .meta {
+  color: #aaa;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+.saved-item .row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
 
-.modal { position: fixed; inset: 0; display: none; z-index: 5000; }
-.modal[style*="display: block"] { display: block; } /* si tu pilotes par JS */
-.modal__backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.6); }
-.modal__dialog { position: relative; margin: 6vh auto; }
-
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  z-index: 7000;
+}
+.modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+.modal__dialog {
+  position: relative;
+  margin: 6vh auto;
+}
 
 /* Proxémie : clusters d’images */
 .prox-cluster-bg {
   fill: #0f0f0f;
   stroke: #333;
   stroke-width: 1px;
-  rx: 8px; ry: 8px;
+  rx: 8px;
+  ry: 8px;
 }
 
 .prox-cluster-tile {
@@ -601,8 +805,84 @@ input[type="range"] {
 }
 
 .prox-cluster-label-bg {
-  fill: rgba(0,0,0,.8);
+  fill: rgba(0, 0, 0, 0.8);
   stroke: #444;
   stroke-width: 1px;
-  rx: 4px; ry: 4px;
+  rx: 4px;
+  ry: 4px;
+}
+
+/* ====== Patterns map: vignettes rectangulaires, placeholder & états ====== */
+.frag-thumb-ic {
+  line-height: 0;
+} /* évite les interlignes */
+.frag-thumb {
+  width: 64px;
+  height: 48px;
+  display: block;
+  object-fit: cover;
+  border: none;
+  border-radius: 0; /* pas d’arrondi */
+  background: #2a2a2a; /* fallback si <img> ne charge pas */
+}
+.frag-thumb.--placeholder {
+  /* quand aucun visuel */
+  width: 64px;
+  height: 48px;
+  background: #5d5d5d; /* gris neutre */
+}
+.frag-thumb.dim {
+  opacity: 0.08;
+  transition: opacity 0.15s linear;
+}
+.frag-thumb.--active {
+  box-shadow: 0 0 0 2px #fff inset;
+}
+
+/* (optionnel mais conseillé) pas d’arrondi partout pour rester cohérent */
+.photo-cell,
+.member-thumb {
+  border-radius: 0;
+}
+
+#pattern-dropzone.drag-over {
+  border-color: #000;
+  background: #f9f9f9;
+}
+
+/* Analogies */
+#analogies-view .tab-btn.btn-sm {
+  font-size: 12px;
+  padding: 4px 8px;
+}
+#analogies-view .tab-btn.primary {
+  background: rgb(0, 0, 0);
+  color: #fff;
+  border: 1px solid rgb(0, 0, 0);
+}
+#analogies-view .tab-btn.danger {
+  background: #700;
+  color: #fff;
+  border: 1px solid #400;
+}
+#analogies-view .anal-cell img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 6px;
+}
+#analogies-view .anal-cell .note {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 8px;
+  font-size: 13px;
+  line-height: 1.35;
+}
+#analogies-view .anal-thumb {
+  cursor: grab;
+  user-select: none;
+}
+#analogies-view .anal-thumb:active {
+  cursor: grabbing;
 }

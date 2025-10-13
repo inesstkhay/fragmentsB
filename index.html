@@ -1,482 +1,1275 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>backdoorurbanism beta</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <title>fragments - version image</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css" />
 
+    <link rel="preconnect" href="https://i.postimg.cc" crossorigin />
+    <link rel="dns-prefetch" href="//i.postimg.cc" />
+  </head>
+  <body>
+    <div id="navbar" class="navbar">
+      <!-- même style que tes onglets actuels: on réutilise .tab-btn -->
+      <button class="tab-btn top-tab active" data-top="fragments">
+        Fragments
+      </button>
+      <button class="tab-btn top-tab" data-top="patterns">Patterns</button>
+      <button class="tab-btn top-tab" data-top="unit">Unité de projet</button>
 
-    <link rel="preconnect" href="https://i.postimg.cc" crossorigin>
-<link rel="dns-prefetch" href="//i.postimg.cc">
-
-        
-</head>
-<body>
-
-<div id="navbar" class="navbar">
-  <!-- même style que tes onglets actuels: on réutilise .tab-btn -->
-  <button class="tab-btn top-tab active" data-top="fragments">Fragments</button>
-  <button class="tab-btn top-tab" data-top="patterns">Patterns</button>
-  <button class="tab-btn top-tab" data-top="unit">Unité de projet</button>
-
-  <div id="brand-chip" class="brand-chip">
-  <span>backdoorurbanism</span>
-  <button id="info-btn" class="brand-info" title="À propos">i</button>
-</div>
-
-</div>
-
-<!-- Sous-onglets : visible UNIQUEMENT quand "Patterns" est actif -->
-<div id="subnav-patterns" class="subnav subnav--inactive">
-  <button class="tab-btn sub-tab" data-sub="patterns-map">Carte</button>
-  <button class="tab-btn sub-tab" data-sub="proxemic">Proxémie</button>
-  <button class="tab-btn sub-tab" data-sub="gallery">Galerie</button>
-
-  <button id="saved-patterns-list-btn" class="tab-btn sub-action">Liste des Patterns enregistrés</button>
-  <button id="create-unit-btn" class="tab-btn sub-action">Créer une Unité de Projet</button>
-</div>
-
-
-<!-- VUES PRINCIPALES -->
-<div id="map" class="view active"><!-- ta carte Leaflet existante --></div>
-<!-- (nouveau) Vue "Carte" de Patterns : vide pour l’instant -->
-<div id="patterns-map" class="view" style="display:none;"></div>
-
-
-<!-- Sidebar à onglets (uniquement pour la carte Patterns) -->
-<div id="tabbed-sidebar" style="
-  position:fixed; top:90px; right:10px; width:380px; max-height:calc(100vh - 120px);
-  display:none; background:#fff; border:1px solid #ccc; z-index:4002; overflow:hidden; font-family:'Consolas', monospace;">
-  <div id="tabbed-sidebar-tabs" style="display:flex; gap:4px; padding:6px; background:#000; border-bottom:1px solid #333; overflow-x:auto;">
-    <!-- boutons d’onglets dynamiques -->
-  </div>
-  <div id="tabbed-sidebar-content" style="overflow:auto; max-height:calc(100vh - 160px); padding:10px;">
-    <!-- panneaux dynamiques -->
-  </div>
-</div>
-
-
-<!-- Vue proxémie existante (ta “patterns/proxémie”) -->
-<div id="proxemic-view" class="view" style="display:none;"></div>
-<!-- Vue galerie existante -->
-<div id="gallery-view" class="view" style="display:none; position: absolute; top: 55px; left: 10px; /* pour ne pas passer sous les filtres */ right: 0; bottom: 0; background: white; overflow-y: auto; z-index: 100;     padding: 80px;     box-sizing: border-box; "></div>
-<!-- (nouveau) Vue "Unité de projet" : vide pour l’instant -->
-<div id="unit-view" class="view" style="display:none;"></div>
-
-<div id="similarity-controls" style="display:none; position: absolute; top: 90px; left: 50%; color: white; transform: translateX(-50%); background: rgb(0, 0, 0); padding: 10px; z-index: 1050; border: 1px solid #ccc;">
-    <label for="similarity-slider">Nombre de critères communs : <span id="slider-value">5</span></label><br>
-    <input type="range" id="similarity-slider" min="2" max="15" value="5" step="1"> </div>
-<div id="critical-view" style=" display: none; position: absolute;     top: 90px;     left: 50%;     transform: translateX(-50%);     width: 600px;    height: 600px;    background: white;    z-index: 100;    padding: 0;    box-sizing: border-box;     overflow: hidden;"> </div>
-
-<!-- PANNELS LATÉRAUX -->
-<div id="spatial-sidebar" class="sidebar">
-    <button class="close-btn" onclick="closeSidebars()">X</button>
-    <h2 id="spatial-name"></h2>
-    <p><strong>ID :</strong> <span id="spatial-id"></span></p>
-    <p id="spatial-description"></p>
-    <div id="spatial-photos"></div>
-</div>
-
-
-<div id="discourse-sidebar" class="sidebar">
-    <button class="close-btn" onclick="closeSidebars()">X</button>
-    <h2 id="discourse-name"></h2>
-    <p><strong>Auteur :</strong> <span id="discourse-author"></span></p>
-    <p><strong>Date :</strong> <span id="discourse-date"></span></p>
-    <p><strong>Source :</strong> <span id="discourse-source"></span></p>
-    <p id="discourse-text"></p>
-</div>
-
-<!-- CONTRÔLES -->
-
-<div id="filters">
-    <strong>Zones</strong><br>
-<label><input type="checkbox" class="filter-zone" value="montreuil" checked> Montreuil</label><br>
-<label><input type="checkbox" class="filter-zone" value="mirail" checked> Mirail</label><br>
-   </div>
-
-   <!-- LEGENDE -->
-
-<div id="criteria-legend" style="position: absolute;  display: none; bottom: 60px; left: 10px; width: 240px; background: white; border: 1px solid #ccc; padding: 10px; font-size: 12px; z-index: 1050; overflow-y: auto; max-height: 60vh;">
-  <strong>Légende des critères</strong><br><br>
-
-  <em>Espace perçu (usage)</em><br>
-  <label><input type="checkbox" class="crit-dim" data-dim="frequence_usage" checked> Fréquence d’usage</label><br>
-  <small>ponctuel, régulier, quotidien</small><br>
-
-  <label><input type="checkbox" class="crit-dim" data-dim="mode_usage" checked> Mode d’usage</label><br>
-  <small>prévu, détourné, créatif</small><br>
-
-  <label><input type="checkbox" class="crit-dim" data-dim="intensite_usage" checked> Intensité d’usage</label><br>
-  <small>faible, moyenne, forte</small><br><br>
-
-  <em>Espace conçu</em><br>
-  <label><input type="checkbox" class="crit-dim" data-dim="echelle" checked> Échelle</label><br>
-  <small>micro, méso, macro</small><br>
-
-  <label><input type="checkbox" class="crit-dim" data-dim="origine_forme" checked> Origine de la forme</label><br>
-  <small>institutionnelle, singulière, collective</small><br>
-
-  <label><input type="checkbox" class="crit-dim" data-dim="accessibilite" checked> Accessibilité</label><br>
-  <small>libre, semi-ouverte, fermée</small><br>
-
-  <label><input type="checkbox" class="crit-dim" data-dim="visibilite" checked> Visibilité</label><br>
-  <small>caché, visible, exposé</small><br><br>
-
-  <em>Espace vécu (expérience)</em><br>
-  <label><input type="checkbox" class="crit-dim" data-dim="acteurs_visibles" checked> Acteurs visibles</label><br>
-  <small>habitant·e, institution, collectif, invisible</small><br>
-
-  <label><input type="checkbox" class="crit-dim" data-dim="rapport_affectif_symbolique" checked> Rapport affectif / symbolique</label><br>
-</div>
-
-
-<button id="toggle-legend-btn" style="
-    position: absolute;
-    top: 180px;
-    left: 10px;
-    z-index: 1050;
-    background-color: #000;
-    color: white;
-    padding: 10px;
-    border: 1px solid white;
-    cursor: pointer;
-    font-family: 'Consolas', monospace;
-">Crtières actifs</button>
-
-
-<button id="toggle-location-btn"
-  class="view-toggle-btn"
-  onclick="toggleLocation()"
-  style="position:absolute; top:90px; right:10px; z-index:1050; background:#000; color:#fff; padding:10px; border:1px solid #fff; cursor:pointer; font-family:'Consolas', monospace;">
-  Voir Toulouse
-</button>
-
-
-<div id="about">
-    <h2>À propos</h2>
-    <p>Description.</p>
-    <p>Developpé par Iness Tkhayyare, LRA ENSA Toulouse</p>
-</div>
-
-<!-- Fenêtre modale 3D -->
-<div id="three-modal" style="display:none;">
-  <div id="three-backdrop" class="modal__backdrop"></div>
-
-  <div id="three-window" class="modal__dialog" role="dialog" aria-modal="true" aria-label="3D">
-    <div class="modal__head">
-      <strong>Visualiseur 3D</strong>
-      <div class="modal__actions">
-        <button id="three-load-btn" class="tab-btn btn-sm" title="Ajouter/Remplacer 3D">Importer 3D</button>
-        <button id="three-close" class="tab-btn btn-sm danger" title="Fermer">×</button>
-      </div>
-    </div>
-    <div id="three-canvas-host" class="three-host"></div>
-  </div>
-</div>
-
-
-<!-- input fichier caché (recyclé par le bouton Importer 3D) -->
-<input id="three-file-input" type="file" accept=".glb,.gltf" style="display:none;">
-
-<!-- ===== Modale Unité de Projet (plein écran) ===== -->
-<div id="unit-modal" class="modal" style="display:none">
-  <div id="unit-backdrop" class="modal__backdrop"></div>
-  <div class="modal__dialog">
-    <div class="modal__head">
-      <h3 id="unit-title">Unité</h3>
-      <div class="modal__actions">
-        <button id="unit-btn-v1" class="tab-btn btn-sm primary">V1</button>
-        <button id="unit-btn-v2" class="tab-btn btn-sm">Importer V2</button>
-        <button id="unit-btn-compare" class="tab-btn btn-sm">Comparer</button>
-        <button id="unit-close" class="tab-btn btn-sm danger">×</button>
+      <div id="brand-chip" class="brand-chip">
+        <span>fragments</span>
+        <button id="info-btn" class="brand-info" title="À propos">i</button>
       </div>
     </div>
 
-    <div class="modal__body">
-      <!-- Vue simple -->
-      <div id="unit-single-host" class="three-host" style="display:block;"></div>
+    <!-- Sous-onglets : visible UNIQUEMENT quand "Patterns" est actif -->
+    <div id="subnav-patterns" class="subnav subnav--inactive">
+      <button class="tab-btn sub-tab" data-sub="patterns-map">Carte</button>
+      <button class="tab-btn sub-tab" data-sub="proxemic">Proxémie</button>
+      <button class="tab-btn sub-tab" data-sub="gallery">Galerie</button>
+      <button class="tab-btn sub-tab" data-sub="gallery-compose">
+        Composition
+      </button>
+      <button class="tab-btn sub-tab" data-sub="analogies">Analogies</button>
 
-      <!-- Vue comparaison -->
-      <div id="unit-compare-host" class="compare-host" style="display:none;">
-        <div class="unit-col"><div id="unit-v1-host" class="three-host"></div></div>
-        <div class="unit-col"><div id="unit-v2-host" class="three-host"></div></div>
+      <button id="saved-patterns-list-btn" class="tab-btn sub-action">
+        Liste des Patterns enregistrés
+      </button>
+      <button id="create-unit-btn" class="tab-btn sub-action">
+        Créer une Unité de Projet
+      </button>
+    </div>
+
+    <!-- VUES PRINCIPALES -->
+    <div id="map" class="view active"><!-- ta carte Leaflet existante --></div>
+    <!-- (nouveau) Vue "Carte" de Patterns : vide pour l’instant -->
+    <div id="patterns-map" class="view" style="display: none"></div>
+
+    <!-- Sidebar à onglets (uniquement pour la carte Patterns) -->
+    <div
+      id="tabbed-sidebar"
+      style="
+        position: fixed;
+        top: 90px;
+        right: 10px;
+        width: 380px;
+        max-height: calc(100vh - 120px);
+        display: none;
+        background: #fff;
+        border: 1px solid #ccc;
+        z-index: 4002;
+        overflow: hidden;
+        font-family: &quot;Consolas&quot;, monospace;
+      "
+    >
+      <div
+        id="tabbed-sidebar-tabs"
+        style="
+          display: flex;
+          gap: 4px;
+          padding: 6px;
+          background: #000;
+          border-bottom: 1px solid #333;
+          overflow-x: auto;
+        "
+      >
+        <!-- boutons d’onglets dynamiques -->
+      </div>
+      <div
+        id="tabbed-sidebar-content"
+        style="overflow: auto; max-height: calc(100vh - 160px); padding: 10px"
+      >
+        <!-- panneaux dynamiques -->
       </div>
     </div>
-  </div>
-</div>
 
+    <!-- Vue proxémie existante (ta “patterns/proxémie”) -->
+    <div id="proxemic-view" class="view" style="display: none"></div>
+    <!-- Vue galerie existante -->
+    <div
+      id="gallery-view"
+      class="view"
+      style="
+        display: none;
+        position: absolute;
+        top: 55px;
+        left: 10px; /* pour ne pas passer sous les filtres */
+        right: 0;
+        bottom: 0;
+        background: white;
+        overflow-y: auto;
+        z-index: 100;
+        padding: 80px;
+        box-sizing: border-box;
+      "
+    ></div>
+    <!-- Vue composition -->
+    <div
+      id="gallery-compose-view"
+      class="view"
+      style="
+        display: none;
+        position: absolute;
+        top: 85px; /* sous la barre */
+        left: 10px; /* aligne avec tes autres vues */
+        right: 0;
+        bottom: 40px; /* marge pour la fine barre noire */
+        background: white;
+        z-index: 100;
+        padding: 12px 16px 16px 150px;
+        box-sizing: border-box;
+        overflow: hidden; /* le host ne scrolle pas */
+        min-height: 0; /* autorise le shrink interne */
+      "
+    ></div>
 
+    <!-- Vue "Analogies" (nouvelle) -->
+    <div
+      id="analogies-view"
+      class="view"
+      style="
+        display: none;
+        position: absolute;
+        top: 85px;
+        left: 10px;
+        right: 0;
+        bottom: 40px;
+        background: #fff;
+        z-index: 100;
+        padding: 12px 16px 16px 150px; /* place la rail à gauche */
+        box-sizing: border-box;
+        overflow: hidden; /* on scrolle dans les boîtes internes */
+        min-height: 0;
+      "
+    >
+      <!-- RAIL CATALOGUE FRAGMENTS (à gauche) -->
+      <aside
+        id="anal-rail"
+        style="
+          position: absolute;
+          inset: 85px auto 10px 0px;
+          width: 130px;
+          background: #0b0b0b;
+          color: #eee;
+          border: 1px solid #ffffff;
+          border-radius: 0px;
+          padding: 8px;
+          box-sizing: border-box;
+          overflow: auto;
+          z-index: 101;
+        "
+      >
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+            margin-bottom: 8px;
+          "
+        >
+          <strong
+            style="
+              font-family: &quot;Consolas&quot;, monospace;
+              font-size: 12px;
+            "
+            >Fragments</strong
+          >
+        </div>
+        <input
+          id="anal-rail-search"
+          type="text"
+          placeholder="Rechercher…"
+          style="
+            width: 80%;
+            padding: 6px 8px;
+            font-size: 12px;
+            background: #151515;
+            color: #fff;
+            border: 1px solid #333;
+            border-radius: 0px;
+            margin-bottom: 8px;
+          "
+        />
+        <div id="anal-rail-list" style="display: grid; gap: 6px">
+          <!-- vignettes des fragments injectées par JS (draggables) -->
+        </div>
+      </aside>
 
-<!-- Modale : Enregistrer un pattern -->
-<div id="save-pattern-modal" class="modal" style="display:none">
-  <div class="modal__backdrop"></div>
-  <div class="modal__dialog" style="width:min(760px,92vw);height:auto;max-height:84vh;overflow:auto;background:#111;border:1px solid #333;border-radius:8px;">
-    <div class="modal__head">
-      <strong>Enregistrer ce pattern</strong>
-      <div class="modal__actions">
-        <button id="sp-cancel" class="tab-btn btn-sm danger">Annuler</button>
-        <button id="sp-save"   class="tab-btn btn-sm primary">Enregistrer</button>
+      <!-- BARRE D’ACTIONS EN HAUT -->
+      <div
+        id="anal-toolbar"
+        style="
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          height: 40px;
+          min-height: 40px;
+          margin-bottom: 10px;
+        "
+      >
+        <input
+          id="anal-title-input"
+          type="text"
+          placeholder="Titre de la carte d’analogies"
+          style="
+            flex: 1;
+            min-width: 180px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-family: &quot;Consolas&quot;, monospace;
+          "
+        />
+        <button
+          id="anal-new-btn"
+          class="tab-btn"
+          style="background: #000; color: #fff; border: 1px solid #fff"
+        >
+          Nouvelle
+        </button>
+        <button id="anal-save-btn" class="tab-btn primary">Enregistrer</button>
+        <button id="anal-open-btn" class="tab-btn">Ouvrir</button>
+        <button id="anal-export-btn" class="tab-btn">Exporter</button>
+      </div>
+
+      <!-- SURFACE DE TRAVAIL : QUADRANT 2x2 -->
+      <div
+        id="anal-board-wrap"
+        style="height: calc(100% - 50px); min-height: 0; overflow: auto"
+      >
+        <div
+          id="anal-board"
+          style="
+            margin: 0 auto;
+            width: 75vw;
+            max-width: none;
+            box-sizing: border-box;
+            min-height: 520px;
+            aspect-ratio: 4 / 3;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 12px;
+          "
+        >
+          <!-- cellule 1 -->
+          <div
+            class="anal-cell"
+            data-slot="0"
+            style="
+              position: relative;
+              border: 1px dashed #bbb;
+              border-radius: 10px;
+              padding: 10px;
+              background: #fafafa;
+              min-height: 250px;
+              overflow: hidden;
+            "
+          >
+            <div
+              class="anal-cell-tools"
+              style="
+                position: absolute;
+                top: 8px;
+                right: 8px;
+                display: flex;
+                gap: 6px;
+                z-index: 100;
+              "
+            >
+              <button
+                class="anal-cell-import tab-btn btn-sm"
+                title="Importer une image"
+              >
+                Importer
+              </button>
+              <button
+                class="anal-cell-clear tab-btn btn-sm danger"
+                title="Vider la case"
+              >
+                Vider
+              </button>
+            </div>
+            <div
+              class="anal-cell-drop"
+              style="
+                position: absolute;
+                inset: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                padding: 16px;
+                color: #777;
+                pointer-events: none;
+              "
+            >
+              Glisser un fragment ici, <br />
+              coller une image (Ctrl/Cmd+V) ou cliquer “Importer”.
+            </div>
+            <div
+              class="anal-cell-content"
+              style="
+                position: absolute;
+                inset: 0;
+                padding: 12px;
+                overflow: auto;
+              "
+            ></div>
+          </div>
+
+          <!-- cellule 2 -->
+          <div
+            class="anal-cell"
+            data-slot="1"
+            style="
+              position: relative;
+              border: 1px dashed #bbb;
+              border-radius: 10px;
+              padding: 10px;
+              background: #fafafa;
+              min-height: 250px;
+              overflow: hidden;
+            "
+          >
+            <div
+              class="anal-cell-tools"
+              style="
+                position: absolute;
+                top: 8px;
+                right: 8px;
+                display: flex;
+                gap: 6px;
+                z-index: 100;
+              "
+            >
+              <button
+                class="anal-cell-import tab-btn btn-sm"
+                title="Importer une image"
+              >
+                Importer
+              </button>
+              <button
+                class="anal-cell-clear tab-btn btn-sm danger"
+                title="Vider la case"
+              >
+                Vider
+              </button>
+            </div>
+            <div
+              class="anal-cell-drop"
+              style="
+                position: absolute;
+                inset: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                padding: 16px;
+                color: #777;
+                pointer-events: none;
+              "
+            >
+              Glisser un fragment ici, <br />
+              coller une image (Ctrl/Cmd+V) ou cliquer “Importer”.
+            </div>
+            <div
+              class="anal-cell-content"
+              style="
+                position: absolute;
+                inset: 0;
+                padding: 12px;
+                overflow: auto;
+              "
+            ></div>
+          </div>
+
+          <!-- cellule 3 -->
+          <div
+            class="anal-cell"
+            data-slot="2"
+            style="
+              position: relative;
+              border: 1px dashed #bbb;
+              border-radius: 10px;
+              padding: 10px;
+              background: #fafafa;
+              min-height: 250px;
+              overflow: hidden;
+            "
+          >
+            <div
+              class="anal-cell-tools"
+              style="
+                position: absolute;
+                top: 8px;
+                right: 8px;
+                display: flex;
+                gap: 6px;
+                z-index: 100;
+              "
+            >
+              <button
+                class="anal-cell-import tab-btn btn-sm"
+                title="Importer une image"
+              >
+                Importer
+              </button>
+              <button
+                class="anal-cell-clear tab-btn btn-sm danger"
+                title="Vider la case"
+              >
+                Vider
+              </button>
+            </div>
+            <div
+              class="anal-cell-drop"
+              style="
+                position: absolute;
+                inset: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                padding: 16px;
+                color: #777;
+                pointer-events: none;
+              "
+            >
+              Glisser un fragment ici, <br />
+              coller une image (Ctrl/Cmd+V) ou cliquer “Importer”.
+            </div>
+            <div
+              class="anal-cell-content"
+              style="
+                position: absolute;
+                inset: 0;
+                padding: 12px;
+                overflow: auto;
+              "
+            ></div>
+          </div>
+
+          <!-- cellule 4 -->
+          <div
+            class="anal-cell"
+            data-slot="3"
+            style="
+              position: relative;
+              border: 1px dashed #bbb;
+              border-radius: 10px;
+              padding: 10px;
+              background: #fafafa;
+              min-height: 250px;
+              overflow: hidden;
+            "
+          >
+            <div
+              class="anal-cell-tools"
+              style="
+                position: absolute;
+                top: 8px;
+                right: 8px;
+                display: flex;
+                gap: 6px;
+                z-index: 100;
+              "
+            >
+              <button
+                class="anal-cell-import tab-btn btn-sm"
+                title="Importer une image"
+              >
+                Importer
+              </button>
+              <button
+                class="anal-cell-clear tab-btn btn-sm danger"
+                title="Vider la case"
+              >
+                Vider
+              </button>
+            </div>
+            <div
+              class="anal-cell-drop"
+              style="
+                position: absolute;
+                inset: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                padding: 16px;
+                color: #777;
+                pointer-events: none;
+              "
+            >
+              Glisser un fragment ici, <br />
+              coller une image (Ctrl/Cmd+V) ou cliquer “Importer”.
+            </div>
+            <div
+              class="anal-cell-content"
+              style="
+                position: absolute;
+                inset: 0;
+                padding: 12px;
+                overflow: auto;
+              "
+            ></div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="modal__body" style="padding:12px">
-      <div style="margin-bottom:10px">
-        <div style="color:#aaa;font-size:13px;margin-bottom:4px">Identifiant (calculé)</div>
-        <input id="sp-key" type="text" disabled style="width:100%;padding:8px;background:#0c0c0c;color:#bbb;border:1px solid #333;border-radius:4px">
-      </div>
-      <div style="margin-bottom:10px">
-        <div style="color:#aaa;font-size:13px;margin-bottom:4px">Nom (affiché)</div>
-        <input id="sp-name" type="text" placeholder="Ex: « P3 — Marché informel »" style="width:100%;padding:8px;background:#0c0c0c;color:#fff;border:1px solid #333;border-radius:4px">
-      </div>
-      <div style="margin-bottom:10px">
-        <div style="color:#aaa;font-size:13px;margin-bottom:4px">Description</div>
-        <textarea id="sp-desc" rows="4" placeholder="Quelques lignes utiles…" style="width:100%;padding:8px;background:#0c0c0c;color:#fff;border:1px solid #333;border-radius:4px;resize:vertical"></textarea>
-      </div>
-      <div style="margin-bottom:6px;color:#aaa;font-size:13px">
-        Fragments inclus (<span id="sp-frag-count">0</span>) :
-      </div>
-      <div id="sp-fragments" style="border:1px solid #222;border-radius:6px;background:#0b0b0b;padding:8px;max-height:240px;overflow:auto;font-size:13px;color:#ddd"></div>
+
+    <!-- (nouveau) Vue "Unité de projet" : vide pour l’instant -->
+    <div id="unit-view" class="view" style="display: none"></div>
+
+    <div
+      id="similarity-controls"
+      style="
+        display: none;
+        position: absolute;
+        top: 90px;
+        left: 50%;
+        color: white;
+        transform: translateX(-50%);
+        background: rgb(0, 0, 0);
+        padding: 10px;
+        z-index: 1050;
+        border: 1px solid #ccc;
+      "
+    >
+      <label for="similarity-slider"
+        >Nombre de critères communs : <span id="slider-value">5</span></label
+      ><br />
+      <input
+        type="range"
+        id="similarity-slider"
+        min="2"
+        max="15"
+        value="5"
+        step="1"
+      />
     </div>
-  </div>
-</div>
+    <div
+      id="critical-view"
+      style="
+        display: none;
+        position: absolute;
+        top: 90px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 600px;
+        height: 600px;
+        background: white;
+        z-index: 100;
+        padding: 0;
+        box-sizing: border-box;
+        overflow: hidden;
+      "
+    ></div>
 
+    <!-- PANNELS LATÉRAUX -->
+    <div id="spatial-sidebar" class="sidebar">
+      <button class="close-btn" onclick="closeSidebars()">X</button>
+      <h2 id="spatial-name"></h2>
+      <p><strong>ID :</strong> <span id="spatial-id"></span></p>
+      <p id="spatial-description"></p>
+      <div id="spatial-photos"></div>
+    </div>
 
-<!-- Modale : Liste des patterns enregistrés -->
-<div id="saved-patterns-list-modal" class="modal" style="display:none">
-  <div class="modal__backdrop"></div>
-  <div class="modal__dialog" style="width:min(900px,92vw);height:min(80vh,92vh);background:#111;border:1px solid #333;border-radius:8px;display:flex;flex-direction:column;">
-    <div class="modal__head">
-      <strong>Patterns enregistrés (local)</strong>
-      <div class="modal__actions">
-        <button id="splist-close" class="tab-btn btn-sm danger">Fermer</button>
+    <div id="discourse-sidebar" class="sidebar">
+      <button class="close-btn" onclick="closeSidebars()">X</button>
+      <h2 id="discourse-name"></h2>
+      <p><strong>Auteur :</strong> <span id="discourse-author"></span></p>
+      <p><strong>Date :</strong> <span id="discourse-date"></span></p>
+      <p><strong>Source :</strong> <span id="discourse-source"></span></p>
+      <p id="discourse-text"></p>
+    </div>
+
+    <!-- CONTRÔLES -->
+
+    <div id="filters">
+      <strong>Zones</strong><br />
+      <label
+        ><input type="checkbox" class="filter-zone" value="montreuil" checked />
+        Montreuil</label
+      ><br />
+      <label
+        ><input type="checkbox" class="filter-zone" value="mirail" checked />
+        Mirail</label
+      ><br />
+    </div>
+
+    <!-- LEGENDE -->
+
+    <div
+      id="criteria-legend"
+      style="
+        position: absolute;
+        display: none;
+        bottom: 60px;
+        left: 10px;
+        width: 240px;
+        background: white;
+        border: 1px solid #ccc;
+        padding: 10px;
+        font-size: 12px;
+        z-index: 1050;
+        overflow-y: auto;
+        max-height: 60vh;
+      "
+    >
+      <strong>Légende des critères</strong><br /><br />
+
+      <em>Espace perçu (usage)</em><br />
+      <label
+        ><input
+          type="checkbox"
+          class="crit-dim"
+          data-dim="frequence_usage"
+          checked
+        />
+        Fréquence d’usage</label
+      ><br />
+      <small>ponctuel, régulier, quotidien</small><br />
+
+      <label
+        ><input
+          type="checkbox"
+          class="crit-dim"
+          data-dim="mode_usage"
+          checked
+        />
+        Mode d’usage</label
+      ><br />
+      <small>prévu, détourné, créatif</small><br />
+
+      <label
+        ><input
+          type="checkbox"
+          class="crit-dim"
+          data-dim="intensite_usage"
+          checked
+        />
+        Intensité d’usage</label
+      ><br />
+      <small>faible, moyenne, forte</small><br /><br />
+
+      <em>Espace conçu</em><br />
+      <label
+        ><input type="checkbox" class="crit-dim" data-dim="echelle" checked />
+        Échelle</label
+      ><br />
+      <small>micro, méso, macro</small><br />
+
+      <label
+        ><input
+          type="checkbox"
+          class="crit-dim"
+          data-dim="origine_forme"
+          checked
+        />
+        Origine de la forme</label
+      ><br />
+      <small>institutionnelle, singulière, collective</small><br />
+
+      <label
+        ><input
+          type="checkbox"
+          class="crit-dim"
+          data-dim="accessibilite"
+          checked
+        />
+        Accessibilité</label
+      ><br />
+      <small>libre, semi-ouverte, fermée</small><br />
+
+      <label
+        ><input
+          type="checkbox"
+          class="crit-dim"
+          data-dim="visibilite"
+          checked
+        />
+        Visibilité</label
+      ><br />
+      <small>caché, visible, exposé</small><br /><br />
+
+      <em>Espace vécu (expérience)</em><br />
+      <label
+        ><input
+          type="checkbox"
+          class="crit-dim"
+          data-dim="acteurs_visibles"
+          checked
+        />
+        Acteurs visibles</label
+      ><br />
+      <small>habitant·e, institution, collectif, invisible</small><br />
+
+      <label
+        ><input
+          type="checkbox"
+          class="crit-dim"
+          data-dim="rapport_affectif_symbolique"
+          checked
+        />
+        Rapport affectif / symbolique</label
+      ><br />
+    </div>
+
+    <button
+      id="toggle-legend-btn"
+      style="
+        position: absolute;
+        top: 180px;
+        left: 10px;
+        z-index: 1050;
+        background-color: #000;
+        color: white;
+        padding: 10px;
+        border: 1px solid white;
+        cursor: pointer;
+        font-family: &quot;Consolas&quot;, monospace;
+      "
+    >
+      Crtières actifs
+    </button>
+
+    <button
+      id="toggle-location-btn"
+      class="view-toggle-btn"
+      onclick="toggleLocation()"
+      style="
+        position: absolute;
+        top: 90px;
+        right: 10px;
+        z-index: 1050;
+        background: #000;
+        color: #fff;
+        padding: 10px;
+        border: 1px solid #fff;
+        cursor: pointer;
+        font-family: &quot;Consolas&quot;, monospace;
+      "
+    >
+      Voir Toulouse
+    </button>
+
+    <div id="about">
+      <h2>À propos</h2>
+      <p>Description.</p>
+      <p>Developpé par Iness Tkhayyare, LRA ENSA Toulouse</p>
+    </div>
+
+    <!-- Fenêtre modale 3D -->
+    <div id="three-modal" style="display: none">
+      <div id="three-backdrop" class="modal__backdrop"></div>
+
+      <div
+        id="three-window"
+        class="modal__dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-label="3D"
+      >
+        <div class="modal__head">
+          <strong>Visualiseur 3D</strong>
+          <div class="modal__actions">
+            <button
+              id="three-load-btn"
+              class="tab-btn btn-sm"
+              title="Ajouter/Remplacer 3D"
+            >
+              Importer 3D
+            </button>
+            <button
+              id="three-close"
+              class="tab-btn btn-sm danger"
+              title="Fermer"
+            >
+              ×
+            </button>
+          </div>
+        </div>
+        <div id="three-canvas-host" class="three-host"></div>
       </div>
     </div>
-    <div id="splist-body" class="modal__body" style="padding:10px;overflow:auto"></div>
-  </div>
-</div>
 
+    <!-- input fichier caché (recyclé par le bouton Importer 3D) -->
+    <input
+      id="three-file-input"
+      type="file"
+      accept=".glb,.gltf"
+      style="display: none"
+    />
 
+    <!-- ===== Modale Unité de Projet (plein écran) ===== -->
+    <div id="unit-modal" class="modal" style="display: none">
+      <div id="unit-backdrop" class="modal__backdrop"></div>
+      <div class="modal__dialog">
+        <div class="modal__head">
+          <h3 id="unit-title">Unité</h3>
+          <div class="modal__actions">
+            <button id="unit-btn-v1" class="tab-btn btn-sm primary">V1</button>
+            <button id="unit-btn-v2" class="tab-btn btn-sm">Importer V2</button>
+            <button id="unit-btn-compare" class="tab-btn btn-sm">
+              Comparer
+            </button>
+            <button id="unit-close" class="tab-btn btn-sm danger">×</button>
+          </div>
+        </div>
 
-<script defer src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script defer src="https://d3js.org/d3.v7.min.js"></script>
-<script defer src="script.js"></script>
+        <div class="modal__body">
+          <!-- Vue simple -->
+          <div
+            id="unit-single-host"
+            class="three-host"
+            style="display: block"
+          ></div>
 
+          <!-- Vue comparaison -->
+          <div
+            id="unit-compare-host"
+            class="compare-host"
+            style="display: none"
+          >
+            <div class="unit-col">
+              <div id="unit-v1-host" class="three-host"></div>
+            </div>
+            <div class="unit-col">
+              <div id="unit-v2-host" class="three-host"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<script type="importmap">
-{
-  "imports": {
-    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/",
-    "three/addons/renderers/CSS2DRenderer.js":"https://unpkg.com/three@0.160.0/examples/jsm/renderers/CSS2DRenderer.js"
-  }
-}
-</script>
+    <!-- Modale : Enregistrer un pattern -->
+    <div id="save-pattern-modal" class="modal" style="display: none">
+      <div class="modal__backdrop"></div>
+      <div
+        class="modal__dialog"
+        style="
+          width: min(760px, 92vw);
+          height: auto;
+          max-height: 84vh;
+          overflow: auto;
+          background: #111;
+          border: 1px solid #333;
+          border-radius: 8px;
+        "
+      >
+        <div class="modal__head">
+          <strong>Enregistrer ce pattern</strong>
+          <div class="modal__actions">
+            <button id="sp-cancel" class="tab-btn btn-sm danger">
+              Annuler
+            </button>
+            <button id="sp-save" class="tab-btn btn-sm primary">
+              Enregistrer
+            </button>
+          </div>
+        </div>
+        <div class="modal__body" style="padding: 12px">
+          <div style="margin-bottom: 10px">
+            <div style="color: #aaa; font-size: 13px; margin-bottom: 4px">
+              Identifiant (calculé)
+            </div>
+            <input
+              id="sp-key"
+              type="text"
+              disabled
+              style="
+                width: 100%;
+                padding: 8px;
+                background: #0c0c0c;
+                color: #bbb;
+                border: 1px solid #333;
+                border-radius: 4px;
+              "
+            />
+          </div>
+          <div style="margin-bottom: 10px">
+            <div style="color: #aaa; font-size: 13px; margin-bottom: 4px">
+              Nom (affiché)
+            </div>
+            <input
+              id="sp-name"
+              type="text"
+              placeholder="Ex: « P3 — Marché informel »"
+              style="
+                width: 100%;
+                padding: 8px;
+                background: #0c0c0c;
+                color: #fff;
+                border: 1px solid #333;
+                border-radius: 4px;
+              "
+            />
+          </div>
+          <div style="margin-bottom: 10px">
+            <div style="color: #aaa; font-size: 13px; margin-bottom: 4px">
+              Description
+            </div>
+            <textarea
+              id="sp-desc"
+              rows="4"
+              placeholder="Quelques lignes utiles…"
+              style="
+                width: 100%;
+                padding: 8px;
+                background: #0c0c0c;
+                color: #fff;
+                border: 1px solid #333;
+                border-radius: 4px;
+                resize: vertical;
+              "
+            ></textarea>
+          </div>
+          <div style="margin-bottom: 6px; color: #aaa; font-size: 13px">
+            Fragments inclus (<span id="sp-frag-count">0</span>) :
+          </div>
+          <div
+            id="sp-fragments"
+            style="
+              border: 1px solid #222;
+              border-radius: 6px;
+              background: #0b0b0b;
+              padding: 8px;
+              max-height: 240px;
+              overflow: auto;
+              font-size: 13px;
+              color: #ddd;
+            "
+          ></div>
+        </div>
+      </div>
+    </div>
 
+    <!-- Modale : Liste des patterns enregistrés -->
+    <div id="saved-patterns-list-modal" class="modal" style="display: none">
+      <div class="modal__backdrop"></div>
+      <div
+        class="modal__dialog"
+        style="
+          width: min(900px, 92vw);
+          height: min(80vh, 92vh);
+          background: #111;
+          border: 1px solid #333;
+          border-radius: 8px;
+          display: flex;
+          flex-direction: column;
+        "
+      >
+        <div class="modal__head">
+          <strong>Patterns enregistrés (local)</strong>
+          <div class="modal__actions">
+            <button id="splist-close" class="tab-btn btn-sm danger">
+              Fermer
+            </button>
+          </div>
+        </div>
+        <div
+          id="splist-body"
+          class="modal__body"
+          style="padding: 10px; overflow: auto"
+        ></div>
+      </div>
+    </div>
 
+    <!-- Modale : Analogies enregistrées (localStorage) -->
+    <div id="anal-saved-modal" class="modal" style="display: none">
+      <div class="modal__backdrop"></div>
+      <div
+        class="modal__dialog"
+        style="
+          width: min(900px, 92vw);
+          height: min(80vh, 92vh);
+          background: #111;
+          border: 1px solid #333;
+          border-radius: 8px;
+          display: flex;
+          flex-direction: column;
+        "
+      >
+        <div class="modal__head">
+          <strong>Analogies enregistrées (local)</strong>
+          <div class="modal__actions">
+            <button id="anal-saved-close" class="tab-btn btn-sm danger">
+              Fermer
+            </button>
+          </div>
+        </div>
+        <div
+          id="anal-saved-body"
+          class="modal__body"
+          style="padding: 10px; overflow: auto"
+        ></div>
+      </div>
+    </div>
 
-<script type="module">
-import * as THREE from 'three';
-import { OrbitControls }   from 'three/addons/controls/OrbitControls.js';
-import { GLTFLoader }      from 'three/addons/loaders/GLTFLoader.js';
-import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+    <!-- Input fichier caché (utilisé par les boutons "Importer" des 4 cases) -->
+    <input
+      id="anal-file-input"
+      type="file"
+      accept="image/*"
+      style="display: none"
+    />
 
-function fitToObject(camera, controls, object, padding = 1.2) {
-  const box = new THREE.Box3().setFromObject(object);
-  const sizeV = box.getSize(new THREE.Vector3());
-  const center = box.getCenter(new THREE.Vector3());
-  const maxSize = Math.max(sizeV.x, sizeV.y, sizeV.z) * padding;
+    <script defer src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script defer src="https://d3js.org/d3.v7.min.js"></script>
+    <script defer src="script.js"></script>
 
-  const fov = camera.fov * (Math.PI/180);
-  const dist = Math.abs(maxSize / (2 * Math.tan(fov/2)));
-  camera.position.copy(center.clone().add(new THREE.Vector3(dist, dist, dist)));
-  camera.near = Math.max(0.001, dist/100);
-  camera.far  = dist*100;
-  camera.updateProjectionMatrix();
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/",
+          "three/addons/renderers/CSS2DRenderer.js": "https://unpkg.com/three@0.160.0/examples/jsm/renderers/CSS2DRenderer.js"
+        }
+      }
+    </script>
 
-  controls.target.copy(center);
-  controls.update();
-}
+    <script type="module">
+      import * as THREE from "three";
+      import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+      import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+      import {
+        CSS2DRenderer,
+        CSS2DObject,
+      } from "three/addons/renderers/CSS2DRenderer.js";
 
-function createThreeViewer(container) {
-  // --- WebGL ---
-  const renderer = new THREE.WebGLRenderer({ antialias:true });
-  renderer.setPixelRatio(Math.min(devicePixelRatio||1, 2));
-  container.appendChild(renderer.domElement);
+      function fitToObject(camera, controls, object, padding = 1.2) {
+        const box = new THREE.Box3().setFromObject(object);
+        const sizeV = box.getSize(new THREE.Vector3());
+        const center = box.getCenter(new THREE.Vector3());
+        const maxSize = Math.max(sizeV.x, sizeV.y, sizeV.z) * padding;
 
-  // --- Labels (DOM 2D) ---
-  const labelRenderer = new CSS2DRenderer();
-  labelRenderer.domElement.style.position = 'absolute';
-  labelRenderer.domElement.style.inset = '0';
-  labelRenderer.domElement.style.pointerEvents = 'none'; // l’UI reste cliquable derrière
-  container.appendChild(labelRenderer.domElement);
+        const fov = camera.fov * (Math.PI / 180);
+        const dist = Math.abs(maxSize / (2 * Math.tan(fov / 2)));
+        camera.position.copy(
+          center.clone().add(new THREE.Vector3(dist, dist, dist)),
+        );
+        camera.near = Math.max(0.001, dist / 100);
+        camera.far = dist * 100;
+        camera.updateProjectionMatrix();
 
-  // --- Scène de base ---
-  const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x111111);
+        controls.target.copy(center);
+        controls.update();
+      }
 
-  const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 1000);
-  const controls = new OrbitControls(camera, renderer.domElement);
+      function createThreeViewer(container) {
+        // --- WebGL ---
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+        container.appendChild(renderer.domElement);
 
-  scene.add(new THREE.AmbientLight(0xffffff, 0.55));
-  const dir = new THREE.DirectionalLight(0xffffff, 1); dir.position.set(3,5,8); scene.add(dir);
+        // --- Labels (DOM 2D) ---
+        const labelRenderer = new CSS2DRenderer();
+        labelRenderer.domElement.style.position = "absolute";
+        labelRenderer.domElement.style.inset = "0";
+        labelRenderer.domElement.style.pointerEvents = "none"; // l’UI reste cliquable derrière
+        container.appendChild(labelRenderer.domElement);
 
-  const grid = new THREE.GridHelper(10, 10, 0x444444, 0x222222); scene.add(grid);
+        // --- Scène de base ---
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x111111);
 
-  const loader = new GLTFLoader();
-  let currentRoot = null, raf = 0, labelsGroup = null;
+        const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 1000);
+        const controls = new OrbitControls(camera, renderer.domElement);
 
-  function resize() {
-    const w = container.clientWidth || 400, h = container.clientHeight || 300;
-    renderer.setSize(w, h);
-    labelRenderer.setSize(w, h);
-    camera.aspect = w/h; camera.updateProjectionMatrix();
-  }
-  const onResize = () => resize();
-  window.addEventListener('resize', onResize); resize();
+        scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+        const dir = new THREE.DirectionalLight(0xffffff, 1);
+        dir.position.set(3, 5, 8);
+        scene.add(dir);
 
-  const tick = () => {
-    renderer.render(scene, camera);
-    labelRenderer.render(scene, camera);
-    raf = requestAnimationFrame(tick);
-  };
-  tick();
+        const grid = new THREE.GridHelper(10, 10, 0x444444, 0x222222);
+        scene.add(grid);
 
-  function clearLabels() {
-    if (!labelsGroup) return;
-    labelsGroup.children.slice().forEach(obj => {
-      if (obj.element && obj.element.remove) obj.element.remove(); // nettoie le DOM
-    });
-    if (currentRoot && labelsGroup.parent) labelsGroup.parent.remove(labelsGroup);
-    labelsGroup = null;
-  }
+        const loader = new GLTFLoader();
+        let currentRoot = null,
+          raf = 0,
+          labelsGroup = null;
 
-  function buildLabel(text, className) {
-    const div = document.createElement('div');
-    div.className = `three-label ${className}`;
-    div.textContent = text;
-    const obj = new CSS2DObject(div);
-    return obj;
-  }
+        function resize() {
+          const w = container.clientWidth || 400,
+            h = container.clientHeight || 300;
+          renderer.setSize(w, h);
+          labelRenderer.setSize(w, h);
+          camera.aspect = w / h;
+          camera.updateProjectionMatrix();
+        }
+        const onResize = () => resize();
+        window.addEventListener("resize", onResize);
+        resize();
 
-  function setLabelsFromMeta(meta) {
-    // rien à faire si pas d’objet
-    if (!currentRoot) return;
+        const tick = () => {
+          renderer.render(scene, camera);
+          labelRenderer.render(scene, camera);
+          raf = requestAnimationFrame(tick);
+        };
+        tick();
 
-    // Nettoie les anciens
-    clearLabels();
+        function clearLabels() {
+          if (!labelsGroup) return;
+          labelsGroup.children.slice().forEach((obj) => {
+            if (obj.element && obj.element.remove) obj.element.remove(); // nettoie le DOM
+          });
+          if (currentRoot && labelsGroup.parent)
+            labelsGroup.parent.remove(labelsGroup);
+          labelsGroup = null;
+        }
 
-    // Calcule une boîte englobante du modèle
-    const box = new THREE.Box3().setFromObject(currentRoot);
-    const size = box.getSize(new THREE.Vector3());
-    const min  = box.min.clone();
-    const max  = box.max.clone();
-    const cx   = (min.x + max.x)/2;
-    const cz   = (min.z + max.z)/2;
+        function buildLabel(text, className) {
+          const div = document.createElement("div");
+          div.className = `three-label ${className}`;
+          div.textContent = text;
+          const obj = new CSS2DObject(div);
+          return obj;
+        }
 
-    labelsGroup = new THREE.Group();
-    currentRoot.add(labelsGroup);
+        function setLabelsFromMeta(meta) {
+          // rien à faire si pas d’objet
+          if (!currentRoot) return;
 
-    const usages   = Array.isArray(meta?.usages)   ? meta.usages   : [];
-    const discours = Array.isArray(meta?.discours) ? meta.discours : [];
+          // Nettoie les anciens
+          clearLabels();
 
-    const nU = usages.length;
-    const nD = discours.length;
-    const total = nU + nD;
+          // Calcule une boîte englobante du modèle
+          const box = new THREE.Box3().setFromObject(currentRoot);
+          const size = box.getSize(new THREE.Vector3());
+          const min = box.min.clone();
+          const max = box.max.clone();
+          const cx = (min.x + max.x) / 2;
+          const cz = (min.z + max.z) / 2;
 
-    if (total === 0) return;
+          labelsGroup = new THREE.Group();
+          currentRoot.add(labelsGroup);
 
-    // On répartit verticalement A L’INTERIEUR du volume, de min.y -> max.y
-    const spanY = Math.max(0.0001, size.y);
-    let index = 0;
+          const usages = Array.isArray(meta?.usages) ? meta.usages : [];
+          const discours = Array.isArray(meta?.discours) ? meta.discours : [];
 
-    // Usages (rouge) sur une colonne légèrement à gauche
-    usages.forEach((u, i) => {
-      const o = buildLabel(u.text, 'usage');
-      const t = (i+1)/(nU+1);
-      const y = min.y + t * spanY;
-      o.position.set(cx - size.x*0.18, y, cz);
-      labelsGroup.add(o);
-      index++;
-    });
+          const nU = usages.length;
+          const nD = discours.length;
+          const total = nU + nD;
 
-    // Discours (blanc) sur une colonne légèrement à droite
-    discours.forEach((d, i) => {
-      const o = buildLabel(d.text, 'discours');
-      const t = (i+1)/(nD+1);
-      const y = min.y + t * spanY;
-      o.position.set(cx + size.x*0.18, y, cz);
-      labelsGroup.add(o);
-      index++;
-    });
-  }
+          if (total === 0) return;
 
-  async function loadGLBFromBlob(blob) {
-    return new Promise((resolve, reject) => {
-      const url = URL.createObjectURL(blob);
-      loader.load(url, (g) => { URL.revokeObjectURL(url); resolve(g); }, undefined, reject);
-    });
-  }
+          // On répartit verticalement A L’INTERIEUR du volume, de min.y -> max.y
+          const spanY = Math.max(0.0001, size.y);
+          let index = 0;
 
-  async function showBlob(blob) {
-    // supprime ancien modèle + labels
-    if (currentRoot) {
-      clearLabels();
-      scene.remove(currentRoot);
-      currentRoot.traverse(o => {
-        if (o.geometry?.dispose) o.geometry.dispose();
-        if (o.material?.dispose) o.material.dispose?.();
-      });
-    }
-    const gltf = await loadGLBFromBlob(blob);
-    currentRoot = gltf.scene;
-    scene.add(currentRoot);
-    fitToObject(camera, controls, currentRoot);
-  }
+          // Usages (rouge) sur une colonne légèrement à gauche
+          usages.forEach((u, i) => {
+            const o = buildLabel(u.text, "usage");
+            const t = (i + 1) / (nU + 1);
+            const y = min.y + t * spanY;
+            o.position.set(cx - size.x * 0.18, y, cz);
+            labelsGroup.add(o);
+            index++;
+          });
 
-  function dispose() {
-    cancelAnimationFrame(raf);
-    window.removeEventListener('resize', onResize);
-    clearLabels();
-    renderer.dispose();
-    if (renderer.domElement.parentNode === container) container.removeChild(renderer.domElement);
-    if (labelRenderer.domElement.parentNode === container) container.removeChild(labelRenderer.domElement);
-  }
+          // Discours (blanc) sur une colonne légèrement à droite
+          discours.forEach((d, i) => {
+            const o = buildLabel(d.text, "discours");
+            const t = (i + 1) / (nD + 1);
+            const y = min.y + t * spanY;
+            o.position.set(cx + size.x * 0.18, y, cz);
+            labelsGroup.add(o);
+            index++;
+          });
+        }
 
-  return { showBlob, setLabelsFromMeta, dispose };
-}
+        async function loadGLBFromBlob(blob) {
+          return new Promise((resolve, reject) => {
+            const url = URL.createObjectURL(blob);
+            loader.load(
+              url,
+              (g) => {
+                URL.revokeObjectURL(url);
+                resolve(g);
+              },
+              undefined,
+              reject,
+            );
+          });
+        }
 
-// Expose au script principal
-window.__ThreeFactory__ = { createThreeViewer };
-</script>
+        async function showBlob(blob) {
+          // supprime ancien modèle + labels
+          if (currentRoot) {
+            clearLabels();
+            scene.remove(currentRoot);
+            currentRoot.traverse((o) => {
+              if (o.geometry?.dispose) o.geometry.dispose();
+              if (o.material?.dispose) o.material.dispose?.();
+            });
+          }
+          const gltf = await loadGLBFromBlob(blob);
+          currentRoot = gltf.scene;
+          scene.add(currentRoot);
+          fitToObject(camera, controls, currentRoot);
+        }
 
+        function dispose() {
+          cancelAnimationFrame(raf);
+          window.removeEventListener("resize", onResize);
+          clearLabels();
+          renderer.dispose();
+          if (renderer.domElement.parentNode === container)
+            container.removeChild(renderer.domElement);
+          if (labelRenderer.domElement.parentNode === container)
+            container.removeChild(labelRenderer.domElement);
+        }
 
+        return { showBlob, setLabelsFromMeta, dispose };
+      }
 
-<!-- Fine barre noire en bas -->
-<div id="footer-strip" style="
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 20px;              /* ajuste l'épaisseur ici */
-  background: #000;
-  z-index: 3000;             /* au-dessus de la carte */
-    border-top: 0.2px solid #585858; /* contour blanc en haut */
-  pointer-events: none;      /* ne bloque pas les clics sur la carte */
-"></div>
+      // Expose au script principal
+      window.__ThreeFactory__ = { createThreeViewer };
+    </script>
 
+    <!-- Fine barre noire en bas -->
+    <div
+      id="footer-strip"
+      style="
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 20px; /* ajuste l'épaisseur ici */
+        background: #000;
+        z-index: 3000; /* au-dessus de la carte */
+        border-top: 0.2px solid #585858; /* contour blanc en haut */
+        pointer-events: none; /* ne bloque pas les clics sur la carte */
+      "
+    ></div>
 
-<!-- Hint flottant pour la création d'Unité de Projet -->
-<div id="unit-hint" style="
-  position:fixed; top:0; left:0; transform: translate(-50%,-140%);
-  padding:6px 8px; background:#000; color:#fff; border:1px solid #fff;
-  font-family:'Consolas', monospace; font-size:13px; z-index:100000; 
-  display:none; pointer-events:none; white-space:nowrap;">
-  Sélectionnez un fragment sur la carte
-</div>
-
-
-
-</body>
+    <!-- Hint flottant pour la création d'Unité de Projet -->
+    <div
+      id="unit-hint"
+      style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        transform: translate(-50%, -140%);
+        padding: 6px 8px;
+        background: #000;
+        color: #fff;
+        border: 1px solid #fff;
+        font-family: &quot;Consolas&quot;, monospace;
+        font-size: 13px;
+        z-index: 100000;
+        display: none;
+        pointer-events: none;
+        white-space: nowrap;
+      "
+    >
+      Sélectionnez un fragment sur la carte
+    </div>
+  </body>
 </html>
