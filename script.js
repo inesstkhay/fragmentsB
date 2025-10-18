@@ -24,6 +24,7 @@ const toulouseZoom = 15;
 let currentLocation = "montreuil"; // localisation initiale
 let patternThreshold = 5; // nb de critères communs pour former un pattern
 let activePatternFilter = null;
+let _stickyDiscId = null; // nouvel état sticky pour un discours
 
 // Références DOM fréquentes
 const proxemicView = document.getElementById("proxemic-view");
@@ -37,6 +38,12 @@ let patterns = {}; // { P1: {name,elements[],criteria{}}, ... }
 let patternNames = {}; // { P1:'P1', ... } (alias si besoin)
 let discoursLayer = null; // couche de points "discours" (pane dédié)
 let combinedFeatures = []; // concat Montreuil + Mirail (utile patterns-map)
+
+
+// --- Mode d'affichage texte sur la carte patterns ---
+// 'noms' | 'criteres' | 'usages' | 'discours'
+let patternDisplayMode = localStorage.getItem("patternDisplayMode") || "noms";
+
 
 // Panne "discours" au-dessus
 let map = L.map("map").setView(montreuilView, montreuilZoom);
@@ -143,6 +150,8 @@ function ensureImgObserver() {
 ---------------------------------------*/
 function toggleLocation() {
   const locationButton = document.getElementById("toggle-location-btn");
+clearSticky();
+undimAll();
 
   // Choisir/initialiser la carte cible selon la vue courante
   let targetMap = map; // défaut: carte "Fragments"
@@ -269,8 +278,7 @@ function applyFilters() {
   // rafraîchit autres vues selon currentView (les fonctions sont en Partie 2)
   if (
     currentView === "proxemic" ||
-    currentView === "gallery" ||
-    currentView === "gallery-compose"
+    currentView === "gallery" 
   ) {
     const visibleFeatures = allLayers
       .filter((layer) => map.hasLayer(layer))
@@ -278,7 +286,6 @@ function applyFilters() {
     patterns = identifyPatterns(visibleFeatures);
     if (currentView === "gallery") showGalleryView();
     else if (currentView === "proxemic") showProxemicView();
-    else if (currentView === "gallery-compose") showGalleryComposeView();
   }
 }
 
@@ -294,9 +301,7 @@ document.querySelectorAll(".filter-zone").forEach((cb) => {
       patterns = identifyPatterns(visibleFeatures);
       if (currentView === "gallery") showGalleryView();
       else if (currentView === "proxemic") showProxemicView();
-    } else if (currentView === "critical") {
-      showCriticalView(); // (Partie 2)
-    }
+    } 
 
     if (currentView === "patterns-map") {
       renderPatternBaseGrey(); // (Partie 2)
@@ -499,7 +504,7 @@ function recomputePatternsAndRefreshViews() {
   else if (currentView === "patterns-map") {
     renderPatternBaseGrey();
     refreshPatternsMap();
-  } else if (currentView === "gallery-compose") showGalleryComposeView();
+  } 
 }
 
 function hookLegendCheckboxes() {
@@ -1163,55 +1168,142 @@ function showGalleryView() {
 /*==================================================
 =                  VUE PROXÉMIQUE                  =
 ==================================================*/
+
+
+/* ===========================
+   AGRÉGATION PAR PATTERN
+   =========================== */
+
+// normalise une chaîne pour agréger (clé) tout en gardant l'original (label)
+function _normKey(s) {
+  return String(s || "")
+    .trim()
+    .replace(/\s+/g, " ")
+    .toLowerCase();
+}
+
+// renvoie { tokens: Array<{key,label,count,family,fragIds:Set<string> }>, maxCount }
+function collectAggregatedTokens(elements, mode, byId) {
+  const map = new Map(); // key -> { label, count, family, fragIds:Set }
+
+  function addToken(rawLabel, family, fragId) {
+    const key = _normKey(rawLabel);
+    if (!key) return;
+    const rec = map.get(key) || {
+      label: rawLabel.trim(),
+      count: 0,
+      family: family || "autre",
+      fragIds: new Set(),
+    };
+    rec.count += 1;
+    if (fragId) rec.fragIds.add(fragId);
+    // si plusieurs variantes de casse existent, on garde la + longue (affichage)
+    if (rawLabel.length > rec.label.length) rec.label = rawLabel;
+    map.set(key, rec);
+  }
+
+  // --- remonte le contenu selon le mode ---
+  (elements || []).forEach((id) => {
+    const f = byId.get(id);
+    if (!f || f.properties?.isDiscourse) return;
+    if (!isFeatureInActiveZones || !isFeatureInActiveZones(f)) return;
+
+    const fid = f.properties?.id || id;
+
+    if (mode === "noms") {
+      const name = f.properties?.name || fid;
+      addToken(name, "autre", fid);
+    }
+
+    if (mode === "usages") {
+      const meta = loadFragmentMeta(fid) || { usages: [] };
+      (meta.usages || [])
+        .map((u) => (u?.text || "").trim())
+        .filter(Boolean)
+        .forEach((line) => addToken(line, "usage", fid));
+    }
+
+    if (mode === "discours") {
+      // 1) discours "proches" (geojson "discours" au même point)
+      if (discoursLayer) {
+        discoursLayer.eachLayer((grp) => {
+          const df = grp.feature;
+          if (!df) return;
+          const sameSpot =
+            f.geometry?.type === "Point" &&
+            df.geometry?.type === "Point" &&
+            df.geometry.coordinates[0] === f.geometry.coordinates[0] &&
+            df.geometry.coordinates[1] === f.geometry.coordinates[1];
+          if (!sameSpot) return;
+          const auteur = (df.properties?.auteur || "").trim();
+          const contenu = (df.properties?.contenu || "").trim();
+          if (!auteur && !contenu) return;
+          const line = (auteur ? auteur + " : " : "") + contenu;
+          addToken(line, "discours", fid);
+        });
+      }
+      // 2) discours saisis côté utilisateur
+      const meta = loadFragmentMeta(fid) || { discours: [] };
+      (meta.discours || [])
+        .map((d) => (d?.text || "").trim())
+        .filter(Boolean)
+        .forEach((line) => addToken(line, "discours", fid));
+    }
+
+    if (mode === "criteres") {
+      // on réutilise tes clés actives et familles
+      activeCriteriaKeysForFeature(f).forEach((k) => {
+        const label = CRITERIA_LABELS[k] || k.replace(/_/g, " ");
+        const fam = CRIT_FAMILY(k) || "autre";
+        addToken(label, fam, fid);
+      });
+    }
+  });
+
+  // trie par fréquence desc, renvoie un tableau
+  const tokens = Array.from(map.values()).sort((a, b) => b.count - a.count);
+  const maxCount = tokens[0]?.count || 1;
+  return { tokens, maxCount };
+}
+
+// échelle de taille de police (pondération “nuage”)
+function scaleFont(count, maxCount, { minPx = 12, maxPx = 28, gamma = 0.6 } = {}) {
+  if (maxCount <= 1) return minPx;
+  const t = Math.max(0, Math.min(1, (count - 1) / (maxCount - 1)));
+  const eased = Math.pow(t, gamma); // courbe douce
+  return Math.round(minPx + eased * (maxPx - minPx));
+}
+
+
+
 function showProxemicView() {
-  // Nettoie la vue
+  // 0) reset la vue
   proxemicView.innerHTML = "";
 
-  // Dimensions de la surface
-  const viewWidth = proxemicView.clientWidth || window.innerWidth;
+  // 1) dimensions de la surface et constantes UI
+  const viewWidth  = proxemicView.clientWidth  || window.innerWidth;
   const viewHeight = proxemicView.clientHeight || window.innerHeight;
 
-  // --- Paramètres visuels (resserrés, sans bordures)
-  const TILE_W = 60; // largeur d’une vignette (px)
-  const TILE_H = 45; // hauteur d’une vignette (px) => format 4:3
-  const GAP = 2; // espace entre vignettes (px)
-  const PAD = 2; // marge intérieure du cluster (px)
-  const COLLIDE_PAD = 2; // marge collision (px) => clusters plus proches
+  // marges “boîte” des clusters (on garde une esthétique resserrée)
+  const PAD         = 6;   // padding interne du cluster
+  const COLLIDE_PAD = 4;   // padding de collision entre clusters
 
-  // Catégories (mêmes clés qu'avant)
+  // --- Catégories (identiques à ta version) ---
   const categories = {
     percu: [
-      "frequence_usage_ponctuel",
-      "frequence_usage_regulier",
-      "frequence_usage_quotidien",
-      "mode_usage_prevu",
-      "mode_usage_detourne",
-      "mode_usage_creatif",
-      "intensite_usage_faible",
-      "intensite_usage_moyenne",
-      "intensite_usage_forte",
-      "intensite_usage_saturee",
+      "frequence_usage_ponctuel","frequence_usage_regulier","frequence_usage_quotidien",
+      "mode_usage_prevu","mode_usage_detourne","mode_usage_creatif",
+      "intensite_usage_faible","intensite_usage_moyenne","intensite_usage_forte","intensite_usage_saturee",
     ],
     concu: [
-      "echelle_micro",
-      "echelle_meso",
-      "echelle_macro",
-      "origine_forme_institutionnelle",
-      "origine_forme_singuliere",
-      "origine_forme_collective",
-      "accessibilite_libre",
-      "accessibilite_semi_ouverte",
-      "accessibilite_fermee",
-      "visibilite_cachee",
-      "visibilite_visible",
-      "visibilite_exposee",
+      "echelle_micro","echelle_meso","echelle_macro",
+      "origine_forme_institutionnelle","origine_forme_singuliere","origine_forme_collective",
+      "accessibilite_libre","accessibilite_semi_ouverte","accessibilite_fermee",
+      "visibilite_cachee","visibilite_visible","visibilite_exposee",
     ],
     vecu: [
-      "acteurs_visibles_habitant",
-      "acteurs_visibles_institution",
-      "acteurs_visibles_collectif",
-      "acteurs_visibles_invisible",
-      "rapport_affectif_symbolique",
+      "acteurs_visibles_habitant","acteurs_visibles_institution","acteurs_visibles_collectif",
+      "acteurs_visibles_invisible","rapport_affectif_symbolique",
     ],
   };
   function getDominantCategory(criteria) {
@@ -1221,234 +1313,207 @@ function showProxemicView() {
       if (categories.concu.includes(key)) counts.concu++;
       if (categories.vecu.includes(key)) counts.vecu++;
     }
-    return Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0];
+    return Object.entries(counts).sort((a,b)=>b[1]-a[1])[0][0];
   }
 
-  // Positions cibles des 3 pôles
+  // 2) positions des 3 pôles
   const positions = {
     percu: { x: viewWidth * 0.25, y: viewHeight * 0.35 },
     concu: { x: viewWidth * 0.75, y: viewHeight * 0.35 },
-    vecu: { x: viewWidth * 0.5, y: viewHeight * 0.8 },
+    vecu:  { x: viewWidth * 0.50, y: viewHeight * 0.80 },
   };
 
-  // Accès rapide aux features par id (pour récupérer la 1re photo)
-  const allFeatures = [...(dataGeojson || []), ...(datamGeojson || [])];
-  const byId = new Map(allFeatures.map((f) => [f.properties.id, f]));
+  // 3) index rapide des features par id
+  const allFeatures = [ ...(dataGeojson || []), ...(datamGeojson || []) ];
+  const byId = new Map(allFeatures.map(f => [f?.properties?.id, f]));
 
-  function firstPhotoSrc(fragmentId) {
-    const f = byId.get(fragmentId);
-    const list = normalizePhotos(f?.properties?.photos);
-    return cleanPhotoUrl(list[0] || "");
+  // 4) on construit un "node" par pattern, avec une boîte (w,h) qui accueillera le nuage
+  //    Heuristique simple : largeur = 320 à 560 selon nb d’éléments, hauteur corrélée
+  function boxForCount(n) {
+    const w = Math.max(320, Math.min(560, 160 + n * 24));  // largeur cluster
+    const h = Math.max(160, Math.min(420, 120 + n * 20));  // hauteur cluster
+    return { w, h };
   }
 
-  // Calcule une grille compacte (cols ~ sqrt(n))
-  function gridDims(n) {
-    const cols = Math.ceil(Math.sqrt(n));
-    const rows = Math.ceil(n / cols);
-    return { cols, rows };
-  }
-
-  // Prépare les "nodes" (1 node = 1 pattern) avec dimensions du cluster
   const nodes = Object.entries(patterns || {}).map(([key, pattern]) => {
     const n = (pattern.elements || []).length;
-    const { cols, rows } = gridDims(Math.max(n, 1));
-    const w = cols * TILE_W + (cols - 1) * GAP;
-    const h = rows * TILE_H + (rows - 1) * GAP;
-    const category = getDominantCategory(pattern.criteria);
+    const { w, h } = boxForCount(n);
+    const category = getDominantCategory(pattern.criteria || {});
     return {
       id: key,
       criteria: pattern.criteria || {},
       elements: pattern.elements || [],
       category,
-      cols,
-      rows,
-      w,
-      h,
+      w, h,
       x: positions[category].x + (Math.random() - 0.5) * 20,
       y: positions[category].y + (Math.random() - 0.5) * 20,
     };
   });
 
-  // Surface zoomable
-  const svgWidth = viewWidth * 2.2;
+  // 5) surface SVG zoomable
+  const svgWidth  = viewWidth  * 2.2;
   const svgHeight = viewHeight * 2.2;
-
-  const svg = d3
-    .select("#proxemic-view")
+  const svg = d3.select("#proxemic-view")
     .append("svg")
     .attr("width", svgWidth)
     .attr("height", svgHeight)
     .attr("viewBox", `0 0 ${svgWidth} ${svgHeight}`)
-    .call(
-      d3.zoom().on("zoom", (event) => {
-        root.attr("transform", event.transform);
-      })
-    );
-
+    .call(d3.zoom().on("zoom", (event) => { root.attr("transform", event.transform); }));
   const root = svg.append("g");
 
-  // Simulation : clusters plus resserrés (forces plus fortes, faible padding)
-  const collideRadius = (d) =>
-    0.5 * Math.hypot(d.w + 2 * PAD, d.h + 2 * PAD) + COLLIDE_PAD;
-  const simulation = d3
-    .forceSimulation(nodes)
-    .force("x", d3.forceX((d) => positions[d.category].x).strength(0.45))
-    .force("y", d3.forceY((d) => positions[d.category].y).strength(0.45))
+  // 6) simulation : regroupe les clusters par pôle et évite les chevauchements
+  const collideRadius = d => 0.5 * Math.hypot(d.w + 2*PAD, d.h + 2*PAD) + COLLIDE_PAD;
+  const simulation = d3.forceSimulation(nodes)
+    .force("x", d3.forceX(d => positions[d.category].x).strength(0.45))
+    .force("y", d3.forceY(d => positions[d.category].y).strength(0.45))
     .force("collide", d3.forceCollide(collideRadius).iterations(2))
     .stop();
-
   for (let i = 0; i < 160; ++i) simulation.tick();
 
-  // Couches : clusters + overlay UI pour les étiquettes pôles (au-dessus)
+  // 7) couches : clusters + overlay des étiquettes “Espace perçu/conçu/vécu”
   const clustersLayer = root.append("g").attr("class", "clusters");
-  const labelsLayer = root
-    .append("g")
-    .attr("class", "ui-overlay")
-    .style("pointer-events", "none");
+  const labelsLayer   = root.append("g").attr("class", "ui-overlay").style("pointer-events", "none");
 
-  // Groupes "cluster" (1 par pattern)
+  // 8) dessiner chaque cluster
   const clusters = clustersLayer
     .selectAll(".pattern-node")
     .data(nodes)
     .join("g")
     .attr("class", "pattern-node")
-    .attr("transform", (d) => `translate(${d.x},${d.y})`)
+    .attr("transform", d => `translate(${d.x},${d.y})`)
     .style("cursor", "pointer")
     .on("click", (_ev, d) => {
-      showDetails({
-        isPattern: true,
-        patternKey: d.id,
-        elements: d.elements,
-        criteria: d.criteria,
-      });
+      // ouvre le panneau latéral existant
+      showDetails({ isPattern:true, patternKey:d.id, elements:d.elements, criteria:d.criteria });
     });
 
-  // Fond du cluster — sans bordure
-  clusters
-    .append("rect")
-    .attr("x", (d) => -(d.w / 2) - PAD)
-    .attr("y", (d) => -(d.h / 2) - PAD)
-    .attr("width", (d) => d.w + 2 * PAD)
-    .attr("height", (d) => d.h + 2 * PAD)
+  // fond de cluster (boîte sombre sans bordure — cohérent avec ta charte)
+  clusters.append("rect")
+    .attr("x", d => -(d.w/2) - PAD)
+    .attr("y", d => -(d.h/2) - PAD)
+    .attr("width",  d => d.w + 2*PAD)
+    .attr("height", d => d.h + 2*PAD)
     .attr("fill", "#0f0f0f")
     .attr("stroke", "none");
 
-  // Grille d’images (SVG <image>) + cases grises sans image
-  clusters.each(function (d) {
-    const g = d3
-      .select(this)
-      .append("g")
-      .attr("transform", `translate(${-d.w / 2},${-d.h / 2})`);
+// 9) CONTENU = WORD-CLOUD AGRÉGÉ : foreignObject avec tokens pondérés
+clusters.each(function (d) {
+  const g = d3
+    .select(this)
+    .append("foreignObject")
+    .attr("x", -(d.w / 2))
+    .attr("y", -(d.h / 2))
+    .attr("width", d.w)
+    .attr("height", d.h);
 
-    const tiles = d.elements.map((id, i) => ({
-      id,
-      col: i % d.cols,
-      row: Math.floor(i / d.cols),
-      src: firstPhotoSrc(id),
-    }));
+  const div = g
+    .append("xhtml:div")
+    .style("width", d.w + "px")
+    .style("height", d.h + "px")
+    .style("overflow", "auto")
+    .style("padding", "6px")
+    .style("display", "flex")
+    .style("flex-wrap", "wrap")
+    .style("align-content", "flex-start")
+    .style("gap", "8px");
 
-    // Cases sans image : carré gris (aucune bordure)
-    g.selectAll("rect.tile-bg")
-      .data(tiles)
-      .join("rect")
-      .attr("class", "tile-bg")
-      .attr("x", (t) => t.col * (TILE_W + GAP))
-      .attr("y", (t) => t.row * (TILE_H + GAP))
-      .attr("width", TILE_W)
-      .attr("height", TILE_H)
-      .attr("fill", "#2a2a2a")
-      .attr("stroke", "none");
+  // === AGRÉGATION PAR PATTERN, PONDÉRATION PAR FRÉQUENCE ===
+  // index rapide (déjà prêt plus haut)
+  const byId = new Map([...(dataGeojson || []), ...(datamGeojson || [])].map(f => [f?.properties?.id, f]));
+  const { tokens, maxCount } = collectAggregatedTokens(d.elements, patternDisplayMode, byId);
 
-    // Images (aucune bordure non plus)
-    g.selectAll("image.tile-img")
-      .data(tiles.filter((t) => t.src))
-      .join("image")
-      .attr("class", "tile-img")
-      .attr("x", (t) => t.col * (TILE_W + GAP))
-      .attr("y", (t) => t.row * (TILE_H + GAP))
-      .attr("width", TILE_W)
-      .attr("height", TILE_H)
-      .attr("preserveAspectRatio", "xMidYMid slice")
-      .attr("href", (t) => t.src);
+  // Limite soft du nombre d’items pour éviter l’overload visuel
+  // (fonction de la surface du bloc — n’hésite pas à ajuster)
+  const area = d.w * d.h;
+  const maxItems = Math.max(12, Math.min(80, Math.floor(area / 2600)));
+  const subset = tokens.slice(0, maxItems);
+
+  subset.forEach((tok) => {
+    // taille selon la fréquence (min/max adaptables)
+    const fs = scaleFont(tok.count, maxCount, {
+      minPx: (patternDisplayMode === "criteres") ? 12 : 12,
+      maxPx: (patternDisplayMode === "criteres") ? 26 : 28,
+      gamma: 0.65,
+    });
+
+    // Élément HTML
+    const span = document.createElement("span");
+
+    if (patternDisplayMode === "criteres") {
+  // Critères : texte blanc, sans fond ni bordure
+  span.className = `token token--${tok.family || "autre"}`;
+  span.style.color = "#fff";
+  span.style.background = "transparent";
+  span.style.border = "none";
+} else {
+  // Usages / Discours / Noms : texte blanc, fond transparent
+  span.className = "agg-token";
+  span.style.color = "#fff";
+  span.style.background = "transparent";
+  span.style.border = "none";
+  span.style.lineHeight = "1.15";
+}
+
+
+    span.textContent = tok.label;
+    span.style.fontSize = fs + "px";
+    span.style.cursor = "default";
+    span.title = `${tok.count} occurrence${tok.count > 1 ? "s" : ""} • ${tok.fragIds.size} fragment${tok.fragIds.size > 1 ? "s" : ""}`;
+
+    // (option) Clic sur le token : ouvre le panneau du pattern (déjà sur clic cluster),
+    // ou bien ouvre le 1er fragment contributeur (décommente si tu préfères)
+    // span.addEventListener("click", () => {
+    //   const firstFragId = Array.from(tok.fragIds)[0];
+    //   if (!firstFragId) return;
+    //   const feat = byId.get(firstFragId);
+    //   if (feat) showDetails(feat.properties);
+    // });
+
+    div.node().appendChild(span);
   });
+});
 
 
-  // Étiquettes des 3 pôles — placées en OVERLAY (toujours devant)
+  // 10) Titre des 3 pôles (overlay)
   function addLabelWithBackground(layer, x, y, textContent) {
     const group = layer.append("g").attr("transform", `translate(${x}, ${y})`);
-    const text = group
-      .append("text")
+    const text = group.append("text")
       .text(textContent)
-      .attr("x", 0)
-      .attr("y", 0)
+      .attr("x", 0).attr("y", 0)
       .style("fill", "#fff")
       .style("font-size", "16px")
       .style("font-weight", "800")
       .style("text-anchor", "middle")
       .attr("dominant-baseline", "middle");
     const bbox = text.node().getBBox();
-    group
-      .insert("rect", "text")
+    group.insert("rect", "text")
       .attr("x", bbox.x - 8)
       .attr("y", bbox.y - 4)
       .attr("width", bbox.width + 16)
       .attr("height", bbox.height + 8)
       .attr("fill", "rgba(0,0,0,0.85)")
-      .attr("rx", 4)
-      .attr("ry", 4);
+      .attr("rx", 4).attr("ry", 4);
   }
-  addLabelWithBackground(
-    labelsLayer,
-    positions.percu.x,
-    positions.percu.y - 80,
-    "Espace perçu"
-  );
-  addLabelWithBackground(
-    labelsLayer,
-    positions.concu.x,
-    positions.concu.y - 80,
-    "Espace conçu"
-  );
-  addLabelWithBackground(
-    labelsLayer,
-    positions.vecu.x,
-    positions.vecu.y + 80,
-    "Espace vécu"
-  );
-
+  addLabelWithBackground(labelsLayer, positions.percu.x, positions.percu.y - 80, "Espace perçu");
+  addLabelWithBackground(labelsLayer, positions.concu.x, positions.concu.y - 80, "Espace conçu");
+  addLabelWithBackground(labelsLayer, positions.vecu.x,  positions.vecu.y + 80, "Espace vécu");
   labelsLayer.raise();
 }
+
 
 /*==================================================
 =               GESTION DES VUES (UI)              =
 ==================================================*/
-function setView(viewId) {
-  currentView = viewId;
-  const views = {
-    map: document.getElementById("map"),
-    proxemic: document.getElementById("proxemic-view"),
-    gallery: document.getElementById("gallery-view"),
-    critical: document.getElementById("critical-view"),
-  };
-  Object.entries(views).forEach(([key, el]) => {
-    el.style.display = key === viewId ? "block" : "none";
-  });
-  if (viewId === "proxemic") showProxemicView();
-  if (viewId === "gallery") showGalleryView();
-  if (viewId === "critical") showCriticalView();
-  updateInterfaceElements(viewId);
-}
 
 function updateInterfaceElements(viewId) {
   const legendBtn = document.getElementById("toggle-legend-btn");
   const locationBtn = document.getElementById("toggle-location-btn");
   const similarityControls = document.getElementById("similarity-controls");
 
-  // La légende est utile pour ces vues (mais pas pour Analogies)
+  // La légende est utile pour ces vues 
   const wantsLegend =
     viewId === "proxemic" ||
     viewId === "gallery" ||
-    viewId === "gallery-compose" ||
     viewId === "patterns-map";
 
   if (legendBtn) legendBtn.style.display = wantsLegend ? "block" : "none";
@@ -1458,15 +1523,18 @@ function updateInterfaceElements(viewId) {
         ? "block"
         : "none";
 
-// Le slider de similarité n’apparaît PAS sur Analogies ni sur Composition
-if (similarityControls) {
-  similarityControls.style.display =
-    (viewId === "analogies" || viewId === "gallery-compose")
-      ? "none"
-      : wantsLegend
-        ? "block"
-        : similarityControls.style.display;
+
+  updateTextualModeVisibility();
 }
+
+// Affiche/masque la box "Affichage : Noms / Critères / Usages / Discours"
+function updateTextualModeVisibility() {
+  const box = document.getElementById('textual-mode');
+  if (!box) return;
+
+  // visible seulement sur Carte (patterns-map) et Proxémie
+  const shouldShow = (currentView === 'patterns-map' || currentView === 'proxemic');
+  box.style.display = shouldShow ? 'flex' : 'none';
 }
 
 const topTabs = document.querySelectorAll(".top-tab");
@@ -1480,8 +1548,6 @@ const VIEWS = {
     "patterns-map": "patterns-map",
     proxemic: "proxemic-view",
     gallery: "gallery-view",
-    "gallery-compose": "gallery-compose-view",
-    analogies: "analogies-view",
   },
 };
 
@@ -1532,8 +1598,6 @@ function setSubTab(subName) {
   if (subName === "proxemic") currentView = "proxemic";
   else if (subName === "gallery") currentView = "gallery";
   else if (subName === "patterns-map") currentView = "patterns-map";
-  else if (subName === "gallery-compose") currentView = "gallery-compose";
-  else if (subName === "analogies") currentView = "analogies";
 
   subTabs.forEach((btn) =>
     btn.classList.toggle("active", btn.dataset.sub === subName)
@@ -1552,17 +1616,8 @@ function setSubTab(subName) {
     showProxemicView();
   } else if (subName === "gallery") {
     showGalleryView();
-  } else if (subName === "gallery-compose") {
-    showGalleryComposeView();
-  } else if (subName === "analogies") {
-    initAnalogiesOnce();
-    showAnalogiesView();
   }
 
-  // --- 🔎 slider de similarité : pas sur "Composition" ---
-  const similarityControls = document.getElementById("similarity-controls");
-  similarityControls.style.display =
-    subName === "gallery-compose" ? "none" : "block";
 
   updateInterfaceElements(currentView);
 }
@@ -1586,6 +1641,8 @@ subTabs.forEach((btn) =>
 setTopTab("fragments");
 currentView = "map";
 updateInterfaceElements("map");
+updateTextualModeVisibility();
+
 
 /*==================================================
 =                  ABOUT (Info)                    =
@@ -1602,6 +1659,21 @@ document.addEventListener("DOMContentLoaded", () => {
   if (infoBtn) infoBtn.addEventListener("click", toggleAbout);
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && aboutBox.style.display === "block") toggleAbout();
+  });
+   const radios = document.querySelectorAll('#textual-mode input[name="pmode"]');
+  radios.forEach(r => {
+    if (r.value === patternDisplayMode) r.checked = true;
+    r.addEventListener("change", () => {
+      patternDisplayMode = r.value;
+      localStorage.setItem("patternDisplayMode", patternDisplayMode);
+      if (currentView === "patterns-map") {
+        renderPatternBaseGrey();
+        clearSticky();
+        refreshPatternsMap();
+      } else if (currentView === "proxemic") {
+        showProxemicView(); // ← ajoute cette ligne pour que le mode texte s'applique aussi en Proxémie
+      }
+    });
   });
 });
 
@@ -1698,47 +1770,134 @@ function getPatternsForFragment(fragmentId) {
   return result;
 }
 
+
+// Échelle de police agressive (petit longtemps, puis grossit vite)
+const LABEL_SIZE_CFG = {
+  minZoom: 9,
+  maxZoom: 20,
+  minPx: 1,   // avant 0.75
+  maxPx: 26,    // avant 30 → beaucoup moins massif
+  gamma: 2.6    // croissance plus douce
+};
+
+function applyLabelSize(){
+  if (!patternMap) return;
+  const {minZoom, maxZoom, minPx, maxPx, gamma} = LABEL_SIZE_CFG;
+  const z = Math.max(minZoom, Math.min(maxZoom, patternMap.getZoom()));
+  const t = (z - minZoom) / (maxZoom - minZoom || 1);
+  const eased = Math.pow(t, gamma);
+  const px = Math.max(0.5, Math.round(minPx + eased * (maxPx - minPx)));
+  const host = document.getElementById('patterns-map');
+  if (host) host.style.setProperty('--fragLabelSize', px + 'px');
+}
+
+
 function initPatternMapOnce() {
   if (patternMap) return;
+
   patternMap = L.map("patterns-map", {
-    zoomControl: true,
-    attributionControl: true,
-  }).setView(montreuilView, montreuilZoom);
+  zoomControl: true,
+  attributionControl: true,
+  zoomAnimation: true,         // ⟵ true
+  markerZoomAnimation: true    // ⟵ true
+}).setView(montreuilView, montreuilZoom);
+
   L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png", {
     attribution: "© OpenStreetMap contributors, © CartoDB",
   }).addTo(patternMap);
-  patternBaseLayer = L.layerGroup().addTo(patternMap);
 
-  fetch("data/contour.geojson")
-    .then((r) => r.json())
-    .then((contour) => {
-      L.geoJSON(contour, {
-        style: { color: "#919090", weight: 2, opacity: 0.8, fillOpacity: 0 },
-      }).addTo(patternMap);
-    });
+  patternBaseLayer  = L.layerGroup().addTo(patternMap);
   patternImageLayer = L.layerGroup().addTo(patternMap);
-  patternLinkLayer = L.layerGroup().addTo(patternMap);
+  patternLinkLayer  = L.layerGroup().addTo(patternMap);
 
   patternMap.createPane("pane-links");
-  patternMap.getPane("pane-links").style.zIndex = 800; // > markerPane (600) et > tooltips (650)
+  patternMap.getPane("pane-links").style.zIndex = 800;
 
-  patternMap.on("zoomend moveend", () => {
+  patternMap.on("moveend", () => {
     if (_stickyFragId) drawLinksForFragment(_stickyFragId);
   });
 
-  // clic "extérieur" = revient au mode initial
   patternMap.on("click", (e) => {
-    // si on a cliqué sur le fond (pas sur un marker), on désactive le sticky
-    if (!e.originalEvent?.target?.closest(".frag-thumb")) {
-      clearSticky();
-    }
+    if (!e.originalEvent?.target?.closest(".frag-thumb, .frag-label")) clearSticky();
   });
 
-  // touche ESC pour annuler le sticky
+
+
+  patternMap.on('zoomend', updateFarOpacity);
+patternMap.on('moveend', updateFarOpacity);
+patternMap.on('movestart', () => { if (!_stickyFragId) undimAll(); });
+patternMap.on('zoomstart', () => { if (!_stickyFragId) undimAll(); });
+patternMap.on('zoomend',   () => { if (!_stickyFragId) undimAll(); });
+
+
   document.addEventListener("keydown", (ev) => {
     if (currentView === "patterns-map" && ev.key === "Escape") clearSticky();
   });
+
+  fetch("data/contour.geojson")
+    .then(r => r.json())
+    .then(contour => {
+      L.geoJSON(contour, { style: { color:"#919090", weight:2, opacity:0.8, fillOpacity:0 }})
+       .addTo(patternMap);
+    });
+
+  // taille initiale et écouteurs liés au zoom/pan
+  applyLabelSize();
+  patternMap.on('zoom', applyLabelSize);
+  patternMap.on('zoomend', () => {
+    applyLabelSize();
+    layoutWordCloud();
+  });
+  patternMap.on('moveend', () => {
+  if (_stickyFragId) drawLinksForFragment(_stickyFragId);
+ });
 }
+
+
+function _isFar(latlng) {
+  const centerPx    = patternMap.latLngToLayerPoint(latlng);
+  const mapCenterPx = patternMap.latLngToLayerPoint(patternMap.getCenter());
+  const dist = Math.hypot(centerPx.x - mapCenterPx.x, centerPx.y - mapCenterPx.y);
+  // seuil adaptable au zoom si tu veux : e.g. 600 * (14 / patternMap.getZoom())
+  return dist > 600;
+}
+
+function updateFarOpacity() {
+  if (!patternMap || !patternImageLayer) return;
+  patternImageLayer.eachLayer((m) => {
+    const el = m.getElement?.()?.querySelector(".frag-label");
+    if (!el) return;
+    if (_isFar(m.getLatLng())) el.classList.add("far");
+    else el.classList.remove("far");
+  });
+}
+
+
+function makeDiscourseHTML(auteur, contenu, discId){
+  const author = (auteur || "").trim();
+  const full   = (contenu || "").trim();
+
+  // 1 phrase max pour l’aperçu, sinon coupe à ~120 caractères
+  const firstDot = full.indexOf(".");
+  const rawShort = (firstDot > 40 && firstDot < 140) ? full.slice(0, firstDot+1)
+                 : full.slice(0, 120);
+  const short = rawShort.replace(/\s+$/,"") + " (…)";  // ← le fameux “(…)”
+
+  // structure : short par défaut, full au hover/open
+  return `
+    <div class="frag-label mode-discours" data-disc-id="${discId}">
+      ${author ? `<span class="disc-author">${author} :</span>` : ""}
+      <span class="disc-short">${short}</span>
+      <span class="disc-full">${full}</span>
+    </div>
+  `;
+}
+
+
+
+// placement interne non-chevauchant pour les mots d'un fragment
+
+
 
 function getFeatureCenter(feature) {
   if (feature.geometry?.type === "Point") {
@@ -1773,33 +1932,65 @@ function centerForFragmentId(id) {
 function clearPatternLinks() {
   if (patternLinkLayer) patternLinkLayer.clearLayers();
 }
+
+
+function _getMarkerIconEl(marker) {
+  // renvoie l'élément .frag-label s'il existe, sinon .frag-thumb
+  const root = marker.getElement?.();
+  if (!root) return null;
+  return root.querySelector(".frag-label") || root.querySelector(".frag-thumb");
+}
+
+
+
+``
+
+
+
 function clearSticky() {
   _stickyFragId = null;
+  _stickyDiscId = null; // ⟵ add
+
   clearPatternLinks();
   if (!patternImageLayer) return;
+
+  // fragments
   patternImageLayer.eachLayer((m) => {
-    const el = m.getElement?.()?.querySelector?.(".frag-thumb");
+    const el = _getMarkerIconEl(m);
     if (el) el.classList.remove("--active");
   });
   undimAll();
+
+  // discours (dans la couche dédiée)
+  if (patternDiscourseTextLayer) {
+    patternDiscourseTextLayer.eachLayer((m) => {
+      const root = m.getElement?.();
+      const el = root?.querySelector(".frag-label.mode-discours");
+      if (el) {
+        el.classList.remove("is-open", "is-hover", "--active");
+      }
+    });
+  }
 }
+
+
 
 function undimAll() {
   if (!patternImageLayer) return;
   patternImageLayer.eachLayer((m) => {
-    const el = m.getElement?.()?.querySelector?.(".frag-thumb");
+    const el = _getMarkerIconEl(m);
     if (el) el.classList.remove("dim");
   });
 }
 
+
 function dimUnrelated(srcFragId, allowedPatterns = null) {
   if (!patternImageLayer) return;
-
   const related = new Set([srcFragId]);
-  let pList =
-    allowedPatterns && allowedPatterns.length
-      ? allowedPatterns.slice()
-      : getPatternsForFragment(srcFragId) || [];
+
+  let pList = allowedPatterns && allowedPatterns.length
+    ? allowedPatterns.slice()
+    : getPatternsForFragment(srcFragId) || [];
 
   pList.forEach((pName) => {
     (patterns[pName]?.elements || []).forEach((id) => related.add(id));
@@ -1807,12 +1998,13 @@ function dimUnrelated(srcFragId, allowedPatterns = null) {
 
   patternImageLayer.eachLayer((m) => {
     const id = m._fragId;
-    const el = m.getElement?.()?.querySelector?.(".frag-thumb");
+    const el = _getMarkerIconEl(m);
     if (!el) return;
     if (!related.has(id)) el.classList.add("dim");
     else el.classList.remove("dim");
   });
 }
+
 
 function renderPatternBaseGrey() {
   if (!patternMap) return;
@@ -1857,6 +2049,216 @@ function renderPatternBaseGrey() {
   }
 }
 
+
+
+function textFromCriteriaMask(mask) {
+  const names = Object.keys(maskToCriteriaDict(mask))
+    .map(k => k.replace(/_/g, " "));
+  return names.length ? names.join(" • ") : "";
+}
+
+
+// 1) "Chapeau" lisible pour chaque clé (sans créer de nouveaux critères)
+const CRITERIA_LABELS = {
+  frequence_usage_aucun: "usage nul",
+  frequence_usage_ponctuel: "ponctuel",
+  frequence_usage_regulier: "régulier",
+  frequence_usage_quotidien: "quotidien",
+
+  mode_usage_prevu: "usage prévu",
+  mode_usage_detourne: "usage détourné",
+  mode_usage_creatif: "usage créatif",
+
+  intensite_usage_aucun: "intensité nulle",
+  intensite_usage_faible: "faible intensité",
+  intensite_usage_moyenne: "intensité moyenne",
+  intensite_usage_forte: "intensité forte",
+  intensite_usage_saturee: "saturé",
+
+  echelle_micro: "micro",
+  echelle_meso: "méso",
+  echelle_macro: "macro",
+
+  origine_forme_institutionnelle: "forme institutionnelle",
+  origine_forme_singuliere: "forme singulière",
+  origine_forme_collective: "forme collective",
+
+  accessibilite_libre: "libre",
+  accessibilite_semi_ouverte: "semi-ouverte",
+  accessibilite_fermee: "fermée",
+
+  visibilite_cachee: "cachée",
+  visibilite_visible: "visible",
+  visibilite_exposee: "exposée",
+
+  acteurs_visibles_habitant: "habitants visibles",
+  acteurs_visibles_institution: "institution visible",
+  acteurs_visibles_collectif: "collectif visible",
+  acteurs_visibles_invisible: "acteurs invisibles",
+
+  rapport_affectif_symbolique: "symbolique",
+};
+
+// 2) Famille → couleur (pour le halo)
+const CRIT_FAMILY = (k) => {
+  if (k.startsWith("frequence_") || k.startsWith("mode_")) return "usage";
+  if (k.startsWith("intensite_")) return "intensite";
+  if (k.startsWith("echelle_")) return "echelle";
+  if (k.startsWith("origine_")) return "origine";
+  if (k.startsWith("accessibilite_")) return "accessibilite";
+  if (k.startsWith("visibilite_")) return "visibilite";
+  if (k.startsWith("acteurs_")) return "acteurs";
+  if (k.startsWith("rapport_")) return "rapport";
+  return "autre";
+};
+const FAMILY_COLOR = {
+  usage: "#4DA3FF",
+  intensite: "#FF7A59",
+  echelle: "#B07CFF",
+  origine: "#5BC489",
+  accessibilite: "#FFC84D",
+  visibilite: "#6DD3C2",
+  acteurs: "#F45B69",
+  rapport: "#E0E04D",
+  autre: "#AAAAAA",
+};
+
+function activeCriteriaKeysForFeature(feature) {
+  const dict = maskToCriteriaDict(getActiveMaskFor(feature)) || {};
+  return Object.keys(dict); // ex: ["frequence_usage_regulier", "visibilite_visible", ...]
+}
+
+// Poids = combien de membres des patterns du fragment partagent ce critère (normalisé 0..1)
+function scoreCriteriaForFragment(fragId) {
+  const pList = getPatternsForFragment(fragId) || [];
+  if (!pList.length) return {};
+
+  // membres = union des fragments de ces patterns
+  const members = new Set();
+  pList.forEach(p => (patterns[p]?.elements || []).forEach(id => members.add(id)));
+
+  // index id -> feature
+  const all = [...(dataGeojson || []), ...(datamGeojson || [])];
+  const byId = new Map(all.map(f => [f?.properties?.id, f]));
+
+  // compter occurrences par critère
+  const counts = {};
+  let denom = 0;
+  members.forEach(id => {
+    const f = byId.get(id);
+    if (!f || !isFeatureInActiveZones(f) || f.properties?.isDiscourse) return;
+    denom++;
+    activeCriteriaKeysForFeature(f).forEach(k => {
+      counts[k] = (counts[k] || 0) + 1;
+    });
+  });
+  if (!denom) return {};
+
+  // normalise en 0..1
+  const scores = {};
+  Object.entries(counts).forEach(([k, c]) => (scores[k] = c / denom));
+  return scores;
+}
+
+
+
+function buildTextLabelHTML(feature, mode) {
+  const id   = feature?.properties?.id   || "";
+  const name = feature?.properties?.name || id;
+
+  const wrapStart = `<div class="frag-label-wrap"><div class="frag-label`;
+  const wrapEnd   = `</div></div>`;
+
+  if (mode === "noms") {
+    if (!name) return "";
+    return `${wrapStart} mode-noms">${name}${wrapEnd}`;
+  }
+
+  if (mode === "criteres") {
+  const fid  = feature?.properties?.id || "";
+  const keys = activeCriteriaKeysForFeature(feature);
+  if (!keys.length) return "";
+
+  // 1) pondération locale (patterns du fragment)
+  const weights = scoreCriteriaForFragment(fid);
+
+  // 2) scorés → triés desc
+  const scored = keys
+    .map(k => ({ k, w: (weights[k] || 0) }))
+    .sort((a, b) => b.w - a.w);
+
+  // 3) on fait un "nuage" court : top N (ajuste 3..6)
+  const N = Math.min(5, scored.length);
+  const top = scored.slice(0, N);
+
+  // 4) placement polaire simple (nuage) + rotation légère
+  //    plus le mot est "léger", plus il est éloigné
+  const RMAX = 16; // px max d’écart intra-label (ajuste à l’œil)
+  const tokens = top.map((t, i) => {
+    const label = CRITERIA_LABELS[t.k] || t.k.replace(/_/g, " ");
+    const w = Math.max(0.15, Math.min(1, t.w));                  // 0.15..1
+    const ang = (i / Math.max(1, top.length)) * Math.PI * 2;     // dispersion
+    const r   = (1 - w) * RMAX;                                  // faible → plus loin
+    const dx  = Math.cos(ang) * r;
+    const dy  = Math.sin(ang) * r;
+
+    // petite rotation (-10°..+10°) selon la clé pour une variété stable
+    let h = 0; for (const c of t.k) h = (h * 31 + c.charCodeAt(0)) | 0;
+    const rot = ((h % 21) - 10); // -10..+10
+
+    const fam = CRIT_FAMILY(t.k);
+    const cls = `token token--${fam}`;
+
+    return `<span class="${cls}" style="--w:${w}; --x:${dx.toFixed(1)}px; --y:${dy.toFixed(1)}px; --rot:${rot}deg;">${label}</span>`;
+  });
+
+  // wrap sans data-halo (on n’utilise plus les halos)
+  return `${wrapStart} mode-criteres">${tokens.join("")}${wrapEnd}`;
+}
+
+
+
+  if (mode === "usages") {
+    const meta  = loadFragmentMeta(id) || { usages: [] };
+    const lines = (meta.usages || []).map(u => (u?.text || "").trim()).filter(Boolean);
+    if (!lines.length) return "";
+    return `${wrapStart} mode-usages">${lines.join("<br>")}${wrapEnd}`;
+  }
+
+  if (mode === "discours") {
+    const meta = loadFragmentMeta(id) || { discours: [] };
+    const userLines = (meta.discours || []).map(d => (d?.text || "").trim()).filter(Boolean);
+
+    const nearLines = [];
+    if (discoursLayer) {
+      discoursLayer.eachLayer(grp => {
+        const f = grp.feature; if (!f) return;
+        const sameSpot =
+          feature.geometry?.type === "Point" &&
+          f.geometry?.type === "Point" &&
+          f.geometry.coordinates[0] === feature.geometry.coordinates[0] &&
+          f.geometry.coordinates[1] === feature.geometry.coordinates[1];
+        if (sameSpot) {
+          const auteur  = (f.properties?.auteur || "").trim();
+          const contenu = (f.properties?.contenu || "").trim();
+          const txt = (auteur ? (auteur + " : ") : "") + contenu;
+          if (txt) nearLines.push(txt);
+        }
+      });
+    }
+    const all = [...nearLines, ...userLines];
+    if (!all.length) return "";
+    return `${wrapStart} mode-discours">${all.join("<br>")}${wrapEnd}`;
+  }
+
+  return "";
+}
+
+
+
+
+
+
 function refreshPatternsMap() {
   if (!patternMap) return;
   if (!combinedFeatures.length)
@@ -1881,62 +2283,183 @@ function refreshPatternsMap() {
   });
   const uniqEligible = Array.from(new Set(eligible));
 
-  // 2) dessiner chaque fragment en vignette image (DivIcon)
-  uniqEligible.forEach((fragId) => {
-    const feat = byId.get(fragId);
-    const photo = firstPhotoForFeature(feat);
-    const center = getFeatureCenter(feat);
-    if (!photo || !center) return;
+// 2) dessiner chaque fragment en ÉTIQUETTE TEXTE (DivIcon)
+uniqEligible.forEach((fragId) => {
+  const feat = byId.get(fragId);
+  const center = getFeatureCenter(feat);
+  if (!center) return;
 
-    let html;
-    if (photo) {
-      html = `<img class="frag-thumb" src="${photo}" alt="${feat.properties.name || fragId}">`;
+ const html = buildTextLabelHTML(feat, patternDisplayMode);
+if (!html) return; // rien à montrer pour ce fragment en ce mode → on skip
+
+const icon = L.divIcon({
+  className: "frag-label-ic",
+  html,
+  iconSize: null,      // laisser le HTML prendre sa taille réelle
+  iconAnchor: [0, 0],  // ancre haut-gauche
+});
+
+const marker = L.marker(center, { icon, riseOnHover: true });
+marker._fragId = fragId;
+
+  // Survol : liens + dimming (inchangé)
+  marker.on("mouseover", () => {
+    if (_stickyFragId) return;
+    drawLinksForFragment(fragId);
+    if (activePatternFilter) dimUnrelated(fragId, [activePatternFilter]);
+    else dimUnrelated(fragId, null);
+  });
+
+  marker.on("mouseout", () => {
+    if (_stickyFragId) return;
+    clearPatternLinks();
+    undimAll();
+  });
+
+  // Clic : sticky + ouverture panneau (inchangé)
+  marker.on("click", (ev) => {
+    const el = _getMarkerIconEl(marker);
+    clearSticky();
+    _stickyFragId = fragId;
+    if (el) el.classList.add("--active");
+
+    drawLinksForFragment(fragId);
+    if (activePatternFilter) dimUnrelated(fragId, [activePatternFilter]);
+    else dimUnrelated(fragId, null);
+
+    const feature = byId.get(fragId);
+    if (feature) onPatternsMapFragmentClick(feature);
+    ev.originalEvent?.stopPropagation?.();
+  });
+
+  // --- superposition sélective SANS halo : calcule juste la distance au centre
+const centerPx   = patternMap.latLngToLayerPoint(center);
+const mapCenterPx= patternMap.latLngToLayerPoint(patternMap.getCenter());
+const dist = Math.hypot(centerPx.x - mapCenterPx.x, centerPx.y - mapCenterPx.y);
+const far = dist > 600; // seuil à ajuster
+
+// un seul addTo
+marker.addTo(patternImageLayer);
+
+// puis on layout + éventuel .far
+requestAnimationFrame(() => {
+  const dom = marker.getElement?.();
+  const label = dom?.querySelector('.frag-label.mode-criteres');
+  if (label) {
+    const z = patternMap.getZoom();
+    const R = Math.max(16, 24 - (z - 12));
+  }
+  if (far) dom?.querySelector(".frag-label")?.classList.add("far");
+});
+
+
+if (marker.options._far) {
+  const dom = marker.getElement?.();
+  dom?.querySelector(".frag-label")?.classList.add("far");
+}
+
+
+
+});
+refreshDiscourseTextLayer();
+applyLabelSize();
+requestAnimationFrame(layoutWordCloud);
+updateFarOpacity();
+}
+
+
+
+let patternDiscourseTextLayer = null;
+
+function refreshDiscourseTextLayer() {
+  if (!patternMap) return;
+  if (!patternDiscourseTextLayer) {
+    patternDiscourseTextLayer = L.layerGroup().addTo(patternMap);
+  }
+  patternDiscourseTextLayer.clearLayers();
+
+  if (patternDisplayMode !== "discours" || !discoursLayer) return;
+
+  discoursLayer.eachLayer(grp => {
+    const f = grp.feature;
+    if (!f) return;
+    const g = f.geometry;
+    if (!g || g.type !== "Point") return;
+
+    const [lng, lat] = g.coordinates;
+    const auteur  = (f.properties?.auteur  || "").trim();
+    const contenu = (f.properties?.contenu || "").trim();
+    if (!auteur && !contenu) return; // rien à afficher
+
+    // 1) le POINT associé en ROND VERT
+    L.circleMarker([lat, lng], {
+      radius: 3,
+      color: "#f6ff00ff",
+      weight: 1,
+      fillColor: "#f6ff00ff",
+      fillOpacity: 0.9
+    }).addTo(patternDiscourseTextLayer);
+
+    // 2) le LABEL texte : court + long
+const discId = (f.properties?.id || `${lat},${lng}`);
+const html = makeDiscourseHTML(auteur, contenu, discId);
+
+const icon = L.divIcon({
+  className: "frag-label-ic",
+  html,
+  iconSize: null,
+  iconAnchor: [0, 0]
+});
+
+const m = L.marker([lat, lng], { icon, riseOnHover: false })
+  .addTo(patternDiscourseTextLayer);
+
+// -- listeners DOM (hover/click) une fois le marker dans le DOM
+requestAnimationFrame(() => {
+  const root = m.getElement?.();
+  const el = root?.querySelector('.frag-label.mode-discours');
+  if (!el) return;
+
+  // HOOVER : ouvrir visuellement
+  el.addEventListener('mouseenter', () => {
+    if (_stickyDiscId && _stickyDiscId !== discId) return; // si autre sticky, ignore
+    el.classList.add('is-hover');
+  });
+  el.addEventListener('mouseleave', () => {
+    if (_stickyDiscId === discId) return; // si sticky, on ne referme pas
+    el.classList.remove('is-hover');
+  });
+
+  // CLIC : toggle sticky
+  el.addEventListener('click', (ev) => {
+    ev.stopPropagation();
+    if (_stickyDiscId === discId) {
+      // unstick
+      _stickyDiscId = null;
+      el.classList.remove('is-open', '--active');
+      el.classList.add('is-hover'); // reste ouvert tant que la souris est dessus
     } else {
-      html = `<div class="frag-thumb --placeholder" aria-hidden="true"></div>`;
+      // clear autres sticky + stick celui-ci
+      if (patternDiscourseTextLayer) {
+        patternDiscourseTextLayer.eachLayer((mm) => {
+          const r = mm.getElement?.();
+          const e2 = r?.querySelector(".frag-label.mode-discours");
+          if (e2) e2.classList.remove('is-open', '--active');
+        });
+      }
+      _stickyDiscId = discId;
+      el.classList.add('is-open', '--active');
+      el.classList.remove('is-hover');
     }
-    const icon = L.divIcon({
-      className: "frag-thumb-ic",
-      html,
-      iconSize: [64, 48],
-      iconAnchor: [32, 24], // centre optique
-    });
-
-    const marker = L.marker(center, { icon, riseOnHover: true });
-    marker._fragId = fragId;
-
-    // Survol : montrer les liens (si pas "sticky")
-    marker.on("mouseover", () => {
-      if (_stickyFragId) return;
-      drawLinksForFragment(fragId);
-      if (activePatternFilter) dimUnrelated(fragId, [activePatternFilter]);
-      else dimUnrelated(fragId, null);
-    });
-
-    marker.on("mouseout", () => {
-      if (_stickyFragId) return;
-      clearPatternLinks();
-      undimAll();
-    });
-
-    // Clic : stabilise + ouvre la sidebar comme avant
-    marker.on("click", (ev) => {
-      const el = marker.getElement()?.querySelector(".frag-thumb");
-      clearSticky();
-      _stickyFragId = fragId;
-      if (el) el.classList.add("--active");
-
-      drawLinksForFragment(fragId);
-      if (activePatternFilter) dimUnrelated(fragId, [activePatternFilter]);
-      else dimUnrelated(fragId, null);
-
-      const feature = byId.get(fragId);
-      if (feature) onPatternsMapFragmentClick(feature);
-      ev.originalEvent?.stopPropagation?.();
-    });
-
-    marker.addTo(patternImageLayer);
+  });
+});
   });
 }
+
+
+
+
+
 
 // --- petit helper : décale le segment AB de 'offsetPx' pixels perpendiculairement
 function offsetLineLatLngs(aLatLng, bLatLng, offsetPx) {
@@ -2056,6 +2579,168 @@ function onPatternsMapFragmentClick(feature) {
     });
   });
 }
+
+// re-pack interne de chaque label "critères" après le layout global
+if (patternImageLayer) {
+  patternImageLayer.eachLayer(m => {
+    const el = m.getElement?.();
+    const label = el?.querySelector('.frag-label.mode-criteres');
+  });
+}
+
+
+
+let __labelLayoutRunning = false;
+
+// bornes “soft”
+const BASE_MAX_SHIFT_PX = 16;  // déplacement max autour de l’ancre (augmenté quand peu de labels)
+const SEPARATION_PAD    = 2;   // marge mini
+
+// Force custom : borne chaque noeud dans un disque de rayon R autour de son ancre (centre)
+function forceBoundWithinRadius(radiusAccessor) {
+  let nodes;
+  function force() {
+    for (let i = 0; i < nodes.length; i++) {
+      const n = nodes[i];
+      const ax = n.anchorCx, ay = n.anchorCy;
+      const dx = n.x - ax, dy = n.y - ay;
+      const r = +radiusAccessor(n);
+      const d2 = dx*dx + dy*dy;
+      if (d2 > r*r) {
+        const d = Math.sqrt(d2) || 1;
+        n.x = ax + dx * (r / d);
+        n.y = ay + dy * (r / d);
+      }
+    }
+  }
+  force.initialize = ns => { nodes = ns; };
+  return force;
+}
+
+
+function layoutWordCloud() {
+  if (!patternMap || !patternImageLayer) return;
+  if (__labelLayoutRunning) return;
+  __labelLayoutRunning = true;
+
+  const nodes = [];
+  patternImageLayer.eachLayer((m) => {
+    const el = m.getElement?.(); if (!el) return;
+    const wrap  = el.querySelector(".frag-label-wrap");
+    const label = el.querySelector(".frag-label");
+    if (!wrap || !label) return;
+
+    const box = label.getBoundingClientRect();
+    const w = Math.max(2, box.width);
+    const h = Math.max(2, box.height);
+    const p = patternMap.latLngToLayerPoint(m.getLatLng()); // top-left ancré
+
+    const anchorLeft = p.x, anchorTop = p.y;
+    const cx0 = anchorLeft + w/2, cy0 = anchorTop + h/2;
+
+    // petite randomisation initiale pour casser les symétries
+    const ang = Math.random() * Math.PI * 2;
+    const j = 1.5;
+    const jx = Math.cos(ang) * j, jy = Math.sin(ang) * j;
+
+    nodes.push({
+      wrap, w, h,
+      anchorLeft, anchorTop,
+      x: cx0 + jx, y: cy0 + jy,      // positions courantes (CENTRE)
+      anchorCx: cx0, anchorCy: cy0   // ancre (CENTRE)
+    });
+  });
+
+  if (!nodes.length) { __labelLayoutRunning = false; return; }
+
+  const few = nodes.length < 40;
+  const maxShift = few ? 28 : 16;             // rayon autorisé autour de l’ancre
+  const pad = 2.5;                               // marge mini entre labels
+  const collideR = d => 0.5 * Math.hypot(d.w, d.h) + pad;
+
+  const sim = d3.forceSimulation(nodes)
+    .alpha(1)
+    .alphaDecay(few ? 0.14 : 0.18)
+    .force("x", d3.forceX(d => d.anchorCx).strength(0.12)) // doux → laisse bouger
+    .force("y", d3.forceY(d => d.anchorCy).strength(0.12))
+    .force("collide", d3.forceCollide(collideR).strength(1).iterations(few ? 5 : 4))
+    .force("bound", forceBoundWithinRadius(() => maxShift))
+    .stop();
+
+  const T = few ? 80 : 50;
+  for (let i = 0; i < T; i++) sim.tick();
+
+  // CENTRE → TOP-LEFT pour le DOM
+  nodes.forEach(d => {
+    const left = d.x - d.w/2;
+    const top  = d.y - d.h/2;
+    const dx = left - d.anchorLeft;
+    const dy = top  - d.anchorTop;
+    d.wrap.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
+  });
+
+  __labelLayoutRunning = false;
+}
+
+
+
+function relayoutOnViewChange() {
+  if (!patternMap || !patternImageLayer) return;
+
+  const nodes = [];
+  patternImageLayer.eachLayer((m) => {
+    const el = m.getElement?.(); if (!el) return;
+    const wrap  = el.querySelector(".frag-label-wrap");
+    const label = el.querySelector(".frag-label");
+    if (!wrap || !label) return;
+
+    const box = label.getBoundingClientRect();
+    const w = Math.max(2, box.width);
+    const h = Math.max(2, box.height);
+    const p = patternMap.latLngToLayerPoint(m.getLatLng());
+
+    const anchorLeft = p.x, anchorTop = p.y;
+    const cx0 = anchorLeft + w/2, cy0 = anchorTop + h/2;
+
+    nodes.push({
+      wrap, w, h,
+      anchorLeft, anchorTop,
+      x: cx0, y: cy0,
+      anchorCx: cx0, anchorCy: cy0
+    });
+  });
+
+  if (!nodes.length) return;
+
+  const few = nodes.length < 40;
+  const maxShift = few ? 28 : 16;
+  const pad = 2;
+  const collideR = d => 0.5 * Math.hypot(d.w, d.h) + pad;
+
+  const sim = d3.forceSimulation(nodes)
+    .alpha(0.9)
+    .alphaDecay(few ? 0.18 : 0.22)
+    .force("x", d3.forceX(d => d.anchorCx).strength(0.14))
+    .force("y", d3.forceY(d => d.anchorCy).strength(0.14))
+    .force("collide", d3.forceCollide(collideR).strength(1).iterations(few ? 4 : 3))
+    .force("bound", forceBoundWithinRadius(() => maxShift))
+    .stop();
+
+  const T = few ? 50 : 30;
+  for (let i = 0; i < T; i++) sim.tick();
+
+  nodes.forEach(d => {
+    const left = d.x - d.w/2;
+    const top  = d.y - d.h/2;
+    const dx = left - d.anchorLeft;
+    const dy = top  - d.anchorTop;
+    d.wrap.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
+  });
+}
+
+
+
+
 
 /*==================================================
 =             MODE CRÉATION D’UNITÉ (UP)           =
@@ -2504,328 +3189,7 @@ async function doUnitCompare() {
   unitModalState.v2Viewer = v2;
 }
 
-/*---------------------------------------
-VUE DE COMPOSIITON
----------------------------------------*/
 
-// --- Fragments spatiaux actuellement visibles selon zones + pas discours
-function getCurrentlyVisibleSpatialFeatures() {
-  const all = [...(dataGeojson || []), ...(datamGeojson || [])];
-  return all.filter(
-    (f) => isFeatureInActiveZones(f) && !f.properties?.isDiscourse
-  );
-}
-
-// --- Toutes les photos normalisées d’un feature (tableau de strings propres)
-function allPhotosForFeature(f) {
-  const list = normalizePhotos(f?.properties?.photos);
-  return list.map(cleanPhotoUrl).filter(Boolean);
-}
-
-// --- Intersection de critères (masques) sur une liste d’IDs
-function intersectCriteriaMasks(fragmentIds) {
-  if (!fragmentIds.length) return 0;
-  const byId = new Map(
-    [...(dataGeojson || []), ...(datamGeojson || [])].map((f) => [
-      f.properties.id,
-      f,
-    ])
-  );
-  let inter = null;
-  fragmentIds.forEach((id) => {
-    const f = byId.get(id);
-    if (!f) return;
-    const m = getActiveMaskFor(f); // tient compte des dimensions (légende) actives
-    inter = inter === null ? m : inter & m;
-  });
-  return inter || 0;
-}
-
-// --- Prochain nom de pattern disponible (P{n}) pour affichage par défaut
-function nextPatternName() {
-  // on prend max sur patterns existants; si aucun => P1
-  const nums = Object.keys(patterns || {})
-    .map((k) => parseInt(String(k).replace(/^P/i, ""), 10))
-    .filter((n) => Number.isFinite(n));
-  const n = nums.length ? Math.max(...nums) + 1 : 1;
-  return `P${n}`;
-}
-
-function showGalleryComposeView() {
-  const host = document.getElementById("gallery-compose-view");
-  host.innerHTML = "";
-
-  /* --- marge interne haute/basse directement sur le host --- */
-  host.style.boxSizing = "border-box";
-  host.style.overflow = "hidden"; // on scrolle dans les boîtes, pas le host
-  host.style.paddingTop = "12px"; // ↑ air en haut
-  host.style.paddingBottom = "28px"; // ↓ air en bas pour ne pas toucher le bord
-
-  // cacher le slider sur cette vue
-  const sliderBox = document.getElementById("similarity-controls");
-  if (sliderBox) sliderBox.style.display = "none";
-
-  /* ===== Layout : [barre] [sources] [composition] ===== */
-  const wrap = document.createElement("div");
-  wrap.style.cssText = [
-    "display:grid",
-    "grid-template-rows:auto 1fr 1fr",
-    "gap:8px",
-    "height:100%",
-    "min-height:0",
-    "box-sizing:border-box",
-    // on soustrait un petit offset pour respecter le padding-bottom du host
-    "height:calc(100% - 10px)",
-  ].join(";");
-
-  /* ---------- (1) BARRE D’INFOS ---------- */
-  const infoBar = document.createElement("div");
-  infoBar.style.cssText = [
-    "display:flex",
-    "justify-content:space-between",
-    "align-items:center",
-    "padding:4px 8px",
-    "line-height:1.2",
-    "min-height:20px",
-    "max-height:30px",
-    "overflow:hidden",
-  ].join(";");
-
-  const leftInfo = document.createElement("div");
-  leftInfo.style.cssText =
-    "font-size:12px;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;";
-  const rightInfo = document.createElement("div");
-  rightInfo.style.cssText = "display:flex;gap:8px;";
-  infoBar.append(leftInfo, rightInfo);
-
-  /* ---------- (2) SOURCES ---------- */
-  const sourceShell = document.createElement("div");
-  sourceShell.style.cssText = [
-    "display:flex",
-    "flex-direction:column",
-    "gap:8px",
-    "border:1px solid #000",
-    "background:#fcfcfc",
-    "padding:8px",
-    "min-height:0",
-    "box-sizing:border-box",
-    "overflow:hidden",
-  ].join(";");
-
-  const sourceScroll = document.createElement("div");
-  sourceScroll.style.cssText =
-    "flex:1 1 0; min-height:0; overflow:auto; box-sizing:border-box;";
-  const sourceGrid = document.createElement("div");
-  sourceGrid.style.cssText =
-    "display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:8px;";
-  sourceScroll.appendChild(sourceGrid);
-  sourceShell.appendChild(sourceScroll);
-
-  /* ---------- (3) COMPOSITION ---------- */
-  const composeRow = document.createElement("div");
-  composeRow.style.cssText = [
-    "display:grid",
-    "grid-template-columns:minmax(0,1fr) 220px",
-    "gap:12px",
-    "height:75%",
-    "min-height:0",
-    "overflow:hidden",
-    "margin-bottom: 10px", // petit air avant le bas du host
-  ].join(";");
-
-  const dropShell = document.createElement("div");
-  dropShell.style.cssText =
-    "display:flex; flex-direction:column; min-height:0;";
-
-  const dropScroll = document.createElement("div");
-  dropScroll.id = "pattern-dropzone";
-  dropScroll.style.cssText = [
-    "flex:1 1 0",
-    "min-height:0",
-    "overflow:auto",
-    "border:1px dashed #000000ff",
-    "background:#fff",
-    "padding:10px",
-    "box-sizing:border-box",
-  ].join(";");
-
-  const dropGrid = document.createElement("div");
-  dropGrid.style.cssText = "display:flex; flex-wrap:wrap; gap:8px;";
-  dropScroll.appendChild(dropGrid);
-  dropShell.appendChild(dropScroll);
-
-  const actionsCol = document.createElement("div");
-  actionsCol.style.cssText =
-    "display:flex; flex-direction:column; gap:8px; align-self:start; position:sticky; top:0;";
-
-  // Boutons
-  const btnSave = document.createElement("button");
-  btnSave.className = "tab-btn";
-  btnSave.textContent = "Enregistrer ce pattern";
-  btnSave.style.cssText =
-    "background:#000;color:#fff;padding:8px;border:1px solid #000;cursor:pointer;border-radius:0;";
-
-  const btnClear = document.createElement("button");
-  btnClear.className = "tab-btn";
-  btnClear.textContent = "Vider la composition";
-  btnClear.style.cssText =
-    "padding:8px;border:1px solid #000;cursor:pointer;background:#000;border-radius:0;";
-
-  actionsCol.append(btnSave, btnClear);
-  composeRow.append(dropShell, actionsCol);
-
-  // montage
-  wrap.append(infoBar, sourceShell, composeRow);
-  host.appendChild(wrap);
-
-  /* ===== Logique ===== */
-  const composition = [];
-  const uniqueFragmentIds = () =>
-    Array.from(new Set(composition.map((x) => x.id)));
-
-  function refreshInfoBar() {
-    const ids = uniqueFragmentIds();
-    const mask = intersectCriteriaMasks(ids);
-    const sharedCount = popcount32(mask);
-    leftInfo.textContent = ids.length
-      ? `Fragments : ${ids.length} - Critères communs : ${sharedCount}`
-      : `Glisse des images ci-dessous pour composer.`;
-  }
-
-  function renderDropGrid() {
-    dropGrid.innerHTML = "";
-    composition.forEach((item, idx) => {
-      const card = document.createElement("div");
-      card.style.cssText =
-        "position:relative;width:120px;height:90px;border:1px solid #ddd;overflow:hidden;background:#eee;";
-      const img = document.createElement("img");
-      img.src = item.photo;
-      img.alt = item.id;
-      img.style.cssText = "width:100%;height:100%;object-fit:cover;";
-      const del = document.createElement("button");
-      del.textContent = "×";
-      del.title = "Retirer";
-      del.style.cssText =
-        "position:absolute;top:2px;right:2px;background:#000;color:#fff;border:none;width:22px;height:22px;cursor:pointer;border-radius:0;";
-      del.onclick = () => {
-        composition.splice(idx, 1);
-        renderDropGrid();
-        refreshInfoBar();
-      };
-      card.append(img, del);
-      dropGrid.appendChild(card);
-    });
-  }
-
-  dropScroll.addEventListener("dragover", (e) => {
-    e.preventDefault();
-    dropScroll.style.borderColor = "#000";
-  });
-  dropScroll.addEventListener("dragleave", () => {
-    dropScroll.style.borderColor = "#bdbdbd";
-  });
-  dropScroll.addEventListener("drop", (e) => {
-    e.preventDefault();
-    dropScroll.style.borderColor = "#bdbdbd";
-    try {
-      const payload = JSON.parse(e.dataTransfer.getData("application/json"));
-      if (payload?.id && payload?.photo) {
-        composition.push({ id: payload.id, photo: payload.photo });
-        renderDropGrid();
-        refreshInfoBar();
-      }
-    } catch (_) {}
-  });
-
-  function populateSourceGrid() {
-    sourceGrid.innerHTML = "";
-    const visibles = getCurrentlyVisibleSpatialFeatures();
-    visibles.forEach((f) => {
-      const fid = f.properties.id;
-      const photos = allPhotosForFeature(f);
-      photos.forEach((photo) => {
-        const cell = document.createElement("div");
-        cell.style.cssText =
-          "border:none;overflow:hidden;background:transparent;";
-        const img = document.createElement("img");
-        img.src = photo;
-        img.alt = f.properties.name || fid || "fragment";
-        img.draggable = true;
-        img.style.cssText =
-          "display:block;width:100%;aspect-ratio:4/3;object-fit:cover;cursor:grab;";
-        img.addEventListener("dragstart", (e) => {
-          e.dataTransfer.setData(
-            "application/json",
-            JSON.stringify({ id: fid, photo })
-          );
-          e.dataTransfer.effectAllowed = "copy";
-        });
-        img.addEventListener("click", () => showDetails(f.properties));
-        cell.appendChild(img);
-        sourceGrid.appendChild(cell);
-      });
-    });
-  }
-
-  btnClear.onclick = () => {
-    composition.splice(0, composition.length);
-    renderDropGrid();
-    refreshInfoBar();
-  };
-  btnSave.onclick = () => {
-    const ids = uniqueFragmentIds();
-    if (!ids.length) {
-      alert(
-        "Ajoute au moins un fragment dans la composition avant d'enregistrer."
-      );
-      return;
-    }
-    const sharedMask = intersectCriteriaMasks(ids);
-    const criteria = maskToCriteriaDict(sharedMask);
-    const pKey = nextPatternName();
-    openPatternEditor({
-      mode: "create",
-      patternKey: pKey,
-      elements: ids,
-      criteria,
-      name: pKey,
-      description: "",
-      onSave: (payload) => {
-        const rec = {
-          uid:
-            "sp_" +
-            Date.now().toString(36) +
-            Math.random().toString(36).slice(2, 7),
-          ...payload,
-          savedAt: new Date().toISOString(),
-        };
-        addSavedPattern(rec);
-        openSavedPatternPanel(rec.uid);
-      },
-      headerText: "Enregistrer ce pattern (composition)",
-      saveText: "Enregistrer",
-    });
-  };
-
-  populateSourceGrid();
-  renderDropGrid();
-  refreshInfoBar();
-
-  document.querySelectorAll(".filter-zone").forEach((cb) => {
-    cb.addEventListener("change", () => {
-      if (currentView === "gallery-compose") populateSourceGrid();
-    });
-  });
-  document.querySelectorAll("#criteria-legend .crit-dim").forEach((cb) => {
-    cb.addEventListener("change", () => {
-      rebuildCriteriaEnabledMaskFromUI();
-      if (currentView === "gallery-compose") {
-        populateSourceGrid();
-        refreshInfoBar();
-      }
-    });
-  });
-}
 
 /*---------------------------------------
 STOCKAGE LOCAL 3D (helpers)
@@ -3447,763 +3811,4 @@ function renderSavedPatternPanel(panel, rec) {
   actions.append(bEdit, bDel);
 
   panel.append(h2, meta, desc, critsWrap, actions, list);
-}
-
-/*==================================================
-=                    ANALOGIES                     =
-==================================================*/
-
-const ANAL_SAVE_KEY = "analogiesV1";
-let Anal = {
-  inited: false,
-  els: {
-    view: null,
-    railList: null,
-    railSearch: null,
-    railFilterBtn: null,
-    board: null,
-    cells: [],
-    title: null,
-    btnNew: null,
-    btnSave: null,
-    btnOpen: null,
-    btnExport: null,
-    fileInput: null,
-    savedModal: null,
-    savedBody: null,
-    savedClose: null,
-  },
-  state: {
-    // 4 cases : { kind:'fragment'|'image'|'note'|null, data:{...}, overlays?:[{id,x,y,text}] }
-    cells: [{ kind: null }, { kind: null }, { kind: null }, { kind: null }],
-    title: "",
-  },
-  pendingImportSlot: null,
-  dragLabel: {
-    active: false,
-    slot: null,
-    id: null,
-    startX: 0,
-    startY: 0,
-    baseX: 0,
-    baseY: 0,
-  }, // drag des labels
-};
-
-function initAnalogiesOnce() {
-  if (Anal.inited) return;
-
-  // --- capture DOM
-  Anal.els.view = document.getElementById("analogies-view");
-  Anal.els.railList = document.getElementById("anal-rail-list");
-  Anal.els.railSearch = document.getElementById("anal-rail-search");
-  Anal.els.board = document.getElementById("anal-board");
-  Anal.els.title = document.getElementById("anal-title-input");
-  Anal.els.btnNew = document.getElementById("anal-new-btn");
-  Anal.els.btnSave = document.getElementById("anal-save-btn");
-  Anal.els.btnOpen = document.getElementById("anal-open-btn");
-  Anal.els.btnExport = document.getElementById("anal-export-btn");
-  Anal.els.fileInput = document.getElementById("anal-file-input");
-  Anal.els.savedModal = document.getElementById("anal-saved-modal");
-  Anal.els.savedBody = document.getElementById("anal-saved-body");
-  Anal.els.savedClose = document.getElementById("anal-saved-close");
-
-  // --- style cadran 2x2 noir épais, sans arrondis
-  if (Anal.els.board) {
-    Anal.els.board.style.cssText = [
-      "display:grid",
-      "grid-template-columns:1fr 1fr",
-      "grid-template-rows:1fr 1fr",
-      "gap:0",
-      "border:4px solid #000",
-      "background:#fff", // fonds neutre
-      "border-radius:0",
-      "overflow:hidden",
-    ].join(";");
-  }
-
-  // Hauteur du cadran : ajuste si tu veux un autre ratio (ici 4/3 paysage)
-  const h = Math.max(420, Math.min(window.innerHeight * 0.7, 720));
-  Anal.els.board.style.height = h + "px";
-  Anal.els.board.style.width = h * 1.3333 + "px"; // 4/3 = paysage
-  Anal.els.board.style.maxWidth = "80vw";
-  Anal.els.board.style.margin = "0 auto"; // centre horizontalement
-
-  // 4 cellules
-  Anal.els.cells = Array.from(Anal.els.board.querySelectorAll(".anal-cell"));
-  // pose les bordures internes épaisses pour un quadrillage net
-  Anal.els.cells.forEach((cell, i) => {
-    const row = Math.floor(i / 2);
-    const col = i % 2;
-    cell.style.border = "0"; // reset
-    cell.style.borderRadius = "0";
-    cell.style.position = "relative";
-    cell.style.overflow = "hidden"; // ⇦ empêche l’agrandissement
-    cell.style.minHeight = "0"; // important pour les grilles
-    cell.style.display = "block"; // pas de layout flex qui pousse
-    // traits internes (4px noirs) : bas pour la première rangée, droite pour la première colonne
-    if (row === 0) cell.style.borderBottom = "4px solid #000";
-    if (col === 0) cell.style.borderRight = "4px solid #000";
-  });
-
-  // --- listeners rail
-  Anal.els.railSearch.addEventListener(
-    "input",
-    debounce(renderAnalogiesRail, 120)
-  );
-  Anal.els.railFilterBtn?.addEventListener("click", () => {
-    document.getElementById("toggle-legend-btn")?.click?.();
-  });
-
-  // --- listeners board
-  Anal.els.cells.forEach((cell) => wireAnalogiesCell(cell));
-
-  // --- toolbar
-  Anal.els.btnNew.addEventListener("click", () => {
-    if (!confirm("Créer une nouvelle carte et vider les 4 cases ?")) return;
-    resetAnalogiesBoard();
-  });
-
-  Anal.els.btnSave.addEventListener("click", () => {
-    const rec = serializeAnalogy();
-    if (!rec.title.trim()) {
-      alert("Donne un titre à la carte avant d’enregistrer.");
-      Anal.els.title.focus();
-      return;
-    }
-    addSavedAnalogy(rec);
-    alert("Carte enregistrée en local.");
-  });
-
-  Anal.els.btnOpen.addEventListener("click", openAnalogiesSavedModal);
-  Anal.els.btnExport.addEventListener("click", () => {
-    const rec = serializeAnalogy();
-    const blob = new Blob([JSON.stringify(rec, null, 2)], {
-      type: "application/json",
-    });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = (rec.title || "analogie") + ".json";
-    a.click();
-    URL.revokeObjectURL(a.href);
-  });
-
-  // input fichier unique partagé
-  Anal.els.fileInput.addEventListener("change", async (e) => {
-    const file = e.target.files?.[0];
-    e.target.value = "";
-    if (!file || Anal.pendingImportSlot == null) return;
-    const dataUrl = await fileToDataURL(file);
-    setCellContent(Anal.pendingImportSlot, {
-      kind: "image",
-      data: { dataUrl, name: file.name || "image" },
-      overlays: [],
-    });
-    Anal.pendingImportSlot = null;
-  });
-
-  // collage (presse-papiers) : si une case a le focus, on la vise; sinon, dernière focale
-  Anal.els.view.addEventListener("paste", async (e) => {
-    const targetCell = e.target.closest?.(".anal-cell");
-    const slot = targetCell
-      ? parseInt(targetCell.dataset.slot, 10)
-      : findFocusedCellSlot();
-    const items = e.clipboardData?.items || [];
-    for (const it of items) {
-      if (it.kind === "file") {
-        const file = it.getAsFile();
-        if (!file) continue;
-        const dataUrl = await fileToDataURL(file);
-        setCellContent(slot ?? 0, {
-          kind: "image",
-          data: { dataUrl, name: file.name || "pasted" },
-          overlays: [],
-        });
-        e.preventDefault();
-        return;
-      } else if (it.kind === "string") {
-        it.getAsString((txt) => {
-          const t = (txt || "").trim();
-          if (t) setCellContent(slot ?? 0, { kind: "note", data: { text: t } });
-        });
-        e.preventDefault();
-        return;
-      }
-    }
-  });
-
-  // drag global des labels (pour éviter sélection involontaire)
-  window.addEventListener("mousemove", onLabelDragMove);
-  window.addEventListener("mouseup", onLabelDragEnd);
-
-  // réagir aux filtres de zones → rail
-  document.querySelectorAll(".filter-zone").forEach((cb) => {
-    cb.addEventListener("change", () => {
-      if (currentView === "analogies") renderAnalogiesRail();
-    });
-  });
-
-  // init
-  renderAnalogiesRail();
-  resetAnalogiesBoard();
-  Anal.inited = true;
-}
-
-function showAnalogiesView() {
-  renderAnalogiesRail();
-}
-
-/* ------------ RAIL (vignettes de fragments) ------------- */
-
-function renderAnalogiesRail() {
-  if (!Anal.els.railList) return;
-  Anal.els.railList.innerHTML = "";
-
-  const q = (Anal.els.railSearch.value || "").toLowerCase().trim();
-  const all = [...(dataGeojson || []), ...(datamGeojson || [])].filter(
-    (f) => isFeatureInActiveZones(f) && !f.properties?.isDiscourse
-  );
-
-  all.forEach((f) => {
-    const fid = f.properties.id;
-    const name = (f.properties.name || "").toLowerCase();
-    if (q && !fid.toLowerCase().includes(q) && !name.includes(q)) return;
-
-    const photos = normalizePhotos(f.properties.photos)
-      .map(cleanPhotoUrl)
-      .filter(Boolean);
-    const src = photos[0] || "";
-    const card = document.createElement("div");
-    card.className = "anal-thumb";
-    card.style.cssText =
-      "border:1px solid #000;background:#fff;overflow:hidden;border-radius:0;";
-
-    const img = document.createElement("img");
-    img.src =
-      src ||
-      "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
-    img.alt = f.properties.name || fid;
-    img.loading = "lazy";
-    img.style.cssText =
-      "display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:0;";
-
-    // drag payload (aucun titre/caption)
-    card.draggable = true;
-    card.addEventListener("dragstart", (e) => {
-      e.dataTransfer.setData(
-        "application/json",
-        JSON.stringify({
-          kind: "fragment",
-          id: fid,
-          photo: src,
-          name: f.properties.name || fid,
-        })
-      );
-      e.dataTransfer.effectAllowed = "copy";
-    });
-    card.addEventListener("click", () => showDetails(f.properties));
-
-    card.append(img);
-    Anal.els.railList.appendChild(card);
-  });
-}
-
-/* ------------ CELLS (drop/import/paste/note + overlay texte) ------------- */
-
-function wireAnalogiesCell(cell) {
-  const slot = parseInt(cell.dataset.slot, 10);
-  const contentEl = cell.querySelector(".anal-cell-content");
-  const dropEl = cell.querySelector(".anal-cell-drop");
-  const btnImport = cell.querySelector(".anal-cell-import");
-  const btnClear = cell.querySelector(".anal-cell-clear");
-
-  // fond neutre et angles vifs
-  cell.style.background = "#fff";
-  if (contentEl) {
-    contentEl.style.position = "absolute";
-    contentEl.style.inset = "0"; // top/right/bottom/left = 0
-  }
-  if (dropEl) {
-    dropEl.style.position = "absolute";
-    dropEl.style.inset = "0";
-    dropEl.style.display = "flex";
-    dropEl.style.alignItems = "center";
-    dropEl.style.justifyContent = "center";
-  }
-
-  // DnD (toujours sur la case entière)
-  cell.addEventListener("dragover", (e) => {
-    e.preventDefault();
-    cell.style.outline = "2px dashed #000";
-  });
-  cell.addEventListener("dragleave", () => {
-    cell.style.outline = "none";
-  });
-  cell.addEventListener("drop", async (e) => {
-    e.preventDefault();
-    cell.style.outline = "none";
-    const dt = e.dataTransfer;
-    let jsonOk = false;
-    try {
-      const payload = JSON.parse(dt.getData("application/json") || "null");
-      if (payload?.kind === "fragment" && payload.id) {
-        setCellContent(slot, {
-          kind: "fragment",
-          data: {
-            id: payload.id,
-            photo: payload.photo || null,
-            name: payload.name || payload.id,
-          },
-          overlays: [],
-        });
-        jsonOk = true;
-      }
-    } catch (_) {}
-    if (jsonOk) return;
-    if (dt.files && dt.files[0] && dt.files[0].type.startsWith("image/")) {
-      const dataUrl = await fileToDataURL(dt.files[0]);
-      setCellContent(slot, {
-        kind: "image",
-        data: { dataUrl, name: dt.files[0].name || "image" },
-        overlays: [],
-      });
-      return;
-    }
-    const txt = dt.getData("text/plain");
-    if (txt && txt.trim())
-      setCellContent(slot, { kind: "note", data: { text: txt.trim() } });
-  });
-
-  // Import / Clear
-  btnImport?.addEventListener("click", () => {
-    Anal.pendingImportSlot = slot;
-    Anal.els.fileInput.click();
-  });
-  btnClear?.addEventListener("click", () => clearCell(slot));
-
-  // ⬇️ Double-clic sur TOUTE la case :
-  // - image/fragment → ajoute un label à l’endroit cliqué
-  // - note → focus texte
-  // - vide → bascule en note
-  cell.addEventListener("dblclick", (ev) => {
-    // évite d’ajouter un label quand on double-clique sur un bouton / input / label existant
-    if (
-      ev.target.closest(".overlay-label") ||
-      ev.target.closest(".tab-btn") ||
-      ev.target.tagName === "TEXTAREA" ||
-      ev.target.tagName === "INPUT"
-    )
-      return;
-
-    const cur = Anal.state.cells[slot];
-
-    // position du clic en % de la surface utile (overlay-layer si présent, sinon la case)
-    const layer = cell.querySelector(".overlay-layer");
-    const refEl = layer || cell;
-    const rect = refEl.getBoundingClientRect();
-    const xPct = Math.min(
-      100,
-      Math.max(0, ((ev.clientX - rect.left) / rect.width) * 100)
-    );
-    const yPct = Math.min(
-      100,
-      Math.max(0, ((ev.clientY - rect.top) / rect.height) * 100)
-    );
-
-    if (cur?.kind === "image" || cur?.kind === "fragment") {
-      addOverlayLabel(slot, { x: xPct, y: yPct, text: "Texte" });
-    } else if (cur?.kind === "note") {
-      const ta = cell.querySelector(".anal-cell-content textarea");
-      if (ta) {
-        ta.focus();
-        ta.select();
-      }
-    } else {
-      setCellContent(slot, { kind: "note", data: { text: "" } });
-    }
-  });
-}
-
-function setCellContent(slot, payload) {
-  const cell = Anal.els.cells[slot];
-  const contentEl = cell.querySelector(".anal-cell-content");
-  const dropEl = cell.querySelector(".anal-cell-drop");
-  contentEl.innerHTML = "";
-  dropEl.style.display = "none";
-  contentEl.style.position = "absolute";
-  contentEl.style.inset = "0";
-
-  // toolbar overlay : bouton 'Texte' pour ajouter un label
-  function mountOverlayToolbar() {
-    const tb = document.createElement("div");
-    tb.style.cssText =
-      "position:absolute;top:6px;left:6px;display:flex;gap:6px;z-index:5";
-    const btnTxt = document.createElement("button");
-    btnTxt.textContent = "Texte";
-    btnTxt.className = "tab-btn btn-xs";
-    btnTxt.style.cssText =
-      "padding:3px 6px;border:1px solid #000;background:#fff;color:#000;border-radius:0;cursor:pointer";
-    btnTxt.addEventListener("click", () =>
-      addOverlayLabel(slot, { x: 50, y: 50, text: "Texte" })
-    );
-    tb.appendChild(btnTxt);
-    contentEl.appendChild(tb);
-  }
-
-  // calque overlays
-  function mountOverlayLayer() {
-    let layer = contentEl.querySelector(".overlay-layer");
-    if (!layer) {
-      layer = document.createElement("div");
-      layer.className = "overlay-layer";
-      layer.style.cssText = "position:absolute;inset:0;z-index:4";
-      contentEl.appendChild(layer);
-    }
-    return layer;
-  }
-
-  Anal.state.cells[slot] = payload;
-
-  if (payload.kind === "fragment" || payload.kind === "image") {
-    const src =
-      payload.kind === "fragment"
-        ? payload.data.photo || ""
-        : payload.data.dataUrl;
-    const img = document.createElement("img");
-    img.src =
-      src ||
-      "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
-    img.alt = payload.data.name || payload.data.id || "image";
-    img.style.cssText =
-      "display:block;width:100%;height:100%;object-fit:contain;object-position:center center;border:0;border-radius:0;user-select:none;";
-    contentEl.appendChild(img);
-
-    mountOverlayToolbar();
-    const layer = mountOverlayLayer();
-    layer.innerHTML = "";
-    (payload.overlays || []).forEach((lbl) =>
-      layer.appendChild(buildLabelEl(slot, lbl))
-    );
-  } else if (payload.kind === "note") {
-    const ta = document.createElement("textarea");
-    ta.value = payload.data.text || "";
-    ta.rows = 8;
-    ta.style.cssText =
-      "width:100%;height:100%;box-sizing:border-box;resize:vertical;border:none;border-radius:0;padding:8px;";
-    ta.addEventListener("input", () => {
-      Anal.state.cells[slot].data.text = ta.value;
-    });
-    contentEl.appendChild(ta);
-  } else {
-    dropEl.style.display = "flex";
-  }
-}
-
-/* ---------- Overlays texte (labels) ---------- */
-
-function addOverlayLabel(slot, { x = 50, y = 50, text = "Texte" } = {}) {
-  // x,y en pourcentage de la surface (0..100)
-  const lbl = {
-    id: "lbl_" + Math.random().toString(36).slice(2, 8),
-    x,
-    y,
-    text,
-  };
-  const cellState = Anal.state.cells[slot];
-  if (!cellState.overlays) cellState.overlays = [];
-  cellState.overlays.push(lbl);
-
-  const cell = Anal.els.cells[slot];
-  const layer =
-    cell.querySelector(".overlay-layer") ||
-    (() => {
-      const l = document.createElement("div");
-      l.className = "overlay-layer";
-      l.style.cssText = "position:absolute;inset:0;z-index:4";
-      cell.querySelector(".anal-cell-content").appendChild(l);
-      return l;
-    })();
-  layer.appendChild(buildLabelEl(slot, lbl));
-}
-
-function buildLabelEl(slot, lbl) {
-  const el = document.createElement("div");
-  el.className = "overlay-label";
-  el.dataset.id = lbl.id;
-  el.style.cssText = [
-    "position:absolute",
-    `left:calc(${lbl.x}% )`,
-    `top:calc(${lbl.y}% )`,
-    "transform:translate(-50%,-50%)",
-    "min-width:40px",
-    "max-width:80%",
-    "padding:4px 8px",
-    "border:1px solid #000",
-    "background:#fff",
-    "color:#000",
-    "font-size:12px",
-    "line-height:1.2",
-    "cursor:move",
-    "user-select:none",
-    "border-radius:0",
-    "box-shadow:none",
-  ].join(";");
-
-  const textEl = document.createElement("span");
-  textEl.textContent = lbl.text || "Texte";
-  textEl.style.display = "inline-block";
-  textEl.style.cursor = "text";
-  textEl.addEventListener("click", (e) => {
-    e.stopPropagation();
-    startInlineEdit(slot, lbl.id, textEl);
-  });
-
-  const close = document.createElement("button");
-  close.textContent = "×";
-  close.title = "Supprimer";
-  close.style.cssText =
-    "margin-left:6px;border:none;background:#fff;color:#000;width:18px;height:18px;line-height:14px;padding:0;cursor:pointer;border-radius:0;";
-  close.addEventListener("click", (e) => {
-    e.stopPropagation();
-    removeOverlayLabel(slot, lbl.id);
-  });
-
-  // drag
-  el.addEventListener("mousedown", (e) => {
-    if (e.target === close) return;
-    Anal.dragLabel = {
-      active: true,
-      slot,
-      id: lbl.id,
-      startX: e.clientX,
-      startY: e.clientY,
-      baseX: lbl.x,
-      baseY: lbl.y,
-    };
-    e.preventDefault();
-  });
-
-  el.append(textEl, close);
-  return el;
-}
-
-function startInlineEdit(slot, id, spanEl) {
-  const input = document.createElement("input");
-  input.type = "text";
-  input.value = spanEl.textContent || "";
-  input.style.cssText =
-    "border:1px solid #000;padding:2px 4px;width:200px;max-width:60vw;border-radius:0;";
-  spanEl.replaceWith(input);
-  input.focus();
-  input.select();
-  const commit = () => {
-    const val = (input.value || "").trim();
-    const cell = Anal.state.cells[slot];
-    const lbl = (cell.overlays || []).find((o) => o.id === id);
-    if (lbl) lbl.text = val || "Texte";
-    const newSpan = document.createElement("span");
-    newSpan.textContent = lbl ? lbl.text : "";
-    newSpan.style.display = "inline-block";
-    newSpan.style.cursor = "text";
-    newSpan.addEventListener("click", (e) => {
-      e.stopPropagation();
-      startInlineEdit(slot, id, newSpan);
-    });
-    input.replaceWith(newSpan);
-  };
-  input.addEventListener("blur", commit);
-  input.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") commit();
-  });
-}
-
-function removeOverlayLabel(slot, id) {
-  const cell = Anal.state.cells[slot];
-  cell.overlays = (cell.overlays || []).filter((o) => o.id !== id);
-  const layer = Anal.els.cells[slot].querySelector(".overlay-layer");
-  layer?.querySelector(`[data-id="${id}"]`)?.remove();
-}
-
-function onLabelDragMove(e) {
-  const d = Anal.dragLabel;
-  if (!d.active) return;
-  const cell = Anal.els.cells[d.slot];
-  const layer = cell.querySelector(".overlay-layer");
-  if (!layer) return;
-
-  const rect = layer.getBoundingClientRect();
-  const dx = e.clientX - d.startX;
-  const dy = e.clientY - d.startY;
-  const newX = Math.min(100, Math.max(0, d.baseX + (dx / rect.width) * 100));
-  const newY = Math.min(100, Math.max(0, d.baseY + (dy / rect.height) * 100));
-
-  // maj state
-  const cellState = Anal.state.cells[d.slot];
-  const lbl = (cellState.overlays || []).find((o) => o.id === d.id);
-  if (lbl) {
-    lbl.x = newX;
-    lbl.y = newY;
-  }
-
-  // maj DOM
-  const el = layer.querySelector(`[data-id="${d.id}"]`);
-  if (el) {
-    el.style.left = `${newX}%`;
-    el.style.top = `${newY}%`;
-  }
-}
-
-function onLabelDragEnd() {
-  Anal.dragLabel.active = false;
-}
-
-/* ------------ gestion vide/reset/clear ------------- */
-
-function clearCell(slot) {
-  Anal.state.cells[slot] = { kind: null };
-  const cell = Anal.els.cells[slot];
-  cell.querySelector(".anal-cell-content").innerHTML = "";
-  cell.querySelector(".anal-cell-drop").style.display = "flex";
-}
-
-function resetAnalogiesBoard() {
-  Anal.els.title.value = "";
-  Anal.state.title = "";
-  for (let i = 0; i < 4; i++) clearCell(i);
-}
-
-/* ------------ Sauvegarde / Ouverture ------------- */
-
-function serializeAnalogy() {
-  Anal.state.title = Anal.els.title.value || "";
-  // on copie un payload “léger”, y compris les overlays (pour image/fragment)
-  const cells = Anal.state.cells.map((c) => {
-    if (!c || !c.kind) return { kind: null };
-    if (c.kind === "image")
-      return {
-        kind: "image",
-        data: { dataUrl: c.data.dataUrl || "" },
-        overlays: c.overlays || [],
-      };
-    if (c.kind === "fragment")
-      return {
-        kind: "fragment",
-        data: { id: c.data.id, photo: c.data.photo || null },
-        overlays: c.overlays || [],
-      };
-    if (c.kind === "note")
-      return { kind: "note", data: { text: c.data.text || "" } };
-    return { kind: null };
-  });
-  return {
-    uid:
-      "an_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
-    title: Anal.state.title,
-    cells,
-    savedAt: new Date().toISOString(),
-  };
-}
-
-function addSavedAnalogy(rec) {
-  const arr = loadSavedAnalogies();
-  arr.push(rec);
-  localStorage.setItem(ANAL_SAVE_KEY, JSON.stringify(arr));
-}
-function loadSavedAnalogies() {
-  try {
-    return JSON.parse(localStorage.getItem(ANAL_SAVE_KEY) || "[]");
-  } catch (e) {
-    return [];
-  }
-}
-function deleteSavedAnalogy(uid) {
-  const arr = loadSavedAnalogies().filter((x) => x.uid !== uid);
-  localStorage.setItem(ANAL_SAVE_KEY, JSON.stringify(arr));
-}
-
-function openAnalogiesSavedModal() {
-  const m = Anal.els.savedModal;
-  const body = Anal.els.savedBody;
-  const close = Anal.els.savedClose;
-  if (!m || !body) return;
-
-  body.innerHTML = "";
-  const items = loadSavedAnalogies()
-    .slice()
-    .sort((a, b) => new Date(b.savedAt) - new Date(a.savedAt));
-  if (!items.length) {
-    body.innerHTML =
-      '<div style="color:#aaa">Aucune carte d’analogies enregistrée.</div>';
-  } else {
-    items.forEach((rec) => {
-      const card = document.createElement("div");
-      card.style.cssText =
-        "border:1px solid #000;padding:10px;margin-bottom:8px;color:#000;background:#fff;border-radius:0;";
-      const h = document.createElement("div");
-      h.style.fontWeight = "700";
-      h.textContent = rec.title || "(sans titre)";
-      const meta = document.createElement("div");
-      meta.style.cssText = "color:#333;font-size:12px;margin:4px 0 8px";
-      meta.textContent = `Sauvé le ${fmtDate(rec.savedAt)}`;
-      const row = document.createElement("div");
-      row.style.cssText = "display:flex;gap:8px;flex-wrap:wrap;";
-      const bOpen = document.createElement("button");
-      bOpen.className = "tab-btn btn-sm primary";
-      bOpen.textContent = "Ouvrir";
-      bOpen.style.cssText =
-        "border:1px solid #000;background:#fff;color:#000;border-radius:0;";
-      bOpen.onclick = () => {
-        m.style.display = "none";
-        loadAnalogyIntoBoard(rec);
-      };
-      const bDel = document.createElement("button");
-      bDel.className = "tab-btn btn-sm danger";
-      bDel.textContent = "Supprimer";
-      bDel.style.cssText =
-        "border:1px solid #000;background:#000;color:#fff;border-radius:0;";
-      bDel.onclick = () => {
-        deleteSavedAnalogy(rec.uid);
-        openAnalogiesSavedModal();
-      };
-      row.append(bOpen, bDel);
-      card.append(h, meta, row);
-      body.appendChild(card);
-    });
-  }
-
-  close.onclick = () => {
-    m.style.display = "none";
-  };
-  m.querySelector(".modal__backdrop")?.addEventListener(
-    "click",
-    () => (m.style.display = "none")
-  );
-  m.style.display = "block";
-}
-
-function loadAnalogyIntoBoard(rec) {
-  resetAnalogiesBoard();
-  Anal.els.title.value = rec.title || "";
-  Anal.state.title = rec.title || "";
-  (rec.cells || []).forEach((c, i) => {
-    if (!c || !c.kind) return;
-    setCellContent(i, c);
-  });
-}
-
-/* ------------ Utils ------------- */
-
-function findFocusedCellSlot() {
-  const el = document.activeElement;
-  const cell = el?.closest?.(".anal-cell");
-  return cell ? parseInt(cell.dataset.slot, 10) : null;
-}
-
-function fileToDataURL(file) {
-  return new Promise((resolve, reject) => {
-    const r = new FileReader();
-    r.onload = () => resolve(r.result);
-    r.onerror = reject;
-    r.readAsDataURL(file);
-  });
 }

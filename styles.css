@@ -471,10 +471,11 @@ input[type="range"] {
 }
 
 /* rangée de petits boutons dans les panneaux */
+
 .btn-row {
   display: flex;
   gap: 6px;
-  margin-top: 8px;
+  margin: 8px 0 14px;
   flex-wrap: wrap;
 }
 
@@ -482,7 +483,7 @@ input[type="range"] {
 .tab-btn.btn-sm {
   padding: 4px 8px;
   font-size: 12px;
-  line-height: 1.1;
+  line-height: 1;
   border-radius: 4px;
 }
 
@@ -496,16 +497,7 @@ input[type="range"] {
 }
 
 /* rangée de petits boutons (déjà utilisée pour 3D) */
-.btn-row {
-  display: flex;
-  gap: 6px;
-  margin: 8px 0 14px;
-}
-.tab-btn.btn-sm {
-  padding: 6px 8px;
-  font-size: 12px;
-  line-height: 1;
-}
+
 .tab-btn.btn-xs {
   padding: 4px 6px;
   font-size: 11px;
@@ -850,39 +842,178 @@ input[type="range"] {
   background: #f9f9f9;
 }
 
-/* Analogies */
-#analogies-view .tab-btn.btn-sm {
-  font-size: 12px;
-  padding: 4px 8px;
+
+/* ==================  Réglages  ================== */
+:root{
+  /* multiplicateurs de largeur pour les discours */
+  --disc-closed-mult: 28;   /* largeur en état fermé (aperçu) */
+  --disc-open-mult:   35;  /* largeur en hover / clic (ouvert) */
 }
-#analogies-view .tab-btn.primary {
-  background: rgb(0, 0, 0);
-  color: #fff;
-  border: 1px solid rgb(0, 0, 0);
+
+/* DivIcon à taille naturelle */
+.frag-label-ic.leaflet-div-icon {
+  width: auto !important;
+  height: auto !important;
+  background: transparent;
+  border: 0;
 }
-#analogies-view .tab-btn.danger {
-  background: #700;
-  color: #fff;
-  border: 1px solid #400;
+
+/* Label minimaliste piloté par --fragLabelSize */
+.frag-label {
+  display: inline-block;
+  padding: 2px 4px;
+  font: var(--fragLabelSize, 12px)/1.2 Consolas, monospace; /* font-size / line-height */
+  white-space: normal;
 }
-#analogies-view .anal-cell img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  border-radius: 6px;
+
+/* Largeurs par mode (compact) */
+.frag-label.mode-noms,
+.frag-label.mode-usages {
+  max-width: calc(var(--fragLabelSize, 12px) * 12);
 }
-#analogies-view .anal-cell .note {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+.frag-label.mode-criteres{
+  max-width: calc(var(--fragLabelSize, 12px) * 24);
+}
+
+/* Effets et couleurs utiles */
+.frag-label.dim { opacity: 0.08; }
+.frag-label.--active { text-decoration: underline; }
+.frag-label.mode-noms     { color: #fff; }
+.frag-label.mode-usages   { color: #ff0000; }
+.frag-label.mode-discours { color: #f2ff00; }
+
+/* ============ DISCOURS : fermé (aperçu 1 ligne) ============ */
+.frag-label.mode-discours{
+  position: relative;
+  cursor: pointer;
+  max-width: calc(var(--fragLabelSize, 12px) * var(--disc-closed-mult));
+  white-space: nowrap;            /* 1 ligne */
+  overflow: hidden;               /* cache le reste */
+  text-overflow: ellipsis;        /* … */
+}
+
+/* on affiche la version courte (“…”) par défaut */
+.frag-label.mode-discours .disc-short{ display:inline; }
+.frag-label.mode-discours .disc-full { display:none; }
+
+/* ============ DISCOURS : ouvert (hover OU sticky) ============ */
+/* On retire nowrap/hidden/ellipsis et on autorise une bonne césure */
+.frag-label.mode-discours.is-hover,
+.frag-label.mode-discours.is-open{
+  white-space: normal;            /* multi-lignes */
+  overflow: visible;              /* plus de clipping */
+  text-overflow: clip;            /* enlève l’ellipsis */
+  max-width: calc(var(--fragLabelSize, 12px) * var(--disc-open-mult));
+  line-height: 1.3;
+  display: inline-block;          /* bloc lisible sans effets de flex parents */
+  overflow-wrap: break-word;      /* casse uniquement si nécessaire */
+  word-break: normal;             /* ne casse pas chaque caractère */
+  hyphens: auto;                  /* césure typographique quand possible */
+  z-index: 1000;                  /* passe devant */
+}
+
+/* quand c'est ouvert, on montre le texte complet, on cache le court */
+.frag-label.mode-discours.is-hover .disc-short,
+.frag-label.mode-discours.is-open  .disc-short{ display:none; }
+.frag-label.mode-discours.is-hover .disc-full,
+.frag-label.mode-discours.is-open  .disc-full { display:inline; }
+
+/* un petit style pour l’auteur au début */
+.frag-label.mode-discours .disc-author{
+  font-weight: 700;
+  margin-right: 4px;
+}
+
+/* si la carte te “dime” des choses au loin, garde la variation d’opacité */
+.frag-label.mode-discours.far { opacity: 0.18; }
+
+/* wrapper du label (utilisé pour le micro-layout) */
+.frag-label-wrap{
+  display:inline-block;
+  transform: translate3d(0,0,0);
+}
+
+/* ----- CRITÈRES : empilement propre (pas de position absolue) ----- */
+.frag-label.mode-criteres {
+  max-width: calc(var(--fragLabelSize, 12px) * 24);
+  padding: 2px 4px;
+  position: static;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* Les tokens redeviennent “flow” */
+.frag-label.mode-criteres .token {
+  position: static;
+  left: auto;
+  top: auto;
+  transform: none !important;
+  line-height: 1.1;
+  white-space: normal;
+}
+
+/* Atténuation si "loin" du centre (superposition sélective) */
+.frag-label.far { opacity: 0.18; }
+
+/* Palettes par famille (couleur du TEXTE) */
+.token--usage         { color:#4DA3FF; }
+.token--intensite     { color:#FF7A59; }
+.token--echelle       { color:#B07CFF; }
+.token--origine       { color:#5BC489; }
+.token--accessibilite { color:#FFC84D; }
+.token--visibilite    { color:#6DD3C2; }
+.token--acteurs       { color:#F45B69; }
+.token--rapport       { color:#E0E04D; }
+.token--autre         { color:#AAAAAA; }
+
+
+/* 1) Le conteneur DivIcon ne doit pas contraindre la largeur */
+.frag-label-ic.leaflet-div-icon {
+  width: auto !important;
+  min-width: 0 !important;
+  height: auto !important;
+  white-space: normal !important; /* évite tout héritage gênant */
+}
+
+/* 2) Discours ouvert : force une width réelle et prioritaire */
+.frag-label.mode-discours.is-hover,
+.frag-label.mode-discours.is-open{
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  /* width > max-width, avec !important pour écraser toute contrainte parent */
+  width: calc(var(--fragLabelSize, 12px) * var(--disc-open-mult)) !important;
+  max-width: none !important;
+  min-width: 28ch;            /* 3) garde-fou pour éviter la “colonne de lettres” */
+  display: block;             /* bloc de paragraphe lisible */
+  line-height: 1.3;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: auto;
+  z-index: 1000;
+}
+
+
+/* ===== Proxémie : calque HTML pour nuages ===== */
+#proxemic-view { position: relative; }
+
+.prox-html-layer {
+  position: absolute;
+  inset: 0;                /* occupe tout le conteneur */
+  pointer-events: none;    /* laisse passer les clics SVG si besoin */
+}
+
+.prox-cloud {
+  position: absolute;      /* on la pose sur le rectangle du cluster */
   padding: 8px;
-  font-size: 13px;
-  line-height: 1.35;
+  overflow: auto;
+  pointer-events: auto;    /* réactive les survols/clics sur le texte */
 }
-#analogies-view .anal-thumb {
-  cursor: grab;
-  user-select: none;
-}
-#analogies-view .anal-thumb:active {
-  cursor: grabbing;
-}
+
+/* Optionnel : un peu d’aération entre labels d’un même cloud */
+.prox-cloud .frag-label-wrap { margin: 2px 4px; display: inline-block; }
