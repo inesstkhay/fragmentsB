@@ -1,6 +1,6 @@
 # fragments — carnet de développement (README en cours...)
 
-Version A: texte
+Version B: texte
 
 Le site que je développe ici n’est pour l’instant qu’une **bêta**, alimentée par les données de ma thèse (fragments situés à Montreuil et au Mirail, discours collectés, essais de patterns).  
 À terme, il deviendra un **outil ouvert**.
